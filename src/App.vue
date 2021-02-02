@@ -21,7 +21,7 @@
 
                     <v-col cols="12" sm="8">
                         <v-sheet min-height="70vh" rounded="lg">
-                            <!--  -->
+                            <Installer />
                         </v-sheet>
                     </v-col>
 
@@ -33,10 +33,14 @@
 </template>
 
 <script>
+import Installer from "./components/Installer";
+
 export default {
     name: "App",
 
-    components: {},
+    components: {
+        Installer,
+    },
 
     data: () => ({
         links: ["Home", "Install"],
