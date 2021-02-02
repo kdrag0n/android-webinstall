@@ -6,5 +6,10 @@ Vue.config.productionTip = false;
 
 new Vue({
     vuetify,
+    data: {
+        product: null,
+        serial: null,
+        zipBlob: null,
+    },
     render: (h) => h(App),
 }).$mount("#app");

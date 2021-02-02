@@ -11,7 +11,8 @@
         "core-js": "^3.6.5",
         "fastboot": "file:/home/dragon/code/web/fastboot.js",
         "vue": "^2.6.11",
-        "vuetify": "^2.4.0"
+        "vuetify": "^2.4.0",
+        "vuex": "^3.6.2"
     },
     "devDependencies": {
         "@vue/cli": "^4.5.11",
