@@ -18,7 +18,6 @@
             v-if="installProgress !== null"
             buffer-value="0"
             :value="installProgress"
-            stream
         ></v-progress-linear>
 
         <v-dialog v-model="reconnectDialog" width="500">
