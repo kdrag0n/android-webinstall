@@ -1,25 +1,65 @@
 <template>
     <v-container>
-        <v-skeleton-loader v-if="latestReleases === null"
-          type="article, actions"
-        ></v-skeleton-loader>
+        <div class="mb-10" flat>
+            <h6 class="text-h6 pb-4">Download a build</h6>
+            <div class="text-body-1">
+                <p>
+                    Pick a build of {{ $root.$data.OS_NAME }} to download and
+                    install.
+                </p>
+            </div>
 
-        <template v-else>
-            <v-card outlined v-for="release in latestReleases" :key="release.url">
-                <v-card-title>{{ release.version }}</v-card-title>
-                <v-card-subtitle>{{ release.variant }}</v-card-subtitle>
+            <v-skeleton-loader
+                v-if="latestReleases === null"
+                type="article, actions"
+            ></v-skeleton-loader>
 
-                <v-card-actions>
-                    <v-btn outlined text @click="download(release)">Download</v-btn>
-                </v-card-actions>
-            </v-card>
-        </template>
+            <div v-else class="d-flex flex-wrap justify-space-around">
+                <v-card
+                    outlined
+                    max-width="16rem"
+                    class="ma-4 d-flex flex-column justify-space-between"
+                    v-for="release in latestReleases"
+                    :key="release.url"
+                >
+                    <div>
+                        <v-card-title>{{ release.version }}</v-card-title>
+                        <v-card-subtitle>{{
+                            $root.$data.RELEASE_VARIANTS[release.variant]
+                        }}</v-card-subtitle>
+                    </div>
 
-        <v-progress-linear v-if="downloadProgress !== null"
-            buffer-value="0"
-            :value="downloadProgress"
-            stream
-        ></v-progress-linear>
+                    <v-card-actions
+                        class="d-flex justify-space-between flex-row-reverse"
+                    >
+                        <v-btn
+                            outlined
+                            text
+                            @click="download(release)"
+                            :disabled="downloading"
+                            >Download</v-btn
+                        >
+                    </v-card-actions>
+                </v-card>
+            </div>
+
+            <v-progress-linear
+                v-if="downloadProgress !== null"
+                buffer-value="0"
+                :value="downloadProgress"
+                stream
+            ></v-progress-linear>
+        </div>
+
+        <div class="d-flex justify-space-between flex-row-reverse">
+            <v-btn
+                color="primary"
+                @click="$emit('nextStep')"
+                :disabled="$root.$data.zipBlob === null"
+                >Next</v-btn
+            >
+            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+        </div>
     </v-container>
 </template>
 
@@ -33,6 +73,7 @@ export default {
         curStep: 1,
         latestReleases: null,
         downloadProgress: null,
+        downloading: false,
     }),
 
     watch: {
@@ -50,10 +91,17 @@ export default {
         async download(release) {
             await this.blobStore.init();
             this.downloadProgress = 0;
-            let blob = await this.blobStore.download(release.url, (progress) => {
-                this.downloadProgress = progress * 100;
-            });
+            this.downloading = true;
+            let blob = await this.blobStore.download(
+                release.url,
+                (progress) => {
+                    this.downloadProgress = progress * 100;
+                }
+            );
+            await new Promise((resolve) => setTimeout(resolve, 500));
             this.downloadProgress = 100;
+            this.downloading = false;
+            this.osVersion = release.version;
 
             this.$root.$data.zipBlob = blob;
         },

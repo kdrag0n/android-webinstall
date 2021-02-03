@@ -1,45 +1,67 @@
 <template>
     <v-container>
-        <v-card outlined>
-            <v-card-title
-                >Installing Android 11.3.1 on
-                {{ DEVICE_NAMES[$root.$data.product] }}</v-card-title
+        <div class="mb-10" flat>
+            <h6 class="text-h6 pb-4">Install {{ $root.$data.OS_NAME }}</h6>
+            <div class="text-body-1">
+                <p>
+                    You’re about install {{ $root.$data.OS_NAME }}
+                    {{ $root.$data.osVersion }} on your
+                    {{ DEVICE_NAMES[$root.$data.product] }}. Press the button
+                    below to continue.
+                </p>
+                <p>
+                    <strong class="red--text text--darken-2"
+                        >All data on your device will be lost.</strong
+                    >
+                </p>
+            </div>
+
+            <v-btn
+                color="primary"
+                @click="install()"
+                :disabled="installProgress !== null"
+                >Install</v-btn
             >
-            <v-card-subtitle>{{ $root.$data.serial }}</v-card-subtitle>
 
-            <v-card-actions>
-                <v-btn outlined text @click="install()">Confirm</v-btn>
-            </v-card-actions>
-        </v-card>
+            <v-banner>{{ installStatus }}</v-banner>
 
-        <v-banner>{{ installStatus }}</v-banner>
+            <v-progress-linear
+                v-if="installProgress !== null"
+                buffer-value="0"
+                :value="installProgress"
+            ></v-progress-linear>
 
-        <v-progress-linear
-            v-if="installProgress !== null"
-            buffer-value="0"
-            :value="installProgress"
-        ></v-progress-linear>
+            <v-dialog v-model="reconnectDialog" width="500">
+                <v-card>
+                    <v-card-title class="headline grey lighten-2">
+                        Reconnect device
+                    </v-card-title>
 
-        <v-dialog v-model="reconnectDialog" width="500">
-            <v-card>
-                <v-card-title class="headline grey lighten-2">
-                    Reconnect device
-                </v-card-title>
+                    <v-card-text>
+                        To continue flashing, allow access to your device again.
+                    </v-card-text>
 
-                <v-card-text>
-                    To continue flashing, reconnect your device.
-                </v-card-text>
+                    <v-divider></v-divider>
 
-                <v-divider></v-divider>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="requestReconnect">
+                            Reconnect
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </div>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="requestReconnect">
-                        I accept
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <div class="d-flex justify-space-between flex-row-reverse">
+            <v-btn
+                color="primary"
+                @click="$emit('nextStep')"
+                :disabled="installProgress < 100"
+                >Next</v-btn
+            >
+            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+        </div>
     </v-container>
 </template>
 
@@ -69,6 +91,7 @@ export default {
         installProgress: null,
         installStatus: "",
         reconnectDialog: false,
+        installed: false,
     }),
 
     methods: {
@@ -83,6 +106,7 @@ export default {
 
         async install() {
             let blob = this.$root.$data.zipBlob;
+            this.installed = false;
             await fastboot.FactoryImages.flashZip(
                 this.device,
                 blob,
@@ -97,6 +121,8 @@ export default {
                     this.installStatus = `${userAction} ${userItem}...`;
                 }
             );
+            await this.device.reboot();
+            this.installed = true;
         },
     },
 };

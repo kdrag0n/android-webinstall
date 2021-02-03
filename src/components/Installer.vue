@@ -1,46 +1,103 @@
 <template>
-    <v-stepper v-model="curStep">
-        <v-stepper-header class="mb-3">
+    <v-stepper v-model="curStep" elevation="0">
+        <v-stepper-header class="mb-3" elevation="0">
             <v-stepper-step :complete="curStep > 1" step="1">
-                Connect
+                Prepare
             </v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step :complete="curStep > 2" step="2">
+                Connect
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step :complete="curStep > 3" step="3">
+                Unlock
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step :complete="curStep > 4" step="4">
                 Download
             </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="3">Install</v-stepper-step>
+            <v-stepper-step :complete="curStep > 5" step="5">
+                Install
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step :complete="curStep > 6" step="6">
+                Finish
+            </v-stepper-step>
+
+            <v-divider></v-divider>
         </v-stepper-header>
 
-        <v-stepper-items>
-            <v-stepper-content step="1">
-                <v-card class="mb-12" flat>
-                    <connect-step :device="device" :blob-store="blobStore" :active="curStep === 1" />
-                </v-card>
-
-                <v-btn color="primary" @click="curStep = 2">Continue</v-btn>
+        <v-stepper-items elevation="0">
+            <v-stepper-content step="1" elevation="0">
+                <prepare-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 1"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
             </v-stepper-content>
 
             <v-stepper-content step="2">
-                <v-card class="mb-12" flat>
-                    <download-step :device="device" :blob-store="blobStore" :active="curStep === 2" />
-                </v-card>
-
-                <v-btn color="primary" @click="curStep = 3">Continue</v-btn>
-
-                <v-btn text @click="curStep = 1">Back</v-btn>
+                <connect-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 2"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
             </v-stepper-content>
 
             <v-stepper-content step="3">
-                <v-card class="mb-12" flat>
-                    <install-step :device="device" :blob-store="blobStore" :active="curStep === 3" />
-                </v-card>
+                <unlock-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :curStep="curStep"
+                    stepNum="3"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
+            </v-stepper-content>
 
-                <v-btn text @click="curStep = 2">Back</v-btn>
+            <v-stepper-content step="4">
+                <download-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 4"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
+            </v-stepper-content>
+
+            <v-stepper-content step="5">
+                <install-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 5"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
+            </v-stepper-content>
+
+            <v-stepper-content step="6">
+                <finish-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 6"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
             </v-stepper-content>
         </v-stepper-items>
     </v-stepper>
@@ -49,9 +106,12 @@
 <script>
 import * as fastboot from "fastboot";
 import { BlobStore } from "../core/download";
+import PrepareStep from "./PrepareStep";
 import ConnectStep from "./ConnectStep";
+import UnlockStep from "./UnlockStep";
 import DownloadStep from "./DownloadStep";
 import InstallStep from "./InstallStep";
+import FinishStep from "./FinishStep";
 
 fastboot.setDebugMode(true);
 
@@ -62,9 +122,12 @@ export default {
     name: "Installer",
 
     components: {
+        PrepareStep,
         ConnectStep,
+        UnlockStep,
         DownloadStep,
         InstallStep,
+        FinishStep,
     },
 
     data: () => ({
