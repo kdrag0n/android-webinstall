@@ -4,7 +4,7 @@
             <h6 class="text-h6 pb-4">Install {{ $root.$data.OS_NAME }}</h6>
             <div class="text-body-1">
                 <p>
-                    You’re about install {{ $root.$data.OS_NAME }}
+                    You’re about to install {{ $root.$data.OS_NAME }}
                     {{ $root.$data.osVersion }} on your
                     {{ DEVICE_NAMES[$root.$data.product] }}. Press the button
                     below to continue.
@@ -23,13 +23,21 @@
                 >Install</v-btn
             >
 
-            <v-banner>{{ installStatus }}</v-banner>
-
-            <v-progress-linear
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8 pt-1"
                 v-if="installProgress !== null"
-                buffer-value="0"
-                :value="installProgress"
-            ></v-progress-linear>
+            >
+                <span class="text-body-1">{{ installStatus }}</span>
+                <v-progress-linear
+                    v-if="installProgress !== null"
+                    class="my-3"
+                    buffer-value="0"
+                    :value="installProgress"
+                ></v-progress-linear>
+            </v-banner>
 
             <v-dialog v-model="reconnectDialog" width="500">
                 <v-card>
@@ -57,7 +65,7 @@
             <v-btn
                 color="primary"
                 @click="$emit('nextStep')"
-                :disabled="installProgress < 100"
+                :disabled="installing || !installed"
                 >Next</v-btn
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
@@ -92,6 +100,7 @@ export default {
         installStatus: "",
         reconnectDialog: false,
         installed: false,
+        installing: true,
     }),
 
     methods: {
@@ -107,6 +116,7 @@ export default {
         async install() {
             let blob = this.$root.$data.zipBlob;
             this.installed = false;
+            this.installing = true;
             await fastboot.FactoryImages.flashZip(
                 this.device,
                 blob,
@@ -118,11 +128,13 @@ export default {
                     let userItem =
                         item === "avb_custom_key" ? "verified boot key" : item;
                     this.installProgress = progress * 100;
-                    this.installStatus = `${userAction} ${userItem}...`;
+                    this.installStatus = `${userAction} ${userItem}`;
                 }
             );
-            await this.device.reboot();
+            this.installStatus = `Restarting into ${this.$root.$data.OS_NAME}`;
+            await this.device.reboot("");
             this.installed = true;
+            this.installing = false;
         },
     },
 };

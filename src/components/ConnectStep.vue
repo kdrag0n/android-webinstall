@@ -11,8 +11,7 @@
                 </p>
                 <p>
                     Your USB cable needs to work for copying files.
-                    Charging-only cables won’t work for installing
-                    {{ $root.$data.OS_NAME }}.
+                    Charging-only cables won’t work for this.
                 </p>
             </div>
 
@@ -32,14 +31,16 @@
                     <v-btn outlined text @click="connect()">Change</v-btn>
                 </v-card-actions>
             </v-card>
-
-            <v-row class="mt-6" v-else-if="connecting">
+            <v-banner single-line outlined rounded class="mt-8" v-else-if="connecting">
                 <v-progress-circular
+                    slot="icon"
                     indeterminate
                     color="primary"
                 ></v-progress-circular>
-                <span class="text-body-1">Connecting to device…</span>
-            </v-row>
+                <span class="text-body-1"
+                    >Connecting to device…</span
+                >
+            </v-banner>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">

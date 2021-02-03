@@ -24,17 +24,18 @@
                     <li>Restart back to the bootloader</li>
                 </ol>
             </div>
-            <v-btn elevation="2" @click="unlock()" :disabled="unlocking"
+            <v-btn color="primary" @click="unlock()" :disabled="unlocking"
                 >Unlock</v-btn
             >
-            <v-banner single-line class="mt-8" elevation="2" v-if="unlocked">
+            <v-banner single-line outlined rounded class="mt-8" v-if="unlocked">
                 <v-icon slot="icon" color="green darken-2">mdi-check</v-icon>
                 <span class="text-body-1 green--text text--darken-2"
                     >Your bootloader is now unlocked.</span
                 >
             </v-banner>
-            <v-row class="mt-6" v-else-if="unlocking">
+            <v-banner single-line outlined rounded class="mt-8" v-else-if="unlocking">
                 <v-progress-circular
+                    slot="icon"
                     indeterminate
                     color="primary"
                 ></v-progress-circular>
@@ -42,7 +43,7 @@
                     >Unlocking bootloader… Confirm using the volume and power
                     buttons.</span
                 >
-            </v-row>
+            </v-banner>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">

@@ -24,7 +24,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <div class="text-body-1">
+            <div class="text-body-1 mt-4">
                 <p>
                     Put your device into bootloader mode by turning it off, and
                     then holding the
@@ -36,7 +36,7 @@
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
-            <v-btn color="primary" @click="$emit('nextStep')">Next</v-btn>
+            <v-btn color="primary" @click="$emit('nextStep')">Start</v-btn>
         </div>
     </v-container>
 </template>

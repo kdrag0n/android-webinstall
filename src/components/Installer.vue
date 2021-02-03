@@ -2,45 +2,41 @@
     <v-stepper v-model="curStep" elevation="0">
         <v-stepper-header class="mb-3" elevation="0">
             <v-stepper-step :complete="curStep > 1" step="1">
-                Prepare
-            </v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step :complete="curStep > 2" step="2">
                 Connect
             </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="curStep > 3" step="3">
+            <v-stepper-step :complete="curStep > 2" step="2">
                 Unlock
             </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="curStep > 4" step="4">
+            <v-stepper-step :complete="curStep > 3" step="3">
                 Download
             </v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="curStep > 5" step="5">
+            <v-stepper-step :complete="curStep > 4" step="4">
                 Install
             </v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step :complete="curStep > 6" step="6">
-                Finish
-            </v-stepper-step>
-
-            <v-divider></v-divider>
         </v-stepper-header>
 
         <v-stepper-items elevation="0">
-            <v-stepper-content step="1" elevation="0">
+            <v-stepper-content step="0">
                 <prepare-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === 0"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
+            </v-stepper-content>
+
+            <v-stepper-content step="1">
+                <connect-step
                     :device="device"
                     :blob-store="blobStore"
                     :active="curStep === 1"
@@ -50,28 +46,28 @@
             </v-stepper-content>
 
             <v-stepper-content step="2">
-                <connect-step
+                <unlock-step
                     :device="device"
                     :blob-store="blobStore"
-                    :active="curStep === 2"
+                    :curStep="curStep"
+                    stepNum="2"
                     @prevStep="curStep -= 1"
                     @nextStep="curStep += 1"
                 />
             </v-stepper-content>
 
             <v-stepper-content step="3">
-                <unlock-step
+                <download-step
                     :device="device"
                     :blob-store="blobStore"
-                    :curStep="curStep"
-                    stepNum="3"
+                    :active="curStep === 3"
                     @prevStep="curStep -= 1"
                     @nextStep="curStep += 1"
                 />
             </v-stepper-content>
 
             <v-stepper-content step="4">
-                <download-step
+                <install-step
                     :device="device"
                     :blob-store="blobStore"
                     :active="curStep === 4"
@@ -81,20 +77,10 @@
             </v-stepper-content>
 
             <v-stepper-content step="5">
-                <install-step
-                    :device="device"
-                    :blob-store="blobStore"
-                    :active="curStep === 5"
-                    @prevStep="curStep -= 1"
-                    @nextStep="curStep += 1"
-                />
-            </v-stepper-content>
-
-            <v-stepper-content step="6">
                 <finish-step
                     :device="device"
                     :blob-store="blobStore"
-                    :active="curStep === 6"
+                    :active="curStep === 5"
                     @prevStep="curStep -= 1"
                     @nextStep="curStep += 1"
                 />
@@ -133,7 +119,7 @@ export default {
     data: () => ({
         device: device,
         blobStore: blobStore,
-        curStep: 1,
+        curStep: 0,
     }),
 };
 </script>

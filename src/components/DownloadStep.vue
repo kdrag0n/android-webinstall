@@ -43,12 +43,18 @@
                 </v-card>
             </div>
 
-            <v-progress-linear
-                v-if="downloadProgress !== null"
-                buffer-value="0"
-                :value="downloadProgress"
-                stream
-            ></v-progress-linear>
+            <v-banner single-line outlined rounded class="mt-8" v-if="downloadProgress !== null">
+                <span class="text-body-1"
+                    >Downloading…</span
+                >
+                <v-progress-linear
+                    v-if="downloadProgress !== null"
+                    class="my-2"
+                    buffer-value="0"
+                    :value="downloadProgress"
+                    stream
+                ></v-progress-linear>
+            </v-banner>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -98,7 +104,6 @@ export default {
                     this.downloadProgress = progress * 100;
                 }
             );
-            await new Promise((resolve) => setTimeout(resolve, 500));
             this.downloadProgress = 100;
             this.downloading = false;
             this.osVersion = release.version;
