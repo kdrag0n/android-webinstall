@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="mb-10" flat>
+        <div class="mb-10">
             <span class="headline mb-1">Installation complete</span>
             <div class="text-body-1">
                 <p>

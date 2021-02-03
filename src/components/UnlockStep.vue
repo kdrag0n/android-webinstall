@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="mb-10" flat>
+        <div class="mb-10">
             <h6 class="text-h6 pb-4">Unlock your bootloader</h6>
             <div class="text-body-1">
                 <p>
