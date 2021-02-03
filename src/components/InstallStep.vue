@@ -56,15 +56,13 @@
 
             <v-dialog v-model="reconnectDialog" width="500">
                 <v-card>
-                    <v-card-title class="headline grey lighten-2">
+                    <v-card-title class="headline">
                         Reconnect device
                     </v-card-title>
 
                     <v-card-text>
                         To continue flashing, allow access to your device again.
                     </v-card-text>
-
-                    <v-divider></v-divider>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
