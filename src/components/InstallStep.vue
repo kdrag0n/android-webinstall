@@ -127,9 +127,25 @@ export default {
         },
 
         async install() {
+            let blob = this.$root.$data.zipBlob;
             this.installed = false;
             this.installing = true;
+            await fastboot.FactoryImages.flashZip(
+                this.device,
+                blob,
+                true,
+                this.reconnectCallback,
+                (action, item, progress) => {
+                    let userAction =
+                        fastboot.FactoryImages.USER_ACTION_MAP[action];
+                    let userItem =
+                        item === "avb_custom_key" ? "verified boot key" : item;
+                    this.installProgress = progress * 100;
+                    this.installStatus = `${userAction} ${userItem}`;
+                }
+            );
             this.installStatus = `Restarting into ${this.$root.$data.OS_NAME}`;
+            await this.device.reboot("");
             this.installed = true;
             this.installing = false;
         },
