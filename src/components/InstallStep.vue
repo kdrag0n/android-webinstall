@@ -47,10 +47,10 @@
             >
                 <span class="text-body-1">{{ installStatus }}</span>
                 <v-progress-linear
-                    v-if="installProgress !== null"
                     class="my-3"
                     buffer-value="0"
                     :value="installProgress"
+                    stream
                 ></v-progress-linear>
             </v-banner>
 
