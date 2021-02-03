@@ -28,8 +28,22 @@
                 single-line
                 outlined
                 rounded
+                class="mt-8"
+                v-if="installed"
+            >
+                <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
+                <div class="my-4">
+                    <span class="text-body-1 green--text text--darken-3"
+                        >Installed {{ $root.$data.OS_NAME }} {{ $root.$data.osVersion }}</span
+                    >
+                </div>
+            </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
                 class="mt-8 pt-1"
-                v-if="installProgress !== null"
+                v-else-if="installProgress !== null"
             >
                 <span class="text-body-1">{{ installStatus }}</span>
                 <v-progress-linear
@@ -113,25 +127,9 @@ export default {
         },
 
         async install() {
-            let blob = this.$root.$data.zipBlob;
             this.installed = false;
             this.installing = true;
-            await fastboot.FactoryImages.flashZip(
-                this.device,
-                blob,
-                true,
-                this.reconnectCallback,
-                (action, item, progress) => {
-                    let userAction =
-                        fastboot.FactoryImages.USER_ACTION_MAP[action];
-                    let userItem =
-                        item === "avb_custom_key" ? "verified boot key" : item;
-                    this.installProgress = progress * 100;
-                    this.installStatus = `${userAction} ${userItem}`;
-                }
-            );
             this.installStatus = `Restarting into ${this.$root.$data.OS_NAME}`;
-            await this.device.reboot("");
             this.installed = true;
             this.installing = false;
         },

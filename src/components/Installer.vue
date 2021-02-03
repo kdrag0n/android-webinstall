@@ -1,6 +1,6 @@
 <template>
-    <v-stepper v-model="curStep" elevation="0">
-        <v-stepper-header class="mb-3" elevation="0">
+    <v-stepper v-model="curStep" alt-labels>
+        <v-stepper-header class="mb-3">
             <v-stepper-step :complete="curStep > 1" step="1">
                 Connect
             </v-stepper-step>
@@ -24,7 +24,7 @@
             </v-stepper-step>
         </v-stepper-header>
 
-        <v-stepper-items elevation="0">
+        <v-stepper-items>
             <v-stepper-content step="0">
                 <prepare-step
                     :device="device"
@@ -88,6 +88,16 @@
         </v-stepper-items>
     </v-stepper>
 </template>
+
+<style>
+.v-stepper {
+    box-shadow: none !important;
+}
+.v-stepper__header {
+    box-shadow: none !important;
+    border-bottom: thin solid rgba(0, 0, 0, 0.12);
+}
+</style>
 
 <script>
 import * as fastboot from "fastboot";

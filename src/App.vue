@@ -6,7 +6,7 @@
                     <v-col cols="12" sm="2"></v-col>
 
                     <v-col cols="12" sm="8">
-                        <v-sheet min-height="70vh" rounded="lg">
+                        <v-sheet min-height="70vh" darkrounded="lg" elevation="4">
                             <Installer />
                         </v-sheet>
                     </v-col>

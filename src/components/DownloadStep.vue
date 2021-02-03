@@ -55,7 +55,7 @@
                 <div class="my-4">
                     <span class="text-body-1 green--text text--darken-3"
                         >Downloaded {{ $root.$data.OS_NAME }}
-                        {{ release.version }}-{{ release.variant }}.</span
+                        {{ release.version }}-{{ release.variant }}</span
                     >
                 </div>
             </v-banner>
@@ -119,6 +119,7 @@ export default {
             this.downloadProgress = 0;
             this.downloading = true;
             this.release = release;
+            this.$root.$data.osVersion = release.version;
             let blob = await this.blobStore.download(
                 release.url,
                 (progress) => {
@@ -127,7 +128,6 @@ export default {
             );
             this.downloadProgress = 100;
             this.downloading = false;
-            this.osVersion = release.version;
 
             this.$root.$data.zipBlob = blob;
         },
