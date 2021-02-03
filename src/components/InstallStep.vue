@@ -54,7 +54,7 @@
                 ></v-progress-linear>
             </v-banner>
 
-            <v-dialog v-model="reconnectDialog" width="500">
+            <v-dialog v-model="reconnectDialog" width="500" persistent>
                 <v-card>
                     <v-card-title class="headline">
                         Reconnect device
