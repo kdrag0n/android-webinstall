@@ -2,6 +2,7 @@
     <v-container>
         <div class="mb-10">
             <h6 class="text-h6 pb-4">Unlock your bootloader</h6>
+
             <div class="text-body-1">
                 <p>
                     In order to install custom software, you need to unlock your
@@ -24,16 +25,24 @@
                     <li>Restart back to the bootloader</li>
                 </ol>
             </div>
+
             <v-btn color="primary" @click="unlock()" :disabled="unlocking"
                 >Unlock</v-btn
             >
+
             <v-banner single-line outlined rounded class="mt-8" v-if="unlocked">
-                <v-icon slot="icon" color="green darken-2">mdi-check</v-icon>
-                <span class="text-body-1 green--text text--darken-2"
+                <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
+                <span class="text-body-1 green--text text--darken-3"
                     >Your bootloader is now unlocked.</span
                 >
             </v-banner>
-            <v-banner single-line outlined rounded class="mt-8" v-else-if="unlocking">
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="unlocking"
+            >
                 <v-progress-circular
                     slot="icon"
                     indeterminate
@@ -59,15 +68,12 @@
 </template>
 
 <script>
-import { DEVICE_NAMES } from "../core/devices.js";
-
 export default {
     name: "UnlockStep",
 
     props: ["device", "blobStore", "curStep", "stepNum"],
 
     data: () => ({
-        DEVICE_NAMES: DEVICE_NAMES,
         unlocking: false,
         unlocked: false,
     }),

@@ -2,6 +2,7 @@
     <v-container>
         <div class="mb-10">
             <h6 class="text-h6 pb-4">Download a build</h6>
+
             <div class="text-body-1">
                 <p>
                     Pick a build of {{ $root.$data.OS_NAME }} to download and
@@ -43,13 +44,31 @@
                 </v-card>
             </div>
 
-            <v-banner single-line outlined rounded class="mt-8" v-if="downloadProgress !== null">
-                <span class="text-body-1"
-                    >Downloading…</span
-                >
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-if="downloadProgress >= 100"
+            >
+                <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
+                <div class="my-4">
+                    <span class="text-body-1 green--text text--darken-3"
+                        >Downloaded {{ $root.$data.OS_NAME }}
+                        {{ release.version }}-{{ release.variant }}.</span
+                    >
+                </div>
+            </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8 pt-1"
+                v-else-if="downloadProgress !== null"
+            >
+                <span class="text-body-1">Downloading…</span>
                 <v-progress-linear
-                    v-if="downloadProgress !== null"
-                    class="my-2"
+                    class="my-3"
                     buffer-value="0"
                     :value="downloadProgress"
                     stream
@@ -80,6 +99,7 @@ export default {
         latestReleases: null,
         downloadProgress: null,
         downloading: false,
+        release: null,
     }),
 
     watch: {
@@ -98,6 +118,7 @@ export default {
             await this.blobStore.init();
             this.downloadProgress = 0;
             this.downloading = true;
+            this.release = release;
             let blob = await this.blobStore.download(
                 release.url,
                 (progress) => {

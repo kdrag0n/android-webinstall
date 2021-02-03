@@ -2,6 +2,7 @@
     <v-container>
         <div class="mb-10">
             <h6 class="text-h6 pb-4">Prepare your device</h6>
+
             <div class="text-body-1">
                 <p>
                     This is an easy way to install
@@ -42,23 +43,7 @@
 </template>
 
 <script>
-import { DEVICE_NAMES } from "../core/devices.js";
-
 export default {
-    name: "ConnectStep",
-
     props: ["device", "blobStore", "active"],
-
-    data: () => ({
-        DEVICE_NAMES: DEVICE_NAMES,
-    }),
-
-    methods: {
-        async connect() {
-            await this.device.connect();
-            this.$root.$data.product = await this.device.getVariable("product");
-            this.$root.$data.serial = await this.device.getVariable("serialno");
-        },
-    },
 };
 </script>

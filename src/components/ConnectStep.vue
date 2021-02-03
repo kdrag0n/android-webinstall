@@ -2,6 +2,7 @@
     <v-container>
         <div class="mb-10">
             <h6 class="text-h6 pb-4">Connect your device</h6>
+
             <div class="text-body-1">
                 <p>
                     Plug your device into the computer you’re installing from.
@@ -10,36 +11,39 @@
                     USB hubs.
                 </p>
                 <p>
-                    Your USB cable needs to work for copying files.
-                    Charging-only cables won’t work for this.
+                    Your USB cable needs to be able to copy files. Charging-only
+                    cables won’t work for this.
                 </p>
             </div>
 
             <v-btn color="primary" @click="connect()">Connect</v-btn>
 
-            <v-card outlined class="mt-6" v-if="$root.$data.product !== null">
-                <v-card-text>
-                    <span>Connected to</span>
-                </v-card-text>
-
-                <v-card-title>{{
-                    DEVICE_NAMES[$root.$data.product]
-                }}</v-card-title>
-                <v-card-subtitle>{{ $root.$data.serial }}</v-card-subtitle>
-
-                <v-card-actions>
-                    <v-btn outlined text @click="connect()">Change</v-btn>
-                </v-card-actions>
-            </v-card>
-            <v-banner single-line outlined rounded class="mt-8" v-else-if="connecting">
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-if="$root.$data.product !== null"
+            >
+                <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
+                <span class="text-body-1 green--text text--darken-3"
+                    >Connected to
+                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}</span
+                >
+            </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="connecting"
+            >
                 <v-progress-circular
                     slot="icon"
                     indeterminate
                     color="primary"
                 ></v-progress-circular>
-                <span class="text-body-1"
-                    >Connecting to device…</span
-                >
+                <span class="text-body-1">Connecting to device…</span>
             </v-banner>
         </div>
 
@@ -56,15 +60,12 @@
 </template>
 
 <script>
-import { DEVICE_NAMES } from "../core/devices.js";
-
 export default {
     name: "ConnectStep",
 
     props: ["device", "blobStore", "active"],
 
     data: () => ({
-        DEVICE_NAMES: DEVICE_NAMES,
         connecting: false,
     }),
 
@@ -73,7 +74,6 @@ export default {
             this.connecting = true;
             await this.device.connect();
             this.$root.$data.product = await this.device.getVariable("product");
-            this.$root.$data.serial = await this.device.getVariable("serialno");
             this.connecting = false;
         },
     },

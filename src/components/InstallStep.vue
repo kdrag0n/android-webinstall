@@ -2,15 +2,16 @@
     <v-container>
         <div class="mb-10">
             <h6 class="text-h6 pb-4">Install {{ $root.$data.OS_NAME }}</h6>
+
             <div class="text-body-1">
                 <p>
                     You’re about to install {{ $root.$data.OS_NAME }}
                     {{ $root.$data.osVersion }} on your
-                    {{ DEVICE_NAMES[$root.$data.product] }}. Press the button
+                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}. Press the button
                     below to continue.
                 </p>
                 <p>
-                    <strong class="red--text text--darken-2"
+                    <strong class="red--text text--darken-3"
                         >All data on your device will be lost.</strong
                     >
                 </p>
@@ -81,7 +82,6 @@
 
 <script>
 import * as fastboot from "fastboot";
-import { DEVICE_NAMES } from "../core/devices.js";
 
 fastboot.FactoryImages.configureZip({
     workerScripts: {
@@ -95,7 +95,6 @@ export default {
     props: ["device", "blobStore", "active"],
 
     data: () => ({
-        DEVICE_NAMES: DEVICE_NAMES,
         installProgress: null,
         installStatus: "",
         reconnectDialog: false,
