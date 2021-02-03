@@ -26,7 +26,7 @@
                 </ol>
             </div>
 
-            <v-btn color="primary" @click="unlock()" :disabled="unlocking"
+            <v-btn color="primary" @click="unlock()" :disabled="unlocking || unlocked"
                 >Unlock</v-btn
             >
 
