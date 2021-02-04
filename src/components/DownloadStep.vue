@@ -126,7 +126,9 @@ export default {
                 this.releaseIndex = await indexResp.json();
             }
 
-            this.latestReleases = this.releaseIndex.latest[this.$root.$data.product];
+            this.latestReleases = this.releaseIndex.latest[
+                this.$root.$data.product
+            ];
         },
     },
 
