@@ -5,14 +5,21 @@
 
             <div class="text-body-1">
                 <p>
-                    You’re about to install {{ $root.$data.OS_NAME }}
-                    {{ $root.$data.osVersion }} on your
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}. Press
-                    the button below to continue.
+                    This will install {{ $root.$data.OS_NAME }}
+                    {{ $root.$data.release.version
+                    }}{{
+                        $root.$data.RELEASE_VARIANTS[
+                            $root.$data.release.variant
+                        ].suffix
+                    }}
+                    onto your
+                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}.
                 </p>
-                <p>
+                <p v-if="$root.$data.installType === 'clean'">
+                    Because you’re doing a clean install to switch from another
+                    OS,
                     <strong class="red--text text--darken-3"
-                        >All data on your device will be lost.</strong
+                        >all data on your device will be lost.</strong
                     >
                 </p>
             </div>
@@ -35,7 +42,7 @@
                 <div class="my-4">
                     <span class="text-body-1 green--text text--darken-3"
                         >Installed {{ $root.$data.OS_NAME }}
-                        {{ $root.$data.osVersion }}</span
+                        {{ $root.$data.release.version }}</span
                     >
                 </div>
             </v-banner>
@@ -190,7 +197,7 @@ export default {
                 await fastboot.FactoryImages.flashZip(
                     this.device,
                     blob,
-                    true,
+                    this.$root.$data.installType === "clean",
                     this.reconnectCallback,
                     (action, item, progress) => {
                         let userAction =

@@ -25,8 +25,18 @@
         </v-stepper-header>
 
         <v-stepper-items>
-            <v-stepper-content step="0">
+            <v-stepper-content step="-1">
                 <prepare-step
+                    :device="device"
+                    :blob-store="blobStore"
+                    :active="curStep === -1"
+                    @prevStep="curStep -= 1"
+                    @nextStep="curStep += 1"
+                />
+            </v-stepper-content>
+
+            <v-stepper-content step="0">
+                <install-type-step
                     :device="device"
                     :blob-store="blobStore"
                     :active="curStep === 0"
@@ -103,6 +113,7 @@
 import * as fastboot from "fastboot";
 import { BlobStore } from "../core/download";
 import PrepareStep from "./PrepareStep";
+import InstallTypeStep from "./InstallTypeStep";
 import ConnectStep from "./ConnectStep";
 import UnlockStep from "./UnlockStep";
 import DownloadStep from "./DownloadStep";
@@ -119,6 +130,7 @@ export default {
 
     components: {
         PrepareStep,
+        InstallTypeStep,
         ConnectStep,
         UnlockStep,
         DownloadStep,
@@ -129,7 +141,7 @@ export default {
     data: () => ({
         device: device,
         blobStore: blobStore,
-        curStep: 0,
+        curStep: -1,
     }),
 };
 </script>

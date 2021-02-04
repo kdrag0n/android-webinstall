@@ -8,7 +8,7 @@
                     Congratulations! Your
                     {{ $root.$data.DEVICE_NAMES[$root.$data.product] }} is now
                     running {{ $root.$data.OS_NAME }}
-                    {{ $root.$data.osVersion }}.
+                    {{ $root.$data.release.version }}.
                 </p>
                 <p><strong>Enjoy!</strong></p>
             </div>

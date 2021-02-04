@@ -27,6 +27,7 @@
                         <v-card-title>{{ release.version }}</v-card-title>
                         <v-card-subtitle>{{
                             $root.$data.RELEASE_VARIANTS[release.variant]
+                                .description
                         }}</v-card-subtitle>
                     </div>
 
@@ -110,12 +111,10 @@ export default {
     props: ["device", "blobStore", "active"],
 
     data: () => ({
-        curStep: 1,
         releaseIndex: undefined,
         latestReleases: undefined,
         downloadProgress: null,
         downloading: false,
-        release: null,
         error: null,
     }),
 
@@ -134,10 +133,9 @@ export default {
 
     methods: {
         async download(release) {
-            this.release = release;
             this.downloadProgress = 0;
             this.downloading = true;
-            this.$root.$data.osVersion = release.version;
+            this.$root.$data.release = null;
 
             try {
                 await this.blobStore.init();
@@ -150,6 +148,7 @@ export default {
 
                 this.downloadProgress = 100;
                 this.$root.$data.zipBlob = blob;
+                this.$root.$data.release = release;
                 this.error = null;
             } catch (e) {
                 this.error = e.message;

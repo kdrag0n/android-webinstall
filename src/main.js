@@ -9,7 +9,8 @@ new Vue({
     data: {
         product: null,
         zipBlob: null,
-        osVersion: null,
+        release: null,
+        installType: null,
         OS_NAME: "ProtonAOSP",
         DEVICE_NAMES: {
             sailfish: "Pixel",
@@ -45,9 +46,15 @@ new Vue({
             },
         ],
         RELEASE_VARIANTS: {
-            minimal: "Minimal version without Google apps or services.",
-            gapps:
-                "Version with Google services included, so the apps you’re familiar with will work. Recommended for most users.",
+            minimal: {
+                description: "Minimal version without Google apps or services.",
+                suffix: "",
+            },
+            gapps: {
+                description:
+                    "Version with Google services included, so the apps you’re familiar with will work. Recommended for most users.",
+                suffix: " with Google services",
+            },
         },
     },
     render: (h) => h(App),

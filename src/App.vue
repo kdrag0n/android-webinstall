@@ -10,6 +10,7 @@
                             :min-height="
                                 $vuetify.breakpoint.mobile ? '100vh' : '70vh'
                             "
+                            max-width="50rem"
                             :rounded="$vuetify.breakpoint.mobile ? null : 'lg'"
                             :elevation="$vuetify.breakpoint.mobile ? 0 : 4"
                         >
