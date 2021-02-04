@@ -111,6 +111,7 @@ export default {
 
     data: () => ({
         curStep: 1,
+        releaseIndex: undefined,
         latestReleases: undefined,
         downloadProgress: null,
         downloading: false,
@@ -120,12 +121,12 @@ export default {
 
     watch: {
         active: async function (newState) {
-            if (newState && this.latestReleases === undefined) {
+            if (newState && this.releaseIndex === undefined) {
                 let indexResp = await fetch("/releases/index.json");
-                let index = await indexResp.json();
-
-                this.latestReleases = index.latest[this.$root.$data.product];
+                this.releaseIndex = await indexResp.json();
             }
+
+            this.latestReleases = this.releaseIndex.latest[this.$root.$data.product];
         },
     },
 
