@@ -24,17 +24,6 @@
                     }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
-
-            <div class="text-body-1 mt-4">
-                <p>
-                    Put your device into bootloader mode by turning it off, then
-                    holding the
-                    <strong>power</strong> and
-                    <strong>volume down</strong> buttons together until you see
-                    a <span class="red--text text--darken-4">red</span> warning
-                    sign.
-                </p>
-            </div>
         </div>
 
         <div class="mb-10 mt-n4" v-else>

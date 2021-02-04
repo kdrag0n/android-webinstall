@@ -5,10 +5,19 @@
 
             <div class="text-body-1">
                 <p>
-                    Plug your device into the computer you’re installing from.
-                    Make sure you use a <strong>high-quality</strong> USB cable,
-                    as many cables will cause issues. Similarly, try not to use
-                    USB hubs.
+                    Put your device into bootloader mode by turning it off, then
+                    holding the
+                    <strong>power</strong> and
+                    <strong>volume down</strong> buttons together until you see
+                    a <span class="red--text text--darken-3">red</span> warning
+                    sign.
+                </p>
+                <p>
+                    Once your device is in bootloader mode, plug it into the
+                    computer or device you’re installing from. Make sure you use
+                    a
+                    <strong>high-quality</strong> USB cable, as many cables will
+                    cause issues. Similarly, try not to use USB hubs.
                 </p>
                 <p>
                     Your USB cable needs to be able to copy files. Charging-only
