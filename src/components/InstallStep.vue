@@ -19,7 +19,8 @@
                     Because you’re doing a clean install to switch from another
                     OS,
                     <strong class="red--text text--darken-3"
-                        >all data on your device will be lost.</strong
+                        >all data on your device will be permanently
+                        lost.</strong
                     >
                 </p>
             </div>
