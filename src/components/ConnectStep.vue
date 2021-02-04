@@ -10,7 +10,9 @@
                     <strong>power</strong> and
                     <strong>volume down</strong> buttons together until you see
                     a <span class="red--text text--darken-3">red</span> warning
-                    sign.
+                    sign or
+                    <span class="green--text text--darken-3">green</span> Android
+                    robot.
                 </p>
                 <p>
                     Once your device is in bootloader mode, plug it into the

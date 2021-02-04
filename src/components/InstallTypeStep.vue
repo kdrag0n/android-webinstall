@@ -19,9 +19,10 @@
                     ripple
                     :color="
                         $root.$data.installType === 'clean'
-                            ? 'grey lighten-2'
+                            ? 'grey lighten-3'
                             : null
                     "
+                    :class="$root.$data.installType === 'clean' ? 'v-card--selected' : null"
                     @click="$root.$data.installType = 'clean'"
                 >
                     <div>
@@ -50,9 +51,10 @@
                     ripple
                     :color="
                         $root.$data.installType === 'update'
-                            ? 'grey lighten-2'
+                            ? 'grey lighten-3'
                             : null
                     "
+                    :class="$root.$data.installType === 'update' ? 'v-card--selected' : null"
                     @click="$root.$data.installType = 'update'"
                 >
                     <div>
@@ -87,8 +89,12 @@
 </template>
 
 <style>
+.theme--light.v-sheet--outlined {
+    border-width: 2px;
+}
+
 .theme--light.v-sheet--outlined.v-card--selected {
-    border: ;
+    border: 2px solid rgba(0, 0, 0, 0.77) !important;
 }
 </style>
 
