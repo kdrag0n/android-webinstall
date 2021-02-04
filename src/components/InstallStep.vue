@@ -18,7 +18,7 @@
             </div>
 
             <v-btn
-                color="primary"
+                :color="installed ? null : 'primary'"
                 @click="install()"
                 :disabled="installProgress !== null"
                 >Install</v-btn
@@ -124,6 +124,10 @@
 <style>
 .v-progress-linear__determinate {
     transition: none !important;
+}
+
+.v-banner--single-line .v-banner__text {
+    white-space: normal !important;
 }
 </style>
 

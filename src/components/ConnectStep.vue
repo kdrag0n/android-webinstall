@@ -16,7 +16,7 @@
                 </p>
             </div>
 
-            <v-btn color="primary" @click="connect()" :disabled="connecting"
+            <v-btn :color="$root.$data.product === null ? 'primary' : null" @click="connect()" :disabled="connecting"
                 >Connect</v-btn
             >
 
