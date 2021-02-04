@@ -1,5 +1,5 @@
 <template>
-    <v-stepper v-model="curStep" alt-labels>
+    <v-stepper v-model="curStep" :alt-labels="!$vuetify.breakpoint.mobile">
         <v-stepper-header class="mb-3">
             <v-stepper-step :complete="curStep > 1" step="1">
                 Connect

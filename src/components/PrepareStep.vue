@@ -27,8 +27,8 @@
 
             <div class="text-body-1 mt-4">
                 <p>
-                    Put your device into bootloader mode by turning it off, and
-                    then holding the
+                    Put your device into bootloader mode by turning it off, then
+                    holding the
                     <strong>power</strong> and
                     <strong>volume down</strong> buttons together until you see
                     a <span class="red--text text--darken-3">red</span> warning
