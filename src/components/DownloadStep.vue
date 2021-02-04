@@ -66,6 +66,7 @@
                 class="mt-8 pt-1"
                 v-else-if="downloadProgress !== null"
             >
+                <v-icon slot="icon" color="primary">mdi-download</v-icon>
                 <span class="text-body-1">Downloading…</span>
                 <v-progress-linear
                     class="my-3"
@@ -74,6 +75,20 @@
                     stream
                 ></v-progress-linear>
             </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="error"
+            >
+                <v-icon slot="icon" color="red darken-3">mdi-close</v-icon>
+                <div class="my-4">
+                    <span class="text-body-1 red--text text--darken-3">{{
+                        error
+                    }}</span>
+                </div>
+            </v-banner>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -81,7 +96,7 @@
                 color="primary"
                 @click="$emit('nextStep')"
                 :disabled="$root.$data.zipBlob === null"
-                >Next</v-btn
+                >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
         </div>
@@ -96,15 +111,16 @@ export default {
 
     data: () => ({
         curStep: 1,
-        latestReleases: null,
+        latestReleases: undefined,
         downloadProgress: null,
         downloading: false,
         release: null,
+        error: null,
     }),
 
     watch: {
         active: async function (newState) {
-            if (newState) {
+            if (newState && this.latestReleases === undefined) {
                 let indexResp = await fetch("/releases/index.json");
                 let index = await indexResp.json();
 
@@ -115,21 +131,30 @@ export default {
 
     methods: {
         async download(release) {
-            await this.blobStore.init();
+            this.release = release;
             this.downloadProgress = 0;
             this.downloading = true;
-            this.release = release;
             this.$root.$data.osVersion = release.version;
-            let blob = await this.blobStore.download(
-                release.url,
-                (progress) => {
-                    this.downloadProgress = progress * 100;
-                }
-            );
-            this.downloadProgress = 100;
-            this.downloading = false;
 
-            this.$root.$data.zipBlob = blob;
+            try {
+                await this.blobStore.init();
+                let blob = await this.blobStore.download(
+                    release.url,
+                    (progress) => {
+                        this.downloadProgress = progress * 100;
+                    }
+                );
+
+                this.downloadProgress = 100;
+                this.$root.$data.zipBlob = blob;
+                this.error = null;
+            } catch (e) {
+                this.error = e.message;
+                this.downloadProgress = null;
+                throw e;
+            } finally {
+                this.downloading = false;
+            }
         },
     },
 };

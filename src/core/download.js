@@ -73,6 +73,10 @@ export class BlobStore {
         if (blob === null) {
             common.logDebug(`Downloading ${url}`);
             let resp = await fetch(new Request(url));
+            if (resp.status !== 200) {
+                throw new Error(`HTTP error: ${resp.status} ${resp.statusText}`);
+            }
+
             blob = await resp.blob();
             common.logDebug("File downloaded, saving...");
             await this.saveFile(filename, blob);

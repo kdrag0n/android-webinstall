@@ -26,7 +26,10 @@
                 </ol>
             </div>
 
-            <v-btn color="primary" @click="unlock()" :disabled="unlocking || unlocked"
+            <v-btn
+                color="primary"
+                @click="unlock()"
+                :disabled="unlocking || unlocked"
                 >Unlock</v-btn
             >
 
@@ -53,6 +56,18 @@
                     buttons.</span
                 >
             </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="error"
+            >
+                <v-icon slot="icon" color="red darken-3">mdi-close</v-icon>
+                <span class="text-body-1 red--text text--darken-3">{{
+                    error
+                }}</span>
+            </v-banner>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -60,7 +75,7 @@
                 color="primary"
                 @click="$emit('nextStep')"
                 :disabled="!unlocked"
-                >Next</v-btn
+                >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
         </div>
@@ -68,6 +83,8 @@
 </template>
 
 <script>
+import { FastbootError } from "fastboot";
+
 export default {
     name: "UnlockStep",
 
@@ -75,20 +92,37 @@ export default {
 
     data: () => ({
         unlocking: false,
-        unlocked: false,
+        unlocked: undefined,
+        initialUnlocked: undefined,
+        error: null,
     }),
 
     watch: {
         curStep: async function (newStep, oldStep) {
             if (newStep == this.stepNum) {
-                this.unlocked =
-                    (await this.device.getVariable("unlocked")) === "yes";
-                if (this.unlocked) {
-                    if (newStep > oldStep) {
-                        this.$emit("nextStep");
-                    } else {
-                        this.$emit("prevStep");
+                try {
+                    // Get unlock state once and save it. Not all bootloaders
+                    // update the unlocked value immediately after unlocking.
+                    if (this.unlocked === undefined) {
+                        this.unlocked =
+                            (await this.device.getVariable("unlocked")) ===
+                            "yes";
+                        this.initialUnlocked = this.unlocked;
                     }
+
+                    // Skip step only if unlock state was never changed
+                    if (this.unlocked && this.initialUnlocked) {
+                        if (newStep > oldStep) {
+                            this.$emit("nextStep");
+                        } else {
+                            this.$emit("prevStep");
+                        }
+                    }
+
+                    this.error = null;
+                } catch (e) {
+                    this.error = e.message;
+                    throw e;
                 }
             }
         },
@@ -97,9 +131,22 @@ export default {
     methods: {
         async unlock() {
             this.unlocking = true;
-            await this.device.runCommand("flashing unlock");
-            this.unlocking = false;
-            this.unlocked = true;
+
+            try {
+                await this.device.runCommand("flashing unlock");
+                this.unlocked = true;
+                this.error = null;
+            } catch (e) {
+                if (e instanceof FastbootError && e.status === "FAIL") {
+                    this.error = "Bootloader was not unlocked!";
+                } else {
+                    this.error = e.message;
+                }
+
+                throw e;
+            } finally {
+                this.unlocking = false;
+            }
         },
     },
 };

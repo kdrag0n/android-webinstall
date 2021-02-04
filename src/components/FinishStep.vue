@@ -1,13 +1,14 @@
 <template>
     <v-container>
         <div class="mb-10">
-            <span class="headline mb-1">Installation complete</span>
+            <h6 class="text-h6 pb-4">Installation complete</h6>
 
             <div class="text-body-1">
                 <p>
                     Congratulations! Your
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }} is now running
-                    {{ $root.$data.OS_NAME }} {{ $root.$data.osVersion }}.
+                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }} is now
+                    running {{ $root.$data.OS_NAME }}
+                    {{ $root.$data.osVersion }}.
                 </p>
                 <p><strong>Enjoy!</strong></p>
             </div>

@@ -7,8 +7,8 @@
                 <p>
                     You’re about to install {{ $root.$data.OS_NAME }}
                     {{ $root.$data.osVersion }} on your
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}. Press the button
-                    below to continue.
+                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}. Press
+                    the button below to continue.
                 </p>
                 <p>
                     <strong class="red--text text--darken-3"
@@ -34,7 +34,8 @@
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <div class="my-4">
                     <span class="text-body-1 green--text text--darken-3"
-                        >Installed {{ $root.$data.OS_NAME }} {{ $root.$data.osVersion }}</span
+                        >Installed {{ $root.$data.OS_NAME }}
+                        {{ $root.$data.osVersion }}</span
                     >
                 </div>
             </v-banner>
@@ -45,6 +46,9 @@
                 class="mt-8 pt-1"
                 v-else-if="installProgress !== null"
             >
+                <v-icon slot="icon" color="primary">{{
+                    installStatusIcon
+                }}</v-icon>
                 <span class="text-body-1">{{ installStatus }}</span>
                 <v-progress-linear
                     class="my-3"
@@ -52,6 +56,20 @@
                     :value="installProgress"
                     stream
                 ></v-progress-linear>
+            </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="error"
+            >
+                <v-icon slot="icon" color="red darken-3">mdi-close</v-icon>
+                <div class="my-4">
+                    <span class="text-body-1 red--text text--darken-3">{{
+                        error
+                    }}</span>
+                </div>
             </v-banner>
 
             <v-dialog v-model="reconnectDialog" width="500" persistent>
@@ -62,6 +80,23 @@
 
                     <v-card-text>
                         To continue flashing, allow access to your device again.
+                        <v-banner
+                            single-line
+                            outlined
+                            rounded
+                            class="mt-8"
+                            v-if="reconnectError"
+                        >
+                            <v-icon slot="icon" color="red darken-3"
+                                >mdi-close</v-icon
+                            >
+                            <div class="my-4">
+                                <span
+                                    class="text-body-1 red--text text--darken-3"
+                                    >{{ reconnectError }}</span
+                                >
+                            </div>
+                        </v-banner>
                     </v-card-text>
 
                     <v-card-actions>
@@ -79,7 +114,7 @@
                 color="primary"
                 @click="$emit('nextStep')"
                 :disabled="installing || !installed"
-                >Next</v-btn
+                >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
         </div>
@@ -101,6 +136,14 @@ fastboot.FactoryImages.configureZip({
     },
 });
 
+const INSTALL_STATUS_ICONS = {
+    load: "mdi-archive-arrow-down-outline",
+    unpack: "mdi-archive-arrow-down-outline",
+    flash: "mdi-cellphone-arrow-down",
+    wipe: "mdi-cellphone-erase",
+    reboot: "mdi-restart",
+};
+
 export default {
     name: "InstallStep",
 
@@ -109,9 +152,13 @@ export default {
     data: () => ({
         installProgress: null,
         installStatus: "",
-        reconnectDialog: false,
+        installStatusIcon: null,
         installed: false,
         installing: true,
+        error: null,
+
+        reconnectDialog: false,
+        reconnectError: null,
     }),
 
     methods: {
@@ -120,32 +167,53 @@ export default {
         },
 
         async requestReconnect() {
-            await this.device.connect();
-            this.reconnectDialog = false;
+            try {
+                await this.device.connect();
+                this.reconnectDialog = false;
+                this.reconnectError = null;
+            } catch (e) {
+                this.reconnectError = e.message;
+                throw e;
+            }
         },
 
         async install() {
-            let blob = this.$root.$data.zipBlob;
             this.installed = false;
             this.installing = true;
-            await fastboot.FactoryImages.flashZip(
-                this.device,
-                blob,
-                true,
-                this.reconnectCallback,
-                (action, item, progress) => {
-                    let userAction =
-                        fastboot.FactoryImages.USER_ACTION_MAP[action];
-                    let userItem =
-                        item === "avb_custom_key" ? "verified boot key" : item;
-                    this.installProgress = progress * 100;
-                    this.installStatus = `${userAction} ${userItem}`;
-                }
-            );
-            this.installStatus = `Restarting into ${this.$root.$data.OS_NAME}`;
-            await this.device.reboot("");
-            this.installed = true;
-            this.installing = false;
+
+            try {
+                let blob = this.$root.$data.zipBlob;
+                await fastboot.FactoryImages.flashZip(
+                    this.device,
+                    blob,
+                    true,
+                    this.reconnectCallback,
+                    (action, item, progress) => {
+                        let userAction =
+                            fastboot.FactoryImages.USER_ACTION_MAP[action];
+                        let userItem =
+                            item === "avb_custom_key"
+                                ? "verified boot key"
+                                : item;
+                        this.installStatus = `${userAction} ${userItem}`;
+                        this.installStatusIcon = INSTALL_STATUS_ICONS[action];
+                        this.installProgress = progress * 100;
+                    }
+                );
+
+                this.installStatus = `Restarting into ${this.$root.$data.OS_NAME}`;
+                await this.device.reboot("");
+
+                this.installed = true;
+                this.error = null;
+            } catch (e) {
+                this.installed = false;
+                this.installProgress = null;
+                this.error = e.message;
+                throw e;
+            } finally {
+                this.installing = false;
+            }
         },
     },
 };

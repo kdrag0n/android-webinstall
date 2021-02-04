@@ -16,14 +16,30 @@
                 </p>
             </div>
 
-            <v-btn color="primary" @click="connect()">Connect</v-btn>
+            <v-btn color="primary" @click="connect()" :disabled="connecting"
+                >Connect</v-btn
+            >
 
             <v-banner
                 single-line
                 outlined
                 rounded
                 class="mt-8"
-                v-if="$root.$data.product !== null"
+                v-if="connecting"
+            >
+                <v-progress-circular
+                    slot="icon"
+                    indeterminate
+                    color="primary"
+                ></v-progress-circular>
+                <span class="text-body-1">Connecting to device…</span>
+            </v-banner>
+            <v-banner
+                single-line
+                outlined
+                rounded
+                class="mt-8"
+                v-else-if="$root.$data.product !== null"
             >
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <span class="text-body-1 green--text text--darken-3"
@@ -36,14 +52,12 @@
                 outlined
                 rounded
                 class="mt-8"
-                v-else-if="connecting"
+                v-else-if="error"
             >
-                <v-progress-circular
-                    slot="icon"
-                    indeterminate
-                    color="primary"
-                ></v-progress-circular>
-                <span class="text-body-1">Connecting to device…</span>
+                <v-icon slot="icon" color="red darken-3">mdi-close</v-icon>
+                <span class="text-body-1 red--text text--darken-3">{{
+                    error
+                }}</span>
             </v-banner>
         </div>
 
@@ -52,7 +66,7 @@
                 color="primary"
                 @click="$emit('nextStep')"
                 :disabled="$root.$data.product === null"
-                >Next</v-btn
+                >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
         </div>
@@ -67,14 +81,25 @@ export default {
 
     data: () => ({
         connecting: false,
+        error: null,
     }),
 
     methods: {
         async connect() {
             this.connecting = true;
-            await this.device.connect();
-            this.$root.$data.product = await this.device.getVariable("product");
-            this.connecting = false;
+
+            try {
+                await this.device.connect();
+                this.$root.$data.product = await this.device.getVariable(
+                    "product"
+                );
+                this.error = null;
+            } catch (e) {
+                this.error = e.message;
+                throw e;
+            } finally {
+                this.connecting = false;
+            }
         },
     },
 };

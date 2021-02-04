@@ -6,7 +6,7 @@
             <div class="text-body-1">
                 <p>
                     This is an easy way to install
-                    {{ $root.$data.OS_NAME }} onto your device. You will need an
+                    {{ $root.$data.OS_NAME }} onto your device. You’ll need an
                     <strong>unlocked</strong> model of one of the supported
                     devices:
                 </p>
@@ -37,7 +37,10 @@
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
-            <v-btn color="primary" @click="$emit('nextStep')">Start</v-btn>
+            <v-btn color="primary" @click="$emit('nextStep')">
+                Start
+                <v-icon dark right>mdi-arrow-right</v-icon>
+            </v-btn>
         </div>
     </v-container>
 </template>
