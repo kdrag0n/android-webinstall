@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="mb-10">
+        <div class="mb-10 mt-n4">
             <h6 class="text-h6 pb-4">Connect your device</h6>
 
             <div class="text-body-1">
@@ -16,7 +16,10 @@
                 </p>
             </div>
 
-            <v-btn :color="$root.$data.product === null ? 'primary' : null" @click="connect()" :disabled="connecting"
+            <v-btn
+                :color="$root.$data.product === null ? 'primary' : null"
+                @click="connect()"
+                :disabled="connecting"
                 >Connect</v-btn
             >
 

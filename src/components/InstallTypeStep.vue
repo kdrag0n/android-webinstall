@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="mb-10">
+        <div class="mb-10 mt-n4">
             <h6 class="text-h6 pb-4">Choose an install type</h6>
 
             <div class="text-body-1">

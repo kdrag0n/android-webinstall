@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div class="mb-10" v-if="usbSupported">
+        <div class="mb-10 mt-n4" v-if="usbSupported">
             <h6 class="text-h6 pb-4">Prepare your device</h6>
 
             <div class="text-body-1">
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="mb-10" v-else>
+        <div class="mb-10 mt-n4" v-else>
             <h6 class="text-h6 pb-4 red--text text--darken-4">
                 Your browser isn’t supported
             </h6>
