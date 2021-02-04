@@ -31,7 +31,8 @@
                     then holding the
                     <strong>power</strong> and
                     <strong>volume down</strong> buttons together until you see
-                    a red warning sign.
+                    a <span class="red--text text--darken-3">red</span> warning
+                    sign.
                 </p>
             </div>
         </div>
