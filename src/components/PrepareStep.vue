@@ -33,7 +33,7 @@
 
             <div class="text-body-1">
                 <p>
-                    Unfortunately, you can’t use this easy web installer for
+                    Unfortunately, you can’t use this web installer for
                     {{ $root.$data.OS_NAME }} because your browser doesn’t
                     support WebUSB. Only Google Chrome and other browsers based
                     on Chromium, such Brave and Microsoft Edge, are supported.
@@ -43,7 +43,7 @@
             <div class="text-body-1 mt-4">
                 <p>
                     If you think this is a mistake, update your browser to the
-                    latest version.
+                    latest version and try again.
                 </p>
             </div>
         </div>
