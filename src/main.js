@@ -56,6 +56,20 @@ new Vue({
                 suffix: " with Google services",
             },
         },
+        DONATION_LINKS: [
+            {
+                title: "Recurring donation",
+                description:
+                    "If you have the means to do so, please consider making a recurring donation through Liberapay. This allows us to support the project sustainably in the future.",
+                url: "https://liberapay.com/kdrag0n/",
+            },
+            {
+                title: "One-time donation",
+                description:
+                    "You can also make a one-time donation through PayPal, It doesn’t help with sustainable support, but every little bit is appreciated!",
+                url: "https://paypal.me/kdrag0ndonate",
+            },
+        ],
     },
     render: (h) => h(App),
 }).$mount("#app");
