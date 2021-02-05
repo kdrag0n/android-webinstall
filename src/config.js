@@ -1,5 +1,5 @@
 export default {
-    OS_NAME: "ProtonAOSP",
+    OS_NAME: process.env.VUE_APP_OS_NAME,
     DEVICE_NAMES: {
         sailfish: "Pixel",
         marlin: "Pixel XL",
