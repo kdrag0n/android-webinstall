@@ -30,9 +30,7 @@
                     @click="setType('clean')"
                 >
                     <v-card-title class="mt-n2">
-                        <v-icon
-                            class="pr-2 py-2"
-                            color="rgba(0, 0, 0, 0.87)"
+                        <v-icon class="pr-2 py-2" color="rgba(0, 0, 0, 0.87)"
                             >mdi-cellphone-erase</v-icon
                         >
                         Clean install</v-card-title
