@@ -1,5 +1,6 @@
 export default {
     OS_NAME: process.env.VUE_APP_OS_NAME,
+    ACCENT_COLOR: "#007cfa",
     DEVICE_NAMES: {
         sailfish: "Pixel",
         marlin: "Pixel XL",
