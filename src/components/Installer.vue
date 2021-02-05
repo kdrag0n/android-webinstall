@@ -102,6 +102,7 @@
 <style>
 .v-stepper {
     box-shadow: none !important;
+    border-radius: 8px !important;
 }
 .v-stepper__header {
     box-shadow: none !important;
