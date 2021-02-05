@@ -126,7 +126,7 @@ export default {
                 this.$emit("nextStep");
             }
 
-            this.saEvent(`install_type_${newType}`);
+            this.saEvent(`install_type__${newType}`);
         },
     },
 };

@@ -150,8 +150,10 @@ export default {
             this.$root.$data.release = null;
 
             try {
+                this.saEvent(
+                    `download_build__${this.$root.$data.product}_${release.version}_${release.variant}`
+                );
                 await this.blobStore.init();
-                this.saEvent("download_file");
                 let blob = await this.blobStore.download(
                     release.url,
                     (progress) => {

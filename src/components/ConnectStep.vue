@@ -125,7 +125,7 @@ export default {
                     this.$emit("nextStep");
                 }
 
-                this.saEvent("device_connect");
+                this.saEvent(`device_connect__${this.$root.$data.product}`);
             } catch (e) {
                 this.error = e.message;
                 throw e;

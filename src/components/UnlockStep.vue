@@ -151,7 +151,7 @@ export default {
                     this.$emit("nextStep");
                 }
 
-                this.saEvent("unlock_bootloader");
+                this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
             } catch (e) {
                 if (e instanceof FastbootError && e.status === "FAIL") {
                     this.error = "Bootloader was not unlocked!";

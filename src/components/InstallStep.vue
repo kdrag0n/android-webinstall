@@ -206,7 +206,9 @@ export default {
                     await this.device.connect();
                 }
 
-                this.saEvent("install_build");
+                this.saEvent(
+                    `install_build__${this.$root.$data.product}_${this.$root.$data.release.version}_${this.$root.$data.release.variant}`
+                );
                 let blob = this.$root.$data.zipBlob;
                 await fastboot.FactoryImages.flashZip(
                     this.device,
