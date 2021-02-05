@@ -1,6 +1,6 @@
 <template>
     <v-container class="d-flex justify-space-between flex-column flex-grow-1">
-        <div class="mb-10 mt-n4">
+        <div class="mt-n4">
             <h6 class="text-h6 pb-4">Unlock your bootloader</h6>
 
             <div class="text-body-1">
@@ -32,8 +32,10 @@
                 :disabled="unlocking || unlocked"
                 >Unlock</v-btn
             >
+        </div>
 
-            <v-banner single-line outlined rounded class="mt-8" v-if="unlocked">
+        <div class="mb-4">
+            <v-banner single-line outlined rounded class="mt-4" v-if="unlocked">
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <span class="text-body-1 green--text text--darken-3"
                     >Bootloader unlocked</span
@@ -43,7 +45,7 @@
                 single-line
                 outlined
                 rounded
-                class="mt-8"
+                class="mt-4"
                 v-else-if="unlocking"
             >
                 <v-progress-circular
@@ -60,7 +62,7 @@
                 single-line
                 outlined
                 rounded
-                class="mt-8"
+                class="mt-4"
                 v-else-if="error"
             >
                 <v-icon slot="icon" color="red darken-3">mdi-close</v-icon>
