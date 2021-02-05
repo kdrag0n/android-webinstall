@@ -161,10 +161,10 @@ export default {
 
     methods: {
         async download(release) {
+            this.$root.$data.release = release;
             this.downloadProgress = 0;
             this.downloading = true;
             this.downloadingRelease = release;
-            this.$root.$data.release = null;
 
             try {
                 await this.blobStore.init();
@@ -177,7 +177,6 @@ export default {
 
                 this.downloadProgress = 100;
                 this.$root.$data.zipBlob = blob;
-                this.$root.$data.release = release;
                 this.error = null;
 
                 if (this.firstDownload) {
