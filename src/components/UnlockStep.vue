@@ -133,6 +133,10 @@ export default {
             this.unlocking = true;
 
             try {
+                if (!this.device.isConnected) {
+                    await this.device.connect();
+                }
+
                 await this.device.runCommand("flashing unlock");
                 this.unlocked = true;
                 this.error = null;

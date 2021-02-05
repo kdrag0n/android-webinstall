@@ -194,6 +194,10 @@ export default {
             this.installing = true;
 
             try {
+                if (!this.device.isConnected) {
+                    await this.device.connect();
+                }
+
                 let blob = this.$root.$data.zipBlob;
                 await fastboot.FactoryImages.flashZip(
                     this.device,
