@@ -1,6 +1,6 @@
 <template>
     <v-container class="d-flex justify-space-between flex-column flex-grow-1">
-        <div class="mt-n4 flex-grow-1">
+        <div class="mt-n4 flex-grow-1" v-if="$root.$data.release !== null">
             <h6 class="text-h6 pb-4">Install {{ $root.$data.OS_NAME }}</h6>
 
             <div class="text-body-1">
