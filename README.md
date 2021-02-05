@@ -30,7 +30,7 @@ You can start with the following Yarn commands:
 - `yarn build`
 - `yarn lint`
 
-The crux of the configuration is currently in `src/main.js`, and the release index at `public/releases/index.json` is fetched from the root of the domain hosting the installer.
+All configuration is in `src/config.js` and `.env`, and the release index at `public/releases/index.json` is fetched from the root of the domain hosting the installer.
 
 It's possible to adapt this for other ROMs in its current state, but I would recommend waiting for that use case to be better supported officially before doing so.
 
