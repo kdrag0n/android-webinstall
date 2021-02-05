@@ -120,7 +120,7 @@ export default {
                 this.firstSet = false;
                 this.$emit("nextStep");
             }
-        }
+        },
     },
 };
 </script>
