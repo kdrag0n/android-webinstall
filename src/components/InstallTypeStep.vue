@@ -19,10 +19,14 @@
                     ripple
                     :color="
                         $root.$data.installType === 'clean'
-                            ? 'grey lighten-3'
+                            ? 'grey lighten-4'
                             : null
                     "
-                    :class="$root.$data.installType === 'clean' ? 'v-card--selected' : null"
+                    :class="
+                        $root.$data.installType === 'clean'
+                            ? 'v-card--selected'
+                            : null
+                    "
                     @click="$root.$data.installType = 'clean'"
                 >
                     <div>
@@ -51,10 +55,14 @@
                     ripple
                     :color="
                         $root.$data.installType === 'update'
-                            ? 'grey lighten-3'
+                            ? 'grey lighten-4'
                             : null
                     "
-                    :class="$root.$data.installType === 'update' ? 'v-card--selected' : null"
+                    :class="
+                        $root.$data.installType === 'update'
+                            ? 'v-card--selected'
+                            : null
+                    "
                     @click="$root.$data.installType = 'update'"
                 >
                     <div>
