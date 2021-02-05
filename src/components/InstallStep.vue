@@ -23,6 +23,9 @@
                         lost.</strong
                     >
                 </p>
+                <p>
+                    Don’t unplug your device during the install.
+                </p>
             </div>
 
             <v-btn
