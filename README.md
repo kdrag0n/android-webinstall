@@ -2,6 +2,8 @@
 
 This is an easy-to-use web installer for Android-based operating systems that runs entirely in the browser. It uses WebUSB, which is supported by Chromium and its derivatives, and my [fastboot.js](https://github.com/kdrag0n/fastboot.js) library for flashing. This allows it to work on computers and Android devices software with no additional software or command-line tools.
 
+If you have a device officially supported by [ProtonAOSP](https://github.com/ProtonAOSP), you can try flashing it with the official instance of this web installer at [ProtonAOSP web installer](https://protonaosp.kdrag0n.dev/install/web/).
+
 ![Screenshot of an install in progress on a desktop computer](https://user-images.githubusercontent.com/7930239/106990006-3f1ab600-6728-11eb-96a8-d1da5c60fbbf.png)
 
 ## Install process
