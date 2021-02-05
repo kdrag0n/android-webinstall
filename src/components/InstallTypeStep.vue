@@ -109,6 +109,14 @@ export default {
         firstSet: true,
     }),
 
+    watch: {
+        active: async function (newState) {
+            if (newState) {
+                this.saEvent("step_installtype");
+            }
+        },
+    },
+
     methods: {
         setType(newType) {
             this.$root.$data.installType = newType;
@@ -117,6 +125,8 @@ export default {
                 this.firstSet = false;
                 this.$emit("nextStep");
             }
+
+            this.saEvent(`install_type_${newType}`);
         },
     },
 };

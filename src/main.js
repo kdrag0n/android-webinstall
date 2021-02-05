@@ -1,8 +1,14 @@
 import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
+import SimpleAnalytics from "simple-analytics-vue";
 
 Vue.config.productionTip = false;
+
+Vue.use(SimpleAnalytics, {
+    skip: process.env.NODE_ENV !== "production",
+    domain: "api.protonaosp.kdrag0n.dev",
+});
 
 new Vue({
     vuetify,

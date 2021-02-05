@@ -23,9 +23,7 @@
                         lost.</strong
                     >
                 </p>
-                <p>
-                    Don’t unplug your device during the install.
-                </p>
+                <p>Don’t unplug your device during the install.</p>
             </div>
 
             <v-btn
@@ -175,6 +173,14 @@ export default {
         reconnectError: null,
     }),
 
+    watch: {
+        active: async function (newState) {
+            if (newState) {
+                this.saEvent("step_install");
+            }
+        },
+    },
+
     methods: {
         async reconnectCallback() {
             this.reconnectDialog = true;
@@ -200,6 +206,7 @@ export default {
                     await this.device.connect();
                 }
 
+                this.saEvent("install_build");
                 let blob = this.$root.$data.zipBlob;
                 await fastboot.FactoryImages.flashZip(
                     this.device,

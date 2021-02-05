@@ -127,9 +127,13 @@ export default {
 
     watch: {
         active: async function (newState) {
-            if (newState && this.releaseIndex === undefined) {
-                let indexResp = await fetch("/releases/index.json");
-                this.releaseIndex = await indexResp.json();
+            if (newState) {
+                this.saEvent("step_download");
+
+                if (this.releaseIndex === undefined) {
+                    let indexResp = await fetch("/releases/index.json");
+                    this.releaseIndex = await indexResp.json();
+                }
             }
 
             this.latestReleases = this.releaseIndex.latest[
@@ -147,6 +151,7 @@ export default {
 
             try {
                 await this.blobStore.init();
+                this.saEvent("download_file");
                 let blob = await this.blobStore.download(
                     release.url,
                     (progress) => {
