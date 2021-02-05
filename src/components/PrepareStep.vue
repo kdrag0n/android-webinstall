@@ -6,7 +6,7 @@
             <div class="text-body-1">
                 <p>
                     This is an easy way to install
-                    {{ $root.$data.OS_NAME }} onto your device. You’ll need an
+                    {{ $root.$data.OS_NAME }} on your device. You’ll need an
                     <strong>unlocked</strong> model of one of the supported
                     devices:
                 </p>

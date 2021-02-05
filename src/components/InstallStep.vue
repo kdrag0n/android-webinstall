@@ -12,7 +12,7 @@
                             $root.$data.release.variant
                         ].suffix
                     }}
-                    onto your
+                    on your
                     {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}.
                 </p>
                 <p v-if="$root.$data.installType === 'clean'">
