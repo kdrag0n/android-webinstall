@@ -121,11 +121,6 @@ export default {
                     }
 
                     this.error = null;
-
-                    if (this.firstUnlock) {
-                        this.firstUnlock = false;
-                        this.$emit("nextStep");
-                    }
                 } catch (e) {
                     this.error = e.message;
                     throw e;
@@ -146,6 +141,11 @@ export default {
                 await this.device.runCommand("flashing unlock");
                 this.unlocked = true;
                 this.error = null;
+
+                if (this.firstUnlock) {
+                    this.firstUnlock = false;
+                    this.$emit("nextStep");
+                }
             } catch (e) {
                 if (e instanceof FastbootError && e.status === "FAIL") {
                     this.error = "Bootloader was not unlocked!";
