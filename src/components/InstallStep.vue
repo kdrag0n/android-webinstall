@@ -167,6 +167,7 @@ export default {
         installStatusIcon: null,
         installed: false,
         installing: true,
+        firstInstall: true,
         error: null,
 
         reconnectDialog: false,
@@ -222,6 +223,11 @@ export default {
 
                 this.installed = true;
                 this.error = null;
+
+                if (this.firstInstall) {
+                    this.firstInstall = false;
+                    this.$emit("nextStep");
+                }
             } catch (e) {
                 this.installed = false;
                 this.installProgress = null;
