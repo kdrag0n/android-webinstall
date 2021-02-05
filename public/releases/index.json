@@ -2,19 +2,19 @@
     "latest": {
         "taimen": [
             {
-                "version": "11.3.1",
+                "version": "11.3.2",
                 "variant": "minimal",
                 "url": "/releases/files/taimen-factory-2021.01.06.14.zip"
             },
             {
-                "version": "11.3.1",
+                "version": "11.3.2",
                 "variant": "gapps",
                 "url": "/releases/files/taimen-factory-2021.01.06.14-gapps.zip"
             }
         ],
         "redfin": [
             {
-                "version": "11.3.1",
+                "version": "11.3.2",
                 "variant": "gapps",
                 "url": "/releases/files/proton-aosp_redfin_11.3.1-gapps.zip"
             }
