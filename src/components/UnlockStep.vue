@@ -36,7 +36,7 @@
             <v-banner single-line outlined rounded class="mt-8" v-if="unlocked">
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <span class="text-body-1 green--text text--darken-3"
-                    >Your bootloader is now unlocked.</span
+                    >Bootloader unlocked</span
                 >
             </v-banner>
             <v-banner
@@ -94,6 +94,7 @@ export default {
         unlocking: false,
         unlocked: undefined,
         initialUnlocked: undefined,
+        firstUnlock: true,
         error: null,
     }),
 
@@ -120,6 +121,11 @@ export default {
                     }
 
                     this.error = null;
+
+                    if (this.firstUnlock) {
+                        this.firstUnlock = false;
+                        this.$emit("nextStep");
+                    }
                 } catch (e) {
                     this.error = e.message;
                     throw e;
