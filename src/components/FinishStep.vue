@@ -65,13 +65,5 @@ export default {
     name: "FinishStep",
 
     props: ["device", "blobStore", "active"],
-
-    watch: {
-        active: async function (newState) {
-            if (newState) {
-                this.saEvent("step_finish");
-            }
-        },
-    },
 };
 </script>
