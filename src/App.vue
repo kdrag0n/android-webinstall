@@ -8,9 +8,9 @@
                     <v-col cols="12" sm="8" class="d-flex flex-row justify-center">
                         <v-sheet
                             :min-height="
-                                $vuetify.breakpoint.mobile ? '100vh' : '70vh'
+                                $vuetify.breakpoint.mobile ? '100vh' : '75vh'
                             "
-                            max-width="50rem"
+                            width="50rem"
                             :rounded="$vuetify.breakpoint.mobile ? null : 'lg'"
                             :elevation="$vuetify.breakpoint.mobile ? 0 : 4"
                             class="d-flex flex-column"
