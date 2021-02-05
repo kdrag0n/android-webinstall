@@ -3,7 +3,7 @@
         <div class="mb-10 mt-n4">
             <h6 class="text-h6 pb-4">Installation complete</h6>
 
-            <div class="text-body-1">
+            <div class="text-body-1" v-if="$root.$data.release !== null">
                 <p>
                     Congratulations! Your
                     {{ $root.$data.DEVICE_NAMES[$root.$data.product] }} is now
@@ -22,23 +22,24 @@
                     :key="donation.url"
                     outlined
                     max-width="16rem"
-                    class="ma-4 d-flex flex-column justify-space-between"
+                    class="ma-4 d-flex flex-column"
                     ripple
                     :href="donation.url"
+                    target="_blank"
+                    :class="donation.highlight ? 'v-card--p-highlight' : null"
                 >
-                    <div>
-                        <v-card-title class="mt-n2">
-                            <v-icon
-                                class="pr-2 py-2"
-                                color="rgba(0, 0, 0, 0.87)"
-                                >mdi-update</v-icon
-                            >
-                            {{ donation.title }}</v-card-title
-                        >
-                        <v-card-subtitle
-                            >{{ donation.description }}
-                        </v-card-subtitle>
-                    </div>
+                    <v-card-title>
+                        <div class="pr-2">
+                            <liberapay-icon
+                                v-if="donation.icon === 'liberapay'"
+                            />
+                            <paypal-icon v-if="donation.icon === 'paypal'" />
+                        </div>
+                        {{ donation.title }}</v-card-title
+                    >
+                    <v-card-subtitle
+                        >{{ donation.description }}
+                    </v-card-subtitle>
                 </v-card>
             </div>
         </div>
@@ -49,8 +50,22 @@
     </v-container>
 </template>
 
+<style>
+.theme--light.v-sheet--outlined {
+    border-width: 2px;
+}
+
+.theme--light.v-sheet--outlined.v-card--p-highlight {
+    border: 2px solid #007cfa !important;
+}
+</style>
+
 <script>
+import LiberapayIcon from "./LiberapayIcon.vue";
+import PaypalIcon from "./PaypalIcon.vue";
+
 export default {
+    components: { LiberapayIcon, PaypalIcon },
     name: "FinishStep",
 
     props: ["device", "blobStore", "active"],
