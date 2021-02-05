@@ -1,5 +1,9 @@
 <template>
-    <v-stepper v-model="curStep" :alt-labels="!$vuetify.breakpoint.mobile">
+    <v-stepper
+        v-model="curStep"
+        :alt-labels="!$vuetify.breakpoint.mobile"
+        class="d-flex flex-column flex-grow-1"
+    >
         <v-stepper-header class="mb-3">
             <v-stepper-step :complete="curStep > 1" step="1">
                 Connect
@@ -24,8 +28,13 @@
             </v-stepper-step>
         </v-stepper-header>
 
-        <v-stepper-items>
-            <v-stepper-content step="-1">
+        <v-stepper-items class="d-flex flex-column flex-grow-1">
+            <v-stepper-content
+                step="-1"
+                :class="
+                    curStep === -1 ? 'd-flex flex-column flex-grow-1' : null
+                "
+            >
                 <prepare-step
                     :device="device"
                     :blob-store="blobStore"
@@ -35,7 +44,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="0">
+            <v-stepper-content
+                step="0"
+                :class="curStep === 0 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <install-type-step
                     :device="device"
                     :blob-store="blobStore"
@@ -45,7 +57,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="1">
+            <v-stepper-content
+                step="1"
+                :class="curStep === 1 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <connect-step
                     :device="device"
                     :blob-store="blobStore"
@@ -55,7 +70,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="2">
+            <v-stepper-content
+                step="2"
+                :class="curStep === 2 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <unlock-step
                     :device="device"
                     :blob-store="blobStore"
@@ -66,7 +84,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="3">
+            <v-stepper-content
+                step="3"
+                :class="curStep === 3 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <download-step
                     :device="device"
                     :blob-store="blobStore"
@@ -76,7 +97,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="4">
+            <v-stepper-content
+                step="4"
+                :class="curStep === 4 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <install-step
                     :device="device"
                     :blob-store="blobStore"
@@ -86,7 +110,10 @@
                 />
             </v-stepper-content>
 
-            <v-stepper-content step="5">
+            <v-stepper-content
+                step="5"
+                :class="curStep === 5 ? 'd-flex flex-column flex-grow-1' : null"
+            >
                 <finish-step
                     :device="device"
                     :blob-store="blobStore"
@@ -107,6 +134,11 @@
 .v-stepper__header {
     box-shadow: none !important;
     border-bottom: thin solid rgba(0, 0, 0, 0.12);
+}
+.v-stepper__wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="d-flex justify-space-between flex-column flex-grow-1">
         <div class="mb-10 mt-n4" v-if="usbSupported">
             <h6 class="text-h6 pb-4">Prepare your device</h6>
 

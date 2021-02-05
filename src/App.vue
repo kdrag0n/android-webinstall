@@ -13,6 +13,7 @@
                             max-width="50rem"
                             :rounded="$vuetify.breakpoint.mobile ? null : 'lg'"
                             :elevation="$vuetify.breakpoint.mobile ? 0 : 4"
+                            class="d-flex flex-column"
                         >
                             <Installer />
                         </v-sheet>

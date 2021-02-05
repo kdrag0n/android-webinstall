@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="d-flex justify-space-between flex-column flex-grow-1">
         <div class="mb-10 mt-n4">
             <h6 class="text-h6 pb-4">Connect your device</h6>
 
@@ -11,8 +11,8 @@
                     <strong>volume down</strong> buttons together until you see
                     a <span class="red--text text--darken-3">red</span> warning
                     sign or
-                    <span class="green--text text--darken-3">green</span> Android
-                    robot.
+                    <span class="green--text text--darken-3">green</span>
+                    Android robot.
                 </p>
                 <p>
                     Once your device is in bootloader mode, plug it into the
@@ -33,7 +33,9 @@
                 :disabled="connecting"
                 >Connect</v-btn
             >
+        </div>
 
+        <div>
             <v-banner
                 single-line
                 outlined

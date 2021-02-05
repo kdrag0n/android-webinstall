@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <div class="mb-10 mt-n4">
+    <v-container class="d-flex justify-space-between flex-column flex-grow-1">
+        <div class="mt-n4 flex-grow-1">
             <h6 class="text-h6 pb-4">Install {{ $root.$data.OS_NAME }}</h6>
 
             <div class="text-body-1">
@@ -31,14 +31,10 @@
                 :disabled="installProgress !== null"
                 >Install</v-btn
             >
+        </div>
 
-            <v-banner
-                single-line
-                outlined
-                rounded
-                class="mt-8"
-                v-if="installed"
-            >
+        <div class="pb-8">
+            <v-banner single-line outlined rounded v-if="installed">
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <div class="my-4">
                     <span class="text-body-1 green--text text--darken-3"

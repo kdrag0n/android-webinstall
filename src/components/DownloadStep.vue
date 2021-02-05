@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <div class="mb-10 mt-n4">
+    <v-container class="d-flex justify-space-between flex-column flex-grow-1">
+        <div class="mt-n4">
             <h6 class="text-h6 pb-4">Download a build</h6>
 
             <div class="text-body-1">
@@ -9,43 +9,40 @@
                     install.
                 </p>
             </div>
+        </div>
 
-            <v-skeleton-loader
-                v-if="latestReleases === null"
-                type="article, actions"
-            ></v-skeleton-loader>
+        <v-skeleton-loader
+            v-if="latestReleases === null"
+            type="article, actions"
+        ></v-skeleton-loader>
+        <div v-else class="d-flex flex-wrap justify-space-around">
+            <v-card
+                v-for="release in latestReleases"
+                :key="release.url"
+                outlined
+                max-width="16rem"
+                class="ma-4 d-flex flex-column"
+                ripple
+                :color="
+                    downloadingRelease === release ? 'grey lighten-4' : null
+                "
+                :class="
+                    downloadingRelease === release ? 'v-card--selected' : null
+                "
+                @click="download(release)"
+            >
+                <v-card-title>{{ release.version }}</v-card-title>
+                <v-card-subtitle>{{
+                    $root.$data.RELEASE_VARIANTS[release.variant].description
+                }}</v-card-subtitle>
+            </v-card>
+        </div>
 
-            <div v-else class="d-flex flex-wrap justify-space-around">
-                <v-card
-                    v-for="release in latestReleases"
-                    :key="release.url"
-                    outlined
-                    max-width="16rem"
-                    class="ma-4 d-flex flex-column"
-                    ripple
-                    :color="
-                        downloadingRelease === release ? 'grey lighten-4' : null
-                    "
-                    :class="
-                        downloadingRelease === release
-                            ? 'v-card--selected'
-                            : null
-                    "
-                    @click="download(release)"
-                >
-                    <v-card-title>{{ release.version }}</v-card-title>
-                    <v-card-subtitle>{{
-                        $root.$data.RELEASE_VARIANTS[release.variant]
-                            .description
-                    }}</v-card-subtitle>
-                </v-card>
-            </div>
-
+        <div>
             <v-banner
                 single-line
                 outlined
                 rounded
-                class="mt-8"
                 v-if="downloadProgress >= 100"
             >
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>

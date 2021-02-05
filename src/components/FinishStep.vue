@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <div class="mb-10 mt-n4">
+    <v-container class="d-flex justify-space-between flex-column flex-grow-1">
+        <div class="mt-n4">
             <h6 class="text-h6 pb-4">Installation complete</h6>
 
             <div class="text-body-1" v-if="$root.$data.release !== null">
@@ -15,33 +15,29 @@
                     donating to support development and cover maintenance costs:
                 </p>
             </div>
+        </div>
 
-            <div class="d-flex flex-wrap justify-space-around">
-                <v-card
-                    v-for="donation in $root.$data.DONATION_LINKS"
-                    :key="donation.url"
-                    outlined
-                    max-width="16rem"
-                    class="ma-4 d-flex flex-column"
-                    ripple
-                    :href="donation.url"
-                    target="_blank"
-                    :class="donation.highlight ? 'v-card--p-highlight' : null"
+        <div class="d-flex flex-wrap justify-space-around">
+            <v-card
+                v-for="donation in $root.$data.DONATION_LINKS"
+                :key="donation.url"
+                outlined
+                max-width="16rem"
+                class="ma-4 d-flex flex-column"
+                ripple
+                :href="donation.url"
+                target="_blank"
+                :class="donation.highlight ? 'v-card--p-highlight' : null"
+            >
+                <v-card-title>
+                    <div class="pr-2">
+                        <liberapay-icon v-if="donation.icon === 'liberapay'" />
+                        <paypal-icon v-if="donation.icon === 'paypal'" />
+                    </div>
+                    {{ donation.title }}</v-card-title
                 >
-                    <v-card-title>
-                        <div class="pr-2">
-                            <liberapay-icon
-                                v-if="donation.icon === 'liberapay'"
-                            />
-                            <paypal-icon v-if="donation.icon === 'paypal'" />
-                        </div>
-                        {{ donation.title }}</v-card-title
-                    >
-                    <v-card-subtitle
-                        >{{ donation.description }}
-                    </v-card-subtitle>
-                </v-card>
-            </div>
+                <v-card-subtitle>{{ donation.description }} </v-card-subtitle>
+            </v-card>
         </div>
 
         <div class="d-flex justify-space-between">
