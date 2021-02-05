@@ -23,6 +23,7 @@
             href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
         />
         <script>window.sa_event=window.sa_event||function(){a=[].slice.call(arguments);sa_event.q?sa_event.q.push(a):sa_event.q=[a]};</script>
+        <script async defer src="https://<%= htmlWebpackPlugin.options.analyticsDomain %>/latest.js" data-skip-dnt="true"></script>
     </head>
     <body>
         <noscript>
@@ -34,5 +35,7 @@
         </noscript>
         <div id="app"></div>
         <!-- built files will be auto injected -->
+
+        <noscript><img src="https://<%= htmlWebpackPlugin.options.analyticsDomain %>/noscript.gif?ignore-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
     </body>
 </html>

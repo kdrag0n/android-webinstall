@@ -2,18 +2,17 @@ import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import Config from "./config";
-import SimpleAnalytics from "simple-analytics-vue";
+import * as common from "./core/common";
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false;
 
-if (process.env.VUE_APP_SA_DOMAIN !== undefined) {
-    Vue.use(SimpleAnalytics, {
-        skip: process.env.NODE_ENV !== "production",
-        domain: process.env.VUE_APP_SA_DOMAIN,
-    });
-}
+Vue.mixin({
+    methods: {
+        saEvent: common.logEvent,
+    },
+});
 
 if (
     process.env.VUE_APP_SENTRY_DSN !== undefined &&
