@@ -30,7 +30,7 @@ You can start with the following Yarn commands:
 
 The crux of the configuration is currently in `src/main.js`, and the release index at `public/releases/index.json` is fetched from the root of the domain hosting the installer.
 
-It's possible to use this for other ROMs at this point, but I would recommend waiting for that use case to be better supported officially.
+It's possible to adapt this for other ROMs in its current state, but I would recommend waiting for that use case to be better supported officially before doing so.
 
 ## Contributing
 
