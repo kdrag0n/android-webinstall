@@ -56,7 +56,9 @@
                 <div class="my-4">
                     <span class="text-body-1 green--text text--darken-3"
                         >Downloaded {{ $root.$data.OS_NAME }}
-                        {{ release.version }}-{{ release.variant }}</span
+                        {{ $root.$data.release.version }}-{{
+                            $root.$data.release.variant
+                        }}</span
                     >
                 </div>
             </v-banner>
@@ -112,7 +114,7 @@ export default {
 
     data: () => ({
         releaseIndex: undefined,
-        latestReleases: undefined,
+        latestReleases: null,
         downloadProgress: null,
         downloading: false,
         error: null,
