@@ -96,6 +96,7 @@ export default {
     data: () => ({
         connecting: false,
         error: null,
+        firstConnect: true,
     }),
 
     methods: {
@@ -108,6 +109,11 @@ export default {
                     "product"
                 );
                 this.error = null;
+
+                if (this.firstConnect) {
+                    this.firstConnect = false;
+                    this.$emit("nextStep");
+                }
             } catch (e) {
                 this.error = e.message;
                 throw e;

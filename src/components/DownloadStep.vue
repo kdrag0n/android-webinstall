@@ -17,31 +17,27 @@
 
             <div v-else class="d-flex flex-wrap justify-space-around">
                 <v-card
-                    outlined
-                    max-width="16rem"
-                    class="ma-4 d-flex flex-column justify-space-between"
                     v-for="release in latestReleases"
                     :key="release.url"
+                    outlined
+                    max-width="16rem"
+                    class="ma-4 d-flex flex-column"
+                    ripple
+                    :color="
+                        downloadingRelease === release ? 'grey lighten-4' : null
+                    "
+                    :class="
+                        downloadingRelease === release
+                            ? 'v-card--selected'
+                            : null
+                    "
+                    @click="download(release)"
                 >
-                    <div>
-                        <v-card-title>{{ release.version }}</v-card-title>
-                        <v-card-subtitle>{{
-                            $root.$data.RELEASE_VARIANTS[release.variant]
-                                .description
-                        }}</v-card-subtitle>
-                    </div>
-
-                    <v-card-actions
-                        class="d-flex justify-space-between flex-row-reverse"
-                    >
-                        <v-btn
-                            outlined
-                            text
-                            @click="download(release)"
-                            :disabled="downloading"
-                            >Download</v-btn
-                        >
-                    </v-card-actions>
+                    <v-card-title>{{ release.version }}</v-card-title>
+                    <v-card-subtitle>{{
+                        $root.$data.RELEASE_VARIANTS[release.variant]
+                            .description
+                    }}</v-card-subtitle>
                 </v-card>
             </div>
 
@@ -106,6 +102,16 @@
     </v-container>
 </template>
 
+<style>
+.theme--light.v-sheet--outlined {
+    border-width: 2px;
+}
+
+.theme--light.v-sheet--outlined.v-card--selected {
+    border: 2px solid rgba(0, 0, 0, 0.77) !important;
+}
+</style>
+
 <script>
 export default {
     name: "DownloadStep",
@@ -116,7 +122,9 @@ export default {
         releaseIndex: undefined,
         latestReleases: null,
         downloadProgress: null,
+        downloadingRelease: null,
         downloading: false,
+        firstDownload: true,
         error: null,
     }),
 
@@ -137,6 +145,7 @@ export default {
         async download(release) {
             this.downloadProgress = 0;
             this.downloading = true;
+            this.downloadingRelease = release;
             this.$root.$data.release = null;
 
             try {
@@ -152,6 +161,11 @@ export default {
                 this.$root.$data.zipBlob = blob;
                 this.$root.$data.release = release;
                 this.error = null;
+
+                if (this.firstDownload) {
+                    this.firstDownload = false;
+                    this.$emit("nextStep");
+                }
             } catch (e) {
                 this.error = e.message;
                 this.downloadProgress = null;

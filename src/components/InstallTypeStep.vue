@@ -15,7 +15,7 @@
                 <v-card
                     outlined
                     max-width="16rem"
-                    class="ma-4 d-flex flex-column justify-space-between"
+                    class="ma-4 d-flex flex-column"
                     ripple
                     :color="
                         $root.$data.installType === 'clean'
@@ -29,23 +29,21 @@
                     "
                     @click="setType('clean')"
                 >
-                    <div>
-                        <v-card-title class="mt-n2">
-                            <v-icon
-                                class="pr-2 py-2"
-                                color="rgba(0, 0, 0, 0.87)"
-                                >mdi-cellphone-erase</v-icon
-                            >
-                            Clean install</v-card-title
+                    <v-card-title class="mt-n2">
+                        <v-icon
+                            class="pr-2 py-2"
+                            color="rgba(0, 0, 0, 0.87)"
+                            >mdi-cellphone-erase</v-icon
                         >
-                        <v-card-subtitle
-                            >Switch from the stock OS or another ROM to
-                            {{ $root.$data.OS_NAME }}.
-                            <strong class="red--text text--darken-2"
-                                >All data on your device will be lost.</strong
-                            >
-                        </v-card-subtitle>
-                    </div>
+                        Clean install</v-card-title
+                    >
+                    <v-card-subtitle
+                        >Switch from the stock OS or another ROM to
+                        {{ $root.$data.OS_NAME }}.
+                        <strong class="red--text text--darken-2"
+                            >All data on your device will be lost.</strong
+                        >
+                    </v-card-subtitle>
                 </v-card>
 
                 <v-card
