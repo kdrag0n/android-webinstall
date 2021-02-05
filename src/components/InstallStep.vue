@@ -120,7 +120,9 @@
                 :disabled="installing || !installed"
                 >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
-            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+            <v-btn text @click="$emit('prevStep')" :disabled="installing"
+                >Back</v-btn
+            >
         </div>
     </v-container>
 </template>
@@ -162,7 +164,7 @@ export default {
         installStatus: "",
         installStatusIcon: null,
         installed: false,
-        installing: true,
+        installing: false,
         firstInstall: true,
         error: null,
 
