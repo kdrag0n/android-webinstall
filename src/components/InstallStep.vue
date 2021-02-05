@@ -145,7 +145,7 @@ import * as fastboot from "fastboot";
 
 fastboot.FactoryImages.configureZip({
     workerScripts: {
-        inflate: ["/js/vendor/z-worker-pako.js", "pako_inflate.min.js"],
+        inflate: ["js/vendor/z-worker-pako.js", "pako_inflate.min.js"],
     },
 });
 
