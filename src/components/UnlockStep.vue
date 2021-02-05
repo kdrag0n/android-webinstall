@@ -103,6 +103,8 @@ export default {
     watch: {
         curStep: async function (newStep, oldStep) {
             if (newStep == this.stepNum) {
+                this.saEvent("step_unlock");
+
                 try {
                     // Get unlock state once and save it. Not all bootloaders
                     // update the unlocked value immediately after unlocking.
@@ -148,6 +150,8 @@ export default {
                     this.firstUnlock = false;
                     this.$emit("nextStep");
                 }
+
+                this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
             } catch (e) {
                 if (e instanceof FastbootError && e.status === "FAIL") {
                     this.error = "Bootloader was not unlocked!";

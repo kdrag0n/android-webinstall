@@ -173,6 +173,14 @@ export default {
         reconnectError: null,
     }),
 
+    watch: {
+        active: async function (newState) {
+            if (newState) {
+                this.saEvent("step_install");
+            }
+        },
+    },
+
     methods: {
         async reconnectCallback() {
             this.reconnectDialog = true;
@@ -198,6 +206,9 @@ export default {
                     await this.device.connect();
                 }
 
+                this.saEvent(
+                    `install_build__${this.$root.$data.product}_${this.$root.$data.release.version}_${this.$root.$data.release.variant}`
+                );
                 let blob = this.$root.$data.zipBlob;
                 await fastboot.FactoryImages.flashZip(
                     this.device,

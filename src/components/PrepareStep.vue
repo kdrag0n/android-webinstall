@@ -68,5 +68,13 @@ export default {
     data: () => ({
         usbSupported: "usb" in navigator,
     }),
+
+    watch: {
+        active: async function (newState) {
+            if (newState) {
+                this.saEvent("step_prepare");
+            }
+        },
+    },
 };
 </script>

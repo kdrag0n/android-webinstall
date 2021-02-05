@@ -101,6 +101,14 @@ export default {
         firstConnect: true,
     }),
 
+    watch: {
+        active: async function (newState) {
+            if (newState) {
+                this.saEvent("step_connect");
+            }
+        },
+    },
+
     methods: {
         async connect() {
             this.connecting = true;
@@ -116,6 +124,8 @@ export default {
                     this.firstConnect = false;
                     this.$emit("nextStep");
                 }
+
+                this.saEvent(`device_connect__${this.$root.$data.product}`);
             } catch (e) {
                 this.error = e.message;
                 throw e;

@@ -147,6 +147,8 @@ export default {
     watch: {
         active: async function (newState) {
             if (newState) {
+                this.saEvent("step_download");
+
                 if (this.releaseIndex === undefined) {
                     let indexResp = await fetch("/releases/index.json");
                     this.releaseIndex = await indexResp.json();
@@ -167,6 +169,9 @@ export default {
             this.downloadingRelease = release;
 
             try {
+                this.saEvent(
+                    `download_build__${this.$root.$data.product}_${release.version}_${release.variant}`
+                );
                 await this.blobStore.init();
                 let blob = await this.blobStore.download(
                     release.url,
