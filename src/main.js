@@ -14,7 +14,7 @@ if (process.env.VUE_APP_SA_DOMAIN !== undefined) {
     });
 }
 
-if (process.env.VUE_APP_SENTRY_DSN !== undefined) {
+if (process.env.VUE_APP_SENTRY_DSN !== undefined && process.env.NODE_ENV === "production") {
     Sentry.init({
         Vue,
         dsn: process.env.VUE_APP_SENTRY_DSN,
