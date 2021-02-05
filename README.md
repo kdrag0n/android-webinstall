@@ -17,17 +17,6 @@ The following screenshots show the entire installation process, from start to fi
 ![Step 4](https://user-images.githubusercontent.com/7930239/106990521-43939e80-6729-11eb-8bfd-fcc9d62e4d0b.png)
 ![Step 5](https://user-images.githubusercontent.com/7930239/106990523-442c3500-6729-11eb-9bd7-99931ba6224e.png)
 
-### Mobile
-
-![Step](https://user-images.githubusercontent.com/7930239/106990556-51e1ba80-6729-11eb-86ed-15df1e4857c9.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990563-54441480-6729-11eb-94b6-a9b502bf7015.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990566-55754180-6729-11eb-9878-96c32d5ce3ad.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990569-56a66e80-6729-11eb-90f9-c0d1ec048e05.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990574-59a15f00-6729-11eb-970c-3f916ea4c4a3.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990580-5ad28c00-6729-11eb-8d8f-2ef543361ed1.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990597-5f974000-6729-11eb-9c46-4b60e3466109.png)
-![Step](https://user-images.githubusercontent.com/7930239/106990599-60c86d00-6729-11eb-934b-05c85a1c4c64.png)
-
 ## Adapting for other ROMs
 
 By default, this installer is configured for the ProtonAOSP production environment. It is built to be reusable for other projects with only configuration changes, but documentation isn't available yet. There are also more components that need to be separated and refactored for more reusability.
