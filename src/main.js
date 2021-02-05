@@ -2,13 +2,30 @@ import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import SimpleAnalytics from "simple-analytics-vue";
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false;
 
-Vue.use(SimpleAnalytics, {
-    skip: process.env.NODE_ENV !== "production",
-    domain: "api.protonaosp.kdrag0n.dev",
-});
+if (process.env.VUE_APP_SA_DOMAIN !== undefined) {
+    Vue.use(SimpleAnalytics, {
+        skip: process.env.NODE_ENV !== "production",
+        domain: process.env.VUE_APP_SA_DOMAIN,
+    });
+}
+
+if (process.env.VUE_APP_SENTRY_DSN !== undefined) {
+    Sentry.init({
+        Vue,
+        dsn: process.env.VUE_APP_SENTRY_DSN,
+        integrations: [
+            new Integrations.BrowserTracing(),
+        ],
+        tracesSampleRate: 1.0,
+        attachProps: true,
+        logErrors: true,
+    });
+}
 
 new Vue({
     vuetify,
