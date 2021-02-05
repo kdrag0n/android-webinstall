@@ -48,6 +48,7 @@
                 :class="
                     downloadingRelease === release ? 'v-card--selected' : null
                 "
+                :disabled="downloading"
                 @click="download(release)"
             >
                 <v-card-title>{{ release.version }}</v-card-title>
