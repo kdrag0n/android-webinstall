@@ -27,7 +27,7 @@
                             ? 'v-card--selected'
                             : null
                     "
-                    @click="$root.$data.installType = 'clean'"
+                    @click="setType('clean')"
                 >
                     <div>
                         <v-card-title class="mt-n2">
@@ -63,7 +63,7 @@
                             ? 'v-card--selected'
                             : null
                     "
-                    @click="$root.$data.installType = 'update'"
+                    @click="setType('update')"
                 >
                     <div>
                         <v-card-title class="mt-n2">
@@ -113,11 +113,18 @@ export default {
     props: ["device", "blobStore", "active"],
 
     data: () => ({
-        curStep: 1,
+        firstSet: true,
     }),
 
     methods: {
-        async download() {},
+        setType(newType) {
+            this.$root.$data.installType = newType;
+
+            if (this.firstSet) {
+                this.firstSet = false;
+                this.$emit("nextStep");
+            }
+        }
     },
 };
 </script>
