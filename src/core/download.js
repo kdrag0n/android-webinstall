@@ -1,7 +1,27 @@
 import * as common from "./common.js";
 
-const DB_NAME = "BlobStore";
-const DB_VERSION = 1;
+const CACHE_DB_NAME = "BlobStore";
+const CACHE_DB_VERSION = 1;
+
+// This wraps XHR because getting progress updates with fetch() is overly complicated.
+function fetchBlobWithProgress(url, onProgress) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+
+    return new Promise((resolve, reject) => {
+        xhr.onload = () => {
+            resolve(xhr.response);
+        };
+        xhr.onprogress = (event) => {
+            onProgress(event.loaded / event.total);
+        };
+        xhr.onerror = () => {
+            reject(`${xhr.status} ${xhr.statusText}`);
+        };
+    });
+}
 
 export class BlobStore {
     constructor() {
@@ -29,7 +49,7 @@ export class BlobStore {
     async init() {
         if (this.db === null) {
             this.db = await this._wrapReq(
-                indexedDB.open(DB_NAME, DB_VERSION),
+                indexedDB.open(CACHE_DB_NAME, CACHE_DB_VERSION),
                 (event) => {
                     let db = event.target.result;
                     db.createObjectStore("files", { keyPath: "name" });
@@ -61,23 +81,12 @@ export class BlobStore {
         this.db.close();
     }
 
-    /**
-     * Downloads the file from the given URL and saves it to this BlobStore.
-     *
-     * @param {string} url - URL of the file to download.
-     * @returns {blob} Blob containing the downloaded data.
-     */
-    async download(url) {
+    async download(url, onProgress = () => {}) {
         let filename = url.split("/").pop();
         let blob = await this.loadFile(filename);
         if (blob === null) {
             common.logDebug(`Downloading ${url}`);
-            let resp = await fetch(new Request(url));
-            if (resp.status !== 200) {
-                throw new Error(`HTTP error: ${resp.status} ${resp.statusText}`);
-            }
-
-            blob = await resp.blob();
+            let blob = await fetchBlobWithProgress(url, onProgress);
             common.logDebug("File downloaded, saving...");
             await this.saveFile(filename, blob);
             common.logDebug("File saved");
