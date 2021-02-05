@@ -35,7 +35,7 @@
             >
         </div>
 
-        <div>
+        <div class="mb-4">
             <v-banner
                 single-line
                 outlined
