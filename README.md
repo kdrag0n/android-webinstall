@@ -21,7 +21,7 @@ The following screenshots show the entire installation process, from start to fi
 
 ## Adapting for other ROMs
 
-By default, this installer is configured for the ProtonAOSP production environment. It is built to be reusable for other projects with only configuration changes, but documentation isn't available yet. There are also more components that need to be separated and refactored for more reusability.
+By default, this installer is configured for the ProtonAOSP production environment, but it was built with reusability in mind. It can be adapted to other ROM projects with only configuration changes.
 
 You can start with the following Yarn commands:
 
@@ -30,9 +30,7 @@ You can start with the following Yarn commands:
 - `yarn build`
 - `yarn lint`
 
-All configuration is in `src/config.js` and `.env`, and the release index at `public/releases/index.json` is fetched from the root of the domain hosting the installer.
-
-It's possible to adapt this for other ROMs in its current state, but I would recommend waiting for that use case to be better supported officially before doing so.
+All configuration is in `src/config.js` and `.env`, and the release index at `public/releases/index.json` is fetched from the root of the domain hosting the installer. You may also want to change the favicon at `public/favicon.png`.
 
 ## Contributing
 
