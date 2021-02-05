@@ -4,6 +4,14 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta property="og:url" content="<%= BASE_URL %>"/>
+        <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>"/>
+        <meta property="og:description" content="Web installer for <%= htmlWebpackPlugin.options.osName %>, <%= htmlWebpackPlugin.options.osDesc %>."/>
+        <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.osName %>"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="<%= BASE_URL %>favicon.png"/>
+        <meta property="og:image:width" content="600"/>
+        <meta property="og:image:height" content="600"/>
         <link rel="icon" type="image/png" href="<%= BASE_URL %>favicon.png" />
         <title><%= htmlWebpackPlugin.options.title %></title>
         <link
@@ -26,7 +34,7 @@
         <div id="app"></div>
         <!-- built files will be auto injected -->
 
-        <script async defer src="https://<%= analyticsDomain %>/latest.js"></script>
-        <noscript><img src="https://<%= analyticsDomain %>/noscript.gif" alt=""/></noscript>
+        <script async defer src="https://<%= htmlWebpackPlugin.options.analyticsDomain %>/latest.js"></script>
+        <noscript><img src="https://<%= htmlWebpackPlugin.options.analyticsDomain %>/noscript.gif" alt=""/></noscript>
     </body>
 </html>
