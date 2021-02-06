@@ -5725,11 +5725,6 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   dependencies:
     "@zip.js/zip.js" "^2.1.0"
 
-"fastboot@file:/home/dragon/code/web/fastboot.js":
-  version "0.1.0"
-  dependencies:
-    "@zip.js/zip.js" "^2.1.0"
-
 fastq@^1.6.0:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.10.1.tgz#8b8f2ac8bf3632d67afcd65dac248d5fdc45385e"
