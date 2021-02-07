@@ -186,6 +186,11 @@ export default {
                 this.saEvent(`device_connect__${this.$root.$data.product}`);
             } catch (e) {
                 if (
+                    e.code === DOMException.NOT_FOUND_ERR &&
+                    e.message === "No device selected."
+                ) {
+                    this.error = e.message;
+                } else if (
                     e.code === DOMException.SECURITY_ERR &&
                     e.message === "Access denied."
                 ) {
