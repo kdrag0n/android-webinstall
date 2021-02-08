@@ -169,14 +169,44 @@
                             limits, so installing from them isn’t possible.
                         </p>
                         <p>
-                            To fix this, <strong>switch to a normal browser profile</strong> and
-                            try again.
+                            To fix this,
+                            <strong>switch to a normal browser profile</strong>
+                            and try again.
                         </p>
                     </v-card-text>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" text @click="retryStorage()">
+                            Retry
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="memoryDialog" width="500" persistent>
+                <v-card>
+                    <v-card-title class="headline">
+                        Out of memory
+                    </v-card-title>
+
+                    <v-card-text>
+                        <p>
+                            There isn’t enough free memory (RAM) to unpack and
+                            install the OS.
+                        </p>
+                        <p>
+                            To fix this,
+                            <strong>close some unused apps</strong> and try
+                            again. If it still doesn’t work, you may need to
+                            install from another computer or device with more
+                            memory.
+                        </p>
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="retryMemory()">
                             Retry
                         </v-btn>
                     </v-card-actions>
@@ -244,6 +274,7 @@ export default {
 
         disconnectDialog: false,
         storageDialog: false,
+        memoryDialog: false,
     }),
 
     watch: {
@@ -277,6 +308,11 @@ export default {
 
         async retryStorage() {
             this.storageDialog = false;
+            await this.install();
+        },
+
+        async retryMemory() {
+            this.memoryDialog = false;
             await this.install();
         },
 
@@ -337,6 +373,12 @@ export default {
                 ) {
                     this.error = "Out of storage space";
                     this.storageDialog = true;
+                } else if (
+                    e instanceof RangeError &&
+                    e.message.includes("allocation failed")
+                ) {
+                    this.error = "Out of memory";
+                    this.memoryDialog = true;
                 } else {
                     throw e;
                 }
