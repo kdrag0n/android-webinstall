@@ -175,6 +175,76 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="disconnectDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">
+                    Device disconnected
+                </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        Your device unexpectedly disconnected during the
+                        install, so we can’t continue installing.
+                    </p>
+                    <p>
+                        This is usually caused by a low-quality cable, loose
+                        connection, dirty USB port on your device or computer,
+                        or unreliable USB port on your computer.
+                    </p>
+                    <p>
+                        To fix this, try unplugging your device and plugging it
+                        back in with a different cable and port. If it still
+                        doesn’t work, try cleaning your USB ports on both sides.
+                    </p>
+                    <p>
+                        After reconnecting, you need to
+                        <strong>restart your device’s bootloader</strong>
+                        using the volume and power buttons before retrying.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryDisconnect()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="storageDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">
+                    Out of storage space
+                </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        There isn’t enough storage space available to download
+                        and unpack the OS.
+                    </p>
+                    <p>
+                        If you’re not low on storage space, this is usually
+                        caused by using an incognito window or guest profile in
+                        your browser. These profiles have very storage limits,
+                        so installing from them isn’t possible.
+                    </p>
+                    <p>
+                        To fix this,
+                        <strong>switch to a normal browser profile</strong>
+                        and try again.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryStorage()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -230,6 +300,12 @@ export default {
 
         claimDialog: false,
         claimVm: null,
+
+        disconnectDialog: false,
+        disconnectVm: null,
+
+        storageDialog: false,
+        storageVm: null,
     }),
 
     // eslint-disable-next-line no-unused-vars
@@ -242,6 +318,22 @@ export default {
             this.claimDialog = true;
             this.claimVm = vm;
             return false;
+        } else if (
+            err instanceof DOMException &&
+            err.code === DOMException.NETWORK_ERR &&
+            err.message === "A transfer error has occurred."
+        ) {
+            this.disconnectDialog = true;
+            this.disconnectVm = vm;
+            return false;
+        } else if (
+            err instanceof DOMException &&
+            err.code === 0 &&
+            err.message.startsWith("The requested file could not be read")
+        ) {
+            this.storageDialog = true;
+            this.storageVm = vm;
+            return false;
         }
 
         return true;
@@ -252,6 +344,20 @@ export default {
             this.claimDialog = false;
             if ("trigger" in this.claimVm.$attrs) {
                 this.$refs[this.claimVm.$attrs.trigger].errorRetry();
+            }
+        },
+
+        retryDisconnect() {
+            this.disconnectDialog = false;
+            if ("trigger" in this.disconnectVm.$attrs) {
+                this.$refs[this.disconnectVm.$attrs.trigger].errorRetry();
+            }
+        },
+
+        retryStorage() {
+            this.storageDialog = false;
+            if ("trigger" in this.storageVm.$attrs) {
+                this.$refs[this.storageVm.$attrs.trigger].errorRetry();
             }
         },
     },

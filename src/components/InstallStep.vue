@@ -121,78 +121,13 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="requestReconnect">
+                    <v-btn
+                        trigger="installStep"
+                        color="primary"
+                        text
+                        @click="requestReconnect"
+                    >
                         Reconnect
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="disconnectDialog" width="500" persistent>
-            <v-card>
-                <v-card-title class="headline">
-                    Device disconnected
-                </v-card-title>
-
-                <v-card-text>
-                    <p>
-                        Your device unexpectedly disconnected during the
-                        install, so we can’t continue installing.
-                    </p>
-                    <p>
-                        This is usually caused by a low-quality cable, loose
-                        connection, dirty USB port on your device or computer,
-                        or unreliable USB port on your computer.
-                    </p>
-                    <p>
-                        To fix this, try unplugging your device and plugging it
-                        back in with a different cable and port. If it still
-                        doesn’t work, try cleaning your USB ports on both sides.
-                    </p>
-                    <p>
-                        After reconnecting, you need to
-                        <strong>restart your device’s bootloader</strong>
-                        using the volume and power buttons before retrying.
-                    </p>
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryDisconnect()">
-                        Retry
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="storageDialog" width="500" persistent>
-            <v-card>
-                <v-card-title class="headline">
-                    Out of storage space
-                </v-card-title>
-
-                <v-card-text>
-                    <p>
-                        There isn’t enough storage space available to download
-                        and unpack the OS.
-                    </p>
-                    <p>
-                        If you’re not low on storage space, this is usually
-                        caused by using an incognito window or guest profile in
-                        your browser. These profiles have very storage limits,
-                        so installing from them isn’t possible.
-                    </p>
-                    <p>
-                        To fix this,
-                        <strong>switch to a normal browser profile</strong>
-                        and try again.
-                    </p>
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryStorage()">
-                        Retry
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -217,7 +152,12 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryMemory()">
+                    <v-btn
+                        trigger="installStep"
+                        color="primary"
+                        text
+                        @click="retryMemory()"
+                    >
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -271,8 +211,6 @@ export default {
         reconnectDialog: false,
         reconnectError: null,
 
-        disconnectDialog: false,
-        storageDialog: false,
         memoryDialog: false,
     }),
 
@@ -300,16 +238,6 @@ export default {
                 this.reconnectError = e.message;
                 throw e;
             }
-        },
-
-        async retryDisconnect() {
-            this.disconnectDialog = false;
-            await this.install();
-        },
-
-        async retryStorage() {
-            this.storageDialog = false;
-            await this.install();
         },
 
         async retryMemory() {
@@ -370,14 +298,16 @@ export default {
                     e.message === "A transfer error has occurred."
                 ) {
                     this.error = "Device unexpectedly disconnected";
-                    this.disconnectDialog = true;
+                    // Handled by parent
+                    throw e;
                 } else if (
                     e instanceof DOMException &&
                     e.code === 0 &&
                     e.message.startsWith("The requested file could not be read")
                 ) {
                     this.error = "Out of storage space";
-                    this.storageDialog = true;
+                    // Handled by parent
+                    throw e;
                 } else if (
                     e instanceof RangeError &&
                     e.message.includes("allocation failed")

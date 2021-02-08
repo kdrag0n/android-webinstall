@@ -163,6 +163,10 @@ export default {
     },
 
     methods: {
+        async errorRetry() {
+            await this.download(this.$root.$data.release);
+        },
+
         async download(release) {
             this.$root.$data.release = release;
             this.downloadProgress = 0;

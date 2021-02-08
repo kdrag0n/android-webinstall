@@ -30,6 +30,7 @@
             </div>
 
             <v-btn
+                trigger="unlockStep"
                 color="primary"
                 @click="unlock()"
                 :disabled="unlocking || unlocked"
@@ -123,7 +124,12 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryOemUnlock()">
+                    <v-btn
+                        trigger="unlockStep"
+                        color="primary"
+                        text
+                        @click="retryOemUnlock()"
+                    >
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -183,6 +189,15 @@ export default {
     },
 
     methods: {
+        async retryOemUnlock() {
+            this.oemUnlockDialog = false;
+            await this.unlock();
+        },
+
+        async errorRetry() {
+            await this.unlock();
+        },
+
         async unlock() {
             this.unlocking = true;
 
@@ -224,11 +239,6 @@ export default {
 
             this.unlocking = false;
             this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
-        },
-
-        async retryOemUnlock() {
-            this.oemUnlockDialog = false;
-            await this.unlock();
         },
     },
 };

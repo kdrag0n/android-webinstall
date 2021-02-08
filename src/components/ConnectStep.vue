@@ -28,6 +28,7 @@
             </div>
 
             <v-btn
+                trigger="connectStep"
                 :color="$root.$data.product === null ? 'primary' : null"
                 @click="connect()"
                 :disabled="connecting"
@@ -131,7 +132,12 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryUdev()">
+                    <v-btn
+                        trigger="connectStep"
+                        color="primary"
+                        text
+                        @click="retryUdev()"
+                    >
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -165,6 +171,15 @@ export default {
 
     methods: {
         getDeviceName,
+
+        async retryUdev() {
+            this.udevDialog = false;
+            await this.connect();
+        },
+
+        async errorRetry() {
+            await this.connect();
+        },
 
         async connect() {
             this.connecting = true;
@@ -202,11 +217,6 @@ export default {
             } finally {
                 this.connecting = false;
             }
-        },
-
-        async retryUdev() {
-            this.udevDialog = false;
-            await this.connect();
         },
     },
 };
