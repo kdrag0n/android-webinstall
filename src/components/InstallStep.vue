@@ -23,7 +23,10 @@
                         lost.</strong
                     >
                 </p>
-                <p>Don’t unplug your device during the install.</p>
+                <p>
+                    Don’t touch or unplug your device during the install. Make
+                    sure you don’t press any buttons — everything is automatic.
+                </p>
             </div>
 
             <v-btn
