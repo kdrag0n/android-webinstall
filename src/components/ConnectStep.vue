@@ -75,63 +75,6 @@
                     error
                 }}</span>
             </v-banner>
-
-            <v-dialog v-model="udevDialog" width="500" persistent>
-                <v-card>
-                    <v-card-title class="headline">
-                        Access denied
-                    </v-card-title>
-
-                    <v-card-text>
-                        <p>
-                            On Linux, users aren’t allowed to access USB devices
-                            by default.
-                        </p>
-                        <p>
-                            To fix this, you need to install udev rules for
-                            Android devices. The way to do this varies by
-                            distribution, but here are the commands for some
-                            common distributions:
-                        </p>
-
-                        <v-list-item two-line>
-                            <v-list-item-content>
-                                <v-list-item-title
-                                    >Arch Linux</v-list-item-title
-                                >
-                                <v-list-item-subtitle
-                                    >sudo pacman -S
-                                    android-udev</v-list-item-subtitle
-                                >
-                            </v-list-item-content>
-                        </v-list-item>
-
-                        <v-list-item two-line>
-                            <v-list-item-content>
-                                <v-list-item-title
-                                    >Debian, Ubuntu</v-list-item-title
-                                >
-                                <v-list-item-subtitle
-                                    >sudo apt install
-                                    android-sdk-platform-tools-common</v-list-item-subtitle
-                                >
-                            </v-list-item-content>
-                        </v-list-item>
-
-                        <p>
-                            Once you’ve installed udev rules, unplug your device
-                            and plug it back in for it to take effect.
-                        </p>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="retryUdev()">
-                            Retry
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -143,6 +86,58 @@
             >
             <v-btn text @click="$emit('prevStep')">Back</v-btn>
         </div>
+
+        <v-dialog v-model="udevDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">Access denied</v-card-title>
+
+                <v-card-text>
+                    <p>
+                        On Linux, users aren’t allowed to access USB devices by
+                        default.
+                    </p>
+                    <p>
+                        To fix this, you need to install udev rules for Android
+                        devices. The way to do this varies by distribution, but
+                        here are the commands for some common distributions:
+                    </p>
+
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title>Arch Linux</v-list-item-title>
+                            <v-list-item-subtitle
+                                >sudo pacman -S
+                                android-udev</v-list-item-subtitle
+                            >
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title
+                                >Debian, Ubuntu</v-list-item-title
+                            >
+                            <v-list-item-subtitle
+                                >sudo apt install
+                                android-sdk-platform-tools-common</v-list-item-subtitle
+                            >
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <p>
+                        Once you’ve installed udev rules, unplug your device and
+                        plug it back in for it to take effect.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryUdev()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 

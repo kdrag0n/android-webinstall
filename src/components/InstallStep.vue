@@ -76,142 +76,6 @@
                     }}</span>
                 </div>
             </v-banner>
-
-            <v-dialog v-model="reconnectDialog" width="500" persistent>
-                <v-card>
-                    <v-card-title class="headline">
-                        Reconnect device
-                    </v-card-title>
-
-                    <v-card-text>
-                        To continue flashing, allow access to your device again.
-                        <v-banner
-                            single-line
-                            outlined
-                            rounded
-                            class="mt-8"
-                            v-if="reconnectError"
-                        >
-                            <v-icon slot="icon" color="red darken-3"
-                                >mdi-close</v-icon
-                            >
-                            <div class="my-4">
-                                <span
-                                    class="text-body-1 red--text text--darken-3"
-                                    >{{ reconnectError }}</span
-                                >
-                            </div>
-                        </v-banner>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="requestReconnect">
-                            Reconnect
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="disconnectDialog" width="500" persistent>
-                <v-card>
-                    <v-card-title class="headline">
-                        Device disconnected
-                    </v-card-title>
-
-                    <v-card-text>
-                        <p>
-                            Your device unexpectedly disconnected during the
-                            install, so we can’t continue installing.
-                        </p>
-                        <p>
-                            This is usually caused by a low-quality cable, loose
-                            connection, dirty USB port on your device or
-                            computer, or unreliable USB port on your computer.
-                        </p>
-                        <p>
-                            To fix this, try unplugging your device and plugging
-                            it back in with a different cable and port. If it
-                            still doesn’t work, try cleaning your USB ports on
-                            both sides.
-                        </p>
-                        <p>
-                            After reconnecting, you need to
-                            <strong>restart your device’s bootloader</strong>
-                            using the volume and power buttons before retrying.
-                        </p>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="retryDisconnect()">
-                            Retry
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="storageDialog" width="500" persistent>
-                <v-card>
-                    <v-card-title class="headline">
-                        Out of storage space
-                    </v-card-title>
-
-                    <v-card-text>
-                        <p>
-                            There isn’t enough storage space available to
-                            download and unpack the OS.
-                        </p>
-                        <p>
-                            If you’re not low on storage space, this is usually
-                            caused by using an incognito window or guest profile
-                            in your browser. These profiles have very storage
-                            limits, so installing from them isn’t possible.
-                        </p>
-                        <p>
-                            To fix this,
-                            <strong>switch to a normal browser profile</strong>
-                            and try again.
-                        </p>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="retryStorage()">
-                            Retry
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-
-            <v-dialog v-model="memoryDialog" width="500" persistent>
-                <v-card>
-                    <v-card-title class="headline">
-                        Out of memory
-                    </v-card-title>
-
-                    <v-card-text>
-                        <p>
-                            There isn’t enough free memory (RAM) to unpack and
-                            install the OS.
-                        </p>
-                        <p>
-                            To fix this,
-                            <strong>close some unused apps</strong> and try
-                            again. If it still doesn’t work, you may need to
-                            install from another computer or device with more
-                            memory.
-                        </p>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="retryMemory()">
-                            Retry
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -225,6 +89,136 @@
                 >Back</v-btn
             >
         </div>
+
+        <v-dialog v-model="reconnectDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline"> Reconnect device </v-card-title>
+
+                <v-card-text>
+                    To continue flashing, allow access to your device again.
+                    <v-banner
+                        single-line
+                        outlined
+                        rounded
+                        class="mt-8"
+                        v-if="reconnectError"
+                    >
+                        <v-icon slot="icon" color="red darken-3"
+                            >mdi-close</v-icon
+                        >
+                        <div class="my-4">
+                            <span
+                                class="text-body-1 red--text text--darken-3"
+                                >{{ reconnectError }}</span
+                            >
+                        </div>
+                    </v-banner>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="requestReconnect">
+                        Reconnect
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="disconnectDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">
+                    Device disconnected
+                </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        Your device unexpectedly disconnected during the
+                        install, so we can’t continue installing.
+                    </p>
+                    <p>
+                        This is usually caused by a low-quality cable, loose
+                        connection, dirty USB port on your device or computer,
+                        or unreliable USB port on your computer.
+                    </p>
+                    <p>
+                        To fix this, try unplugging your device and plugging it
+                        back in with a different cable and port. If it still
+                        doesn’t work, try cleaning your USB ports on both sides.
+                    </p>
+                    <p>
+                        After reconnecting, you need to
+                        <strong>restart your device’s bootloader</strong>
+                        using the volume and power buttons before retrying.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryDisconnect()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="storageDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">
+                    Out of storage space
+                </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        There isn’t enough storage space available to download
+                        and unpack the OS.
+                    </p>
+                    <p>
+                        If you’re not low on storage space, this is usually
+                        caused by using an incognito window or guest profile in
+                        your browser. These profiles have very storage limits,
+                        so installing from them isn’t possible.
+                    </p>
+                    <p>
+                        To fix this,
+                        <strong>switch to a normal browser profile</strong>
+                        and try again.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryStorage()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="memoryDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline"> Out of memory </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        There isn’t enough free memory (RAM) to unpack and
+                        install the OS.
+                    </p>
+                    <p>
+                        To fix this,
+                        <strong>close some unused apps</strong> and try again.
+                        If it still doesn’t work, you may need to install from
+                        another computer or device with more memory.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryMemory()">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
