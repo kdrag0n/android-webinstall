@@ -143,26 +143,35 @@ export default {
                 }
 
                 await this.device.runCommand("flashing unlock");
-                this.unlocked = true;
-                this.error = null;
-
-                if (this.firstUnlock) {
-                    this.firstUnlock = false;
-                    this.$emit("nextStep");
-                }
-
-                this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
             } catch (e) {
                 if (e instanceof FastbootError && e.status === "FAIL") {
-                    this.error = "Bootloader was not unlocked!";
+                    if (e.message.includes("already")) {
+                        /* Already unlocked = success */
+                    } else if (e.message.includes("canceled")) {
+                        this.error = "Unlock request was canceled";
+                        this.unlocking = false;
+                        return;
+                    } else {
+                        this.unlocking = false;
+                        throw e;
+                    }
                 } else {
                     this.error = e.message;
+                    this.unlocking = false;
+                    throw e;
                 }
-
-                throw e;
-            } finally {
-                this.unlocking = false;
             }
+
+            this.unlocked = true;
+            this.error = null;
+
+            if (this.firstUnlock) {
+                this.firstUnlock = false;
+                this.$emit("nextStep");
+            }
+
+            this.unlocking = false;
+            this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
         },
     },
 };
