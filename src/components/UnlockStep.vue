@@ -8,7 +8,10 @@
                     In order to install custom software, you need to unlock your
                     device’s bootloader.
                 </p>
-                <p>If you haven’t already turned on OEM unlocking:</p>
+                <p>
+                    If this is your first time or you haven’t already turned on
+                    OEM unlocking:
+                </p>
                 <ol class="ml-4 mb-8">
                     <li>Restart back to Android</li>
                     <li>
