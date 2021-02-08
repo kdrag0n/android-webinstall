@@ -198,6 +198,10 @@
                         doesn’t work, try cleaning your USB ports on both sides.
                     </p>
                     <p>
+                        You should also avoid using USB hubs. They’re often
+                        unreliable and can cause disconnects while installing.
+                    </p>
+                    <p>
                         After reconnecting, you need to
                         <strong>restart your device’s bootloader</strong>
                         using the volume and power buttons before retrying.

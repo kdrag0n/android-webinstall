@@ -19,7 +19,7 @@
                     computer or device you’re installing from. Make sure you use
                     a
                     <strong>high-quality</strong> USB cable, as many cables will
-                    cause issues. Similarly, try not to use USB hubs.
+                    cause issues. Don’t use USB hubs if possible.
                 </p>
                 <p>
                     Your USB cable needs to be able to copy files. Charging-only
