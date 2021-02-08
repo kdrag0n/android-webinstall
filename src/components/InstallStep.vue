@@ -376,7 +376,14 @@ export default {
                 ) {
                     this.error = "Out of memory";
                     this.memoryDialog = true;
+                } else if (
+                    e instanceof DOMException &&
+                    e.code === DOMException.NOT_FOUND_ERR &&
+                    e.message === "No device selected."
+                ) {
+                    this.error = e.message;
                 } else {
+                    this.error = e.message;
                     throw e;
                 }
             } finally {

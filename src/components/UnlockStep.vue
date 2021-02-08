@@ -196,6 +196,7 @@ export default {
                 if (e instanceof FastbootError && e.status === "FAIL") {
                     if (e.message.includes("already")) {
                         /* Already unlocked = success */
+                        return;
                     } else if (e.message.includes("canceled")) {
                         this.error = "Unlock request was canceled";
                         this.unlocking = false;
@@ -205,15 +206,12 @@ export default {
                         this.oemUnlockDialog = true;
                         this.unlocking = false;
                         return;
-                    } else {
-                        this.unlocking = false;
-                        throw e;
                     }
-                } else {
-                    this.error = e.message;
-                    this.unlocking = false;
-                    throw e;
                 }
+
+                this.error = e.message;
+                this.unlocking = false;
+                throw e;
             }
 
             this.unlocked = true;
