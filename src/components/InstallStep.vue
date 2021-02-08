@@ -112,6 +112,44 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <v-dialog v-model="disconnectDialog" width="500" persistent>
+                <v-card>
+                    <v-card-title class="headline">
+                        Device disconnected
+                    </v-card-title>
+
+                    <v-card-text>
+                        <p>
+                            Your device unexpectedly disconnected during the
+                            install, so we can’t continue installing.
+                        </p>
+                        <p>
+                            This is usually caused by a low-quality cable, loose
+                            connection, dirty USB port on your device or
+                            computer, or unreliable USB port on your computer.
+                        </p>
+                        <p>
+                            To fix this, try unplugging your device and plugging
+                            it back in with a different cable and port. If it
+                            still doesn’t work, try cleaning your USB ports on
+                            both sides.
+                        </p>
+                        <p>
+                            After reconnecting, you need to
+                            <strong>restart your device’s bootloader</strong>
+                            using the volume and power buttons before retrying.
+                        </p>
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="retryDisconnect()">
+                            Retry
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -171,6 +209,8 @@ export default {
 
         reconnectDialog: false,
         reconnectError: null,
+
+        disconnectDialog: false,
     }),
 
     watch: {
@@ -195,6 +235,11 @@ export default {
                 this.reconnectError = e.message;
                 throw e;
             }
+        },
+
+        async retryDisconnect() {
+            this.disconnectDialog = false;
+            await this.install();
         },
 
         async install() {
@@ -242,7 +287,16 @@ export default {
                 this.installed = false;
                 this.installProgress = null;
                 this.error = e.message;
-                throw e;
+
+                if (
+                    e instanceof DOMException &&
+                    e.code === DOMException.NETWORK_ERR &&
+                    e.message === "A transfer error has occurred."
+                ) {
+                    this.disconnectDialog = true;
+                } else {
+                    throw e;
+                }
             } finally {
                 this.installing = false;
             }
