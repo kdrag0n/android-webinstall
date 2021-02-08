@@ -37,6 +37,7 @@
                     "
                 >
                     <prepare-step
+                        ref="prepareStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === -1"
@@ -52,6 +53,7 @@
                     "
                 >
                     <install-type-step
+                        ref="installTypeStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 0"
@@ -67,6 +69,7 @@
                     "
                 >
                     <connect-step
+                        ref="connectStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 1"
@@ -82,6 +85,7 @@
                     "
                 >
                     <unlock-step
+                        ref="unlockStep"
                         :device="device"
                         :blob-store="blobStore"
                         :curStep="curStep"
@@ -98,6 +102,7 @@
                     "
                 >
                     <download-step
+                        ref="downloadStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 3"
@@ -113,6 +118,7 @@
                     "
                 >
                     <install-step
+                        ref="installStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 4"
@@ -128,6 +134,7 @@
                     "
                 >
                     <finish-step
+                        ref="finishStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 5"
@@ -220,7 +227,9 @@ export default {
         device: device,
         blobStore: blobStore,
         curStep: -1,
+
         claimDialog: false,
+        claimVm: null,
     }),
 
     // eslint-disable-next-line no-unused-vars
@@ -231,6 +240,7 @@ export default {
             err.message === "Unable to claim interface."
         ) {
             this.claimDialog = true;
+            this.claimVm = vm;
             return false;
         }
 
@@ -240,6 +250,9 @@ export default {
     methods: {
         retryClaim() {
             this.claimDialog = false;
+            if ("trigger" in this.claimVm.$attrs) {
+                this.$refs[this.claimVm.$attrs.trigger].errorRetry();
+            }
         },
     },
 };

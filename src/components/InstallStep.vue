@@ -30,9 +30,10 @@
             </div>
 
             <v-btn
+                trigger="installStep"
                 :color="installed ? null : 'primary'"
-                @click="install()"
                 :disabled="installProgress !== null"
+                @click="install()"
                 >Install</v-btn
             >
         </div>
@@ -313,6 +314,10 @@ export default {
 
         async retryMemory() {
             this.memoryDialog = false;
+            await this.install();
+        },
+
+        async errorRetry() {
             await this.install();
         },
 
