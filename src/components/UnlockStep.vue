@@ -16,7 +16,7 @@
                     </li>
                     <li>
                         Tap “Build number” repeatedly until developer options is
-                        enabled
+                        unlocked
                     </li>
                     <li>
                         Go to Settings → System → Advanced → “Developer options”
@@ -70,6 +70,52 @@
                     error
                 }}</span>
             </v-banner>
+
+            <v-dialog v-model="oemUnlockDialog" width="500" persistent>
+                <v-card>
+                    <v-card-title class="headline">
+                        Enable OEM unlocking
+                    </v-card-title>
+
+                    <v-card-text>
+                        <p>
+                            For security reasons, bootloader unlock isn’t
+                            allowed by default. Enable OEM unlocking to allow
+                            it:
+                        </p>
+
+                        <ol class="ml-4 mb-8">
+                            <li>Restart back to Android</li>
+                            <li>
+                                Go to Settings → “About phone” and scroll to the
+                                bottom
+                            </li>
+                            <li>
+                                Tap “Build number” repeatedly until developer
+                                options is unlocked
+                            </li>
+                            <li>
+                                Go to Settings → System → Advanced → “Developer
+                                options”
+                            </li>
+                            <li>Turn on “OEM unlocking”</li>
+                            <li>Restart back to the bootloader</li>
+                        </ol>
+
+                        <p>
+                            Once you’ve enabled OEM unlocking, try unlocking the
+                            bootloader again.
+                        </p>
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="retryOemUnlock()">
+                            Retry
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -98,6 +144,7 @@ export default {
         initialUnlocked: undefined,
         firstUnlock: true,
         error: null,
+        oemUnlockDialog: false,
     }),
 
     watch: {
@@ -151,6 +198,11 @@ export default {
                         this.error = "Unlock request was canceled";
                         this.unlocking = false;
                         return;
+                    } else if (e.message.includes("not allowed")) {
+                        this.error = "OEM unlocking is not enabled";
+                        this.oemUnlockDialog = true;
+                        this.unlocking = false;
+                        return;
                     } else {
                         this.unlocking = false;
                         throw e;
@@ -172,6 +224,11 @@ export default {
 
             this.unlocking = false;
             this.saEvent(`unlock_bootloader__${this.$root.$data.product}`);
+        },
+
+        async retryOemUnlock() {
+            this.oemUnlockDialog = false;
+            await this.unlock();
         },
     },
 };
