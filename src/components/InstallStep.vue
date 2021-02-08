@@ -150,6 +150,38 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <v-dialog v-model="storageDialog" width="500" persistent>
+                <v-card>
+                    <v-card-title class="headline">
+                        Out of storage space
+                    </v-card-title>
+
+                    <v-card-text>
+                        <p>
+                            There isn’t enough storage space available to
+                            download and unpack the OS.
+                        </p>
+                        <p>
+                            If you’re not low on storage space, this is usually
+                            caused by using an incognito window or guest profile
+                            in your browser. These profiles have very storage
+                            limits, so installing from them isn’t possible.
+                        </p>
+                        <p>
+                            To fix this, <strong>switch to a normal browser profile</strong> and
+                            try again.
+                        </p>
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="retryStorage()">
+                            Retry
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
 
         <div class="d-flex justify-space-between flex-row-reverse">
@@ -211,6 +243,7 @@ export default {
         reconnectError: null,
 
         disconnectDialog: false,
+        storageDialog: false,
     }),
 
     watch: {
@@ -242,6 +275,11 @@ export default {
             await this.install();
         },
 
+        async retryStorage() {
+            this.storageDialog = false;
+            await this.install();
+        },
+
         async install() {
             this.installed = false;
             this.installing = true;
@@ -260,8 +298,7 @@ export default {
                     this.$root.$data.installType === "clean",
                     this.reconnectCallback,
                     (action, item, progress) => {
-                        let userAction =
-                            fastboot.USER_ACTION_MAP[action];
+                        let userAction = fastboot.USER_ACTION_MAP[action];
                         let userItem =
                             item === "avb_custom_key"
                                 ? "verified boot key"
@@ -285,14 +322,21 @@ export default {
             } catch (e) {
                 this.installed = false;
                 this.installProgress = null;
-                this.error = e.message;
 
                 if (
                     e instanceof DOMException &&
                     e.code === DOMException.NETWORK_ERR &&
                     e.message === "A transfer error has occurred."
                 ) {
+                    this.error = "Device unexpectedly disconnected";
                     this.disconnectDialog = true;
+                } else if (
+                    e instanceof DOMException &&
+                    e.code === 0 &&
+                    e.message.startsWith("The requested file could not be read")
+                ) {
+                    this.error = "Out of storage space";
+                    this.storageDialog = true;
                 } else {
                     throw e;
                 }
