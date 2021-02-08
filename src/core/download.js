@@ -18,7 +18,11 @@ function fetchBlobWithProgress(url, onProgress) {
             onProgress(event.loaded / event.total);
         };
         xhr.onerror = () => {
-            reject(`${xhr.status} ${xhr.statusText}`);
+            reject(
+                new Error(
+                    `Download failed: HTTP error ${xhr.status} ${xhr.statusText}`
+                )
+            );
         };
     });
 }
