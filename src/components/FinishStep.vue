@@ -6,9 +6,8 @@
             <div class="text-body-1" v-if="$root.$data.release !== null">
                 <p>
                     Congratulations! Your
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }} is now
-                    running {{ $root.$data.OS_NAME }}
-                    {{ $root.$data.release.version }}.
+                    {{ getDeviceName($root.$data.product) }} is now running
+                    {{ $root.$data.OS_NAME }} {{ $root.$data.release.version }}.
                 </p>
                 <p>
                     If you like {{ $root.$data.OS_NAME }}, please consider
@@ -59,6 +58,7 @@
 <script>
 import LiberapayIcon from "./LiberapayIcon.vue";
 import PaypalIcon from "./PaypalIcon.vue";
+import { getDeviceName } from "../core/devices";
 
 export default {
     components: { LiberapayIcon, PaypalIcon },
@@ -72,6 +72,10 @@ export default {
                 this.saEvent("step_finish");
             }
         },
+    },
+
+    methods: {
+        getDeviceName,
     },
 };
 </script>

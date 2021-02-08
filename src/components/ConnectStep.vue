@@ -59,8 +59,7 @@
             >
                 <v-icon slot="icon" color="green darken-3">mdi-check</v-icon>
                 <span class="text-body-1 green--text text--darken-3"
-                    >Connected to
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}</span
+                    >Connected to {{ getDeviceName($root.$data.product) }}</span
                 >
             </v-banner>
             <v-banner
@@ -142,6 +141,8 @@
 </template>
 
 <script>
+import { getDeviceName } from "../core/devices";
+
 export default {
     name: "ConnectStep",
 
@@ -163,6 +164,8 @@ export default {
     },
 
     methods: {
+        getDeviceName,
+
         async connect() {
             this.connecting = true;
 

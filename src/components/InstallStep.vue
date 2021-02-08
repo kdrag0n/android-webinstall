@@ -13,7 +13,7 @@
                         ].suffix
                     }}
                     on your
-                    {{ $root.$data.DEVICE_NAMES[$root.$data.product] }}.
+                    {{ getDeviceName($root.$data.product) }}.
                 </p>
                 <p v-if="$root.$data.installType === 'clean'">
                     Because you’re doing a clean install to switch from another
@@ -237,6 +237,7 @@
 
 <script>
 import * as fastboot from "fastboot";
+import { getDeviceName } from "../core/devices";
 
 fastboot.configureZip({
     workerScripts: {
@@ -283,6 +284,8 @@ export default {
     },
 
     methods: {
+        getDeviceName,
+
         async reconnectCallback() {
             this.reconnectDialog = true;
         },
