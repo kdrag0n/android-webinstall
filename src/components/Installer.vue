@@ -153,7 +153,7 @@ import DownloadStep from "./DownloadStep";
 import InstallStep from "./InstallStep";
 import FinishStep from "./FinishStep";
 
-fastboot.setDebugMode(true);
+fastboot.setDebugLevel(1);
 
 let device = new fastboot.FastbootDevice();
 let blobStore = new BlobStore();

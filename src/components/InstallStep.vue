@@ -179,7 +179,7 @@
 <script>
 import * as fastboot from "fastboot";
 
-fastboot.FactoryImages.configureZip({
+fastboot.configureZip({
     workerScripts: {
         inflate: ["js/vendor/z-worker-pako.js", "pako_inflate.min.js"],
     },
@@ -255,14 +255,13 @@ export default {
                     `install_build__${this.$root.$data.product}_${this.$root.$data.release.version}_${this.$root.$data.release.variant}`
                 );
                 let blob = this.$root.$data.zipBlob;
-                await fastboot.FactoryImages.flashZip(
-                    this.device,
+                await this.device.flashFactoryZip(
                     blob,
                     this.$root.$data.installType === "clean",
                     this.reconnectCallback,
                     (action, item, progress) => {
                         let userAction =
-                            fastboot.FactoryImages.USER_ACTION_MAP[action];
+                            fastboot.USER_ACTION_MAP[action];
                         let userItem =
                             item === "avb_custom_key"
                                 ? "verified boot key"
