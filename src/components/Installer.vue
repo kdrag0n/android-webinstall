@@ -202,6 +202,23 @@
                         <strong>restart your device’s bootloader</strong>
                         using the volume and power buttons before retrying.
                     </p>
+                    <v-banner
+                        single-line
+                        outlined
+                        rounded
+                        class="mt-8"
+                        v-if="reconnectError"
+                    >
+                        <v-icon slot="icon" color="red darken-3"
+                            >mdi-close</v-icon
+                        >
+                        <div class="my-4">
+                            <span
+                                class="text-body-1 red--text text--darken-3"
+                                >{{ reconnectError }}</span
+                            >
+                        </div>
+                    </v-banner>
                 </v-card-text>
 
                 <v-card-actions>
@@ -340,24 +357,33 @@ export default {
     },
 
     methods: {
-        retryClaim() {
+        async retryClaim() {
             this.claimDialog = false;
             if ("trigger" in this.claimVm.$attrs) {
-                this.$refs[this.claimVm.$attrs.trigger].errorRetry();
+                await this.$refs[this.claimVm.$attrs.trigger].errorRetry();
             }
         },
 
-        retryDisconnect() {
+        async retryDisconnect() {
             this.disconnectDialog = false;
+
+            try {
+                await this.device.connect();
+                this.reconnectError = null;
+            } catch (e) {
+                this.reconnectError = e.message;
+                throw e;
+            }
+
             if ("trigger" in this.disconnectVm.$attrs) {
-                this.$refs[this.disconnectVm.$attrs.trigger].errorRetry();
+                await this.$refs[this.disconnectVm.$attrs.trigger].errorRetry();
             }
         },
 
-        retryStorage() {
+        async retryStorage() {
             this.storageDialog = false;
             if ("trigger" in this.storageVm.$attrs) {
-                this.$refs[this.storageVm.$attrs.trigger].errorRetry();
+                await this.$refs[this.storageVm.$attrs.trigger].errorRetry();
             }
         },
     },
