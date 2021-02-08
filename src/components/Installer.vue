@@ -320,6 +320,7 @@ export default {
 
         disconnectDialog: false,
         disconnectVm: null,
+        reconnectError: null,
 
         storageDialog: false,
         storageVm: null,
