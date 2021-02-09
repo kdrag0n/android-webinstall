@@ -260,9 +260,7 @@
 
         <v-dialog v-model="storageDialog" width="500" persistent>
             <v-card>
-                <v-card-title class="headline">
-                    Out of storage space
-                </v-card-title>
+                <v-card-title class="headline">Out of storage</v-card-title>
 
                 <v-card-text>
                     <p>
@@ -270,10 +268,10 @@
                         and unpack the OS. You need at least 5 GB free.
                     </p>
                     <p>
-                        If you’re not low on storage space, this is usually
-                        caused by using an incognito window or guest profile in
-                        your browser. These profiles have very storage limits,
-                        so installing from them isn’t possible.
+                        If you’re not low on storage, this is usually caused by
+                        using an incognito window or guest profile in your
+                        browser. These profiles have very storage limits, so
+                        installing from them isn’t possible.
                     </p>
                     <p>
                         To fix this,
