@@ -4,7 +4,7 @@ This is an easy-to-use web installer for Android-based operating systems that ru
 
 If you have a device officially supported by [ProtonAOSP](https://github.com/ProtonAOSP), you can try flashing it with the official instance of this web installer at [ProtonAOSP web installer](https://protonaosp.kdrag0n.dev/install/web/).
 
-![Screenshot of an install in progress on a desktop computer](https://user-images.githubusercontent.com/7930239/106990006-3f1ab600-6728-11eb-96a8-d1da5c60fbbf.png)
+![Screenshot of an install in progress on a desktop computer](https://user-images.githubusercontent.com/7930239/107443954-9638d600-6aee-11eb-9848-5d0502fecfa9.png)
 
 ## Install process
 
@@ -12,12 +12,13 @@ The following screenshots show the entire installation process, from start to fi
 
 ### Desktop
 
-![Step 0](https://user-images.githubusercontent.com/7930239/106990511-4098ae00-6729-11eb-9393-7c8381a1a135.png)
-![Step 1](https://user-images.githubusercontent.com/7930239/106990512-41314480-6729-11eb-95f0-e5ebd62863c8.png)
-![Step 2](https://user-images.githubusercontent.com/7930239/106990517-42627180-6729-11eb-886b-4a7e50a7a780.png)
-![Step 3](https://user-images.githubusercontent.com/7930239/106990520-42fb0800-6729-11eb-906a-76a9dd8df301.png)
-![Step 4](https://user-images.githubusercontent.com/7930239/106990521-43939e80-6729-11eb-8bfd-fcc9d62e4d0b.png)
-![Step 5](https://user-images.githubusercontent.com/7930239/106990523-442c3500-6729-11eb-9bd7-99931ba6224e.png)
+![Step -1](https://user-images.githubusercontent.com/7930239/107443939-90db8b80-6aee-11eb-88e6-a6bb6625ec1f.png)
+![Step 0](https://user-images.githubusercontent.com/7930239/107443941-920cb880-6aee-11eb-829c-a4d876d72c28.png)
+![Step 1](https://user-images.githubusercontent.com/7930239/107443943-92a54f00-6aee-11eb-8533-5a8c5c0959a4.png)
+![Step 2](https://user-images.githubusercontent.com/7930239/107443949-946f1280-6aee-11eb-83d5-7b2f0f597ee2.png)
+![Step 3](https://user-images.githubusercontent.com/7930239/107443952-95a03f80-6aee-11eb-9528-15e3e0e996b3.png)
+![Step 4](https://user-images.githubusercontent.com/7930239/107443954-9638d600-6aee-11eb-9848-5d0502fecfa9.png)
+![Step 5](https://user-images.githubusercontent.com/7930239/107443959-96d16c80-6aee-11eb-9424-a4acd7db2b7c.png)
 
 ## Adapting for other ROMs
 
