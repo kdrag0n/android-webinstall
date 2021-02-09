@@ -27,9 +27,13 @@ export function isStorageError(err) {
 
 export function isClaimError(err) {
     return (
-        err instanceof DOMException &&
-        err.code === DOMException.NETWORK_ERR &&
-        err.message === "Unable to claim interface."
+        (err instanceof DOMException &&
+            err.code === DOMException.NETWORK_ERR &&
+            err.message === "Unable to claim interface.") ||
+        (err instanceof DOMException &&
+            err.code === DOMException.INVALID_STATE_ERR &&
+            err.message ===
+                "An operation that changes the device state is in progress.")
     );
 }
 
