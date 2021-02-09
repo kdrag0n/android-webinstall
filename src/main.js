@@ -35,7 +35,7 @@ Vue.mixin({
                 errMessage = "Can’t control device";
             } else if (errors.isDisconnectError(err)) {
                 errEvent = "Disconnect";
-                errMessage = "Device unexpectedly disconnected";
+                errMessage = "Device disconnected";
             } else if (errors.isStorageError(err)) {
                 errEvent = "Storage";
                 errMessage = "Out of storage";

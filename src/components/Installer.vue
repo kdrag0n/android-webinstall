@@ -221,7 +221,7 @@
 
                 <v-card-text>
                     <p>
-                        Your device disconnected unexpectedly, so we can’t
+                        Your device disconnected, so we can’t
                         continue installing.
                     </p>
                     <p>
