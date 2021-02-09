@@ -3,6 +3,15 @@ import * as common from "./common.js";
 const CACHE_DB_NAME = "BlobStore";
 const CACHE_DB_VERSION = 1;
 
+export class XhrError extends Error {
+    constructor(status, statusText) {
+        super(`HTTP error ${status} ${statusText}`);
+        this.status = status;
+        this.statusText = statusText;
+        this.name = "XhrError";
+    }
+}
+
 // This wraps XHR because getting progress updates with fetch() is overly complicated.
 function fetchBlobWithProgress(url, onProgress) {
     let xhr = new XMLHttpRequest();
@@ -18,11 +27,7 @@ function fetchBlobWithProgress(url, onProgress) {
             onProgress(event.loaded / event.total);
         };
         xhr.onerror = () => {
-            reject(
-                new Error(
-                    `Download failed: HTTP error ${xhr.status} ${xhr.statusText}`
-                )
-            );
+            reject(new XhrError(xhr.status, xhr.statusText));
         };
     });
 }

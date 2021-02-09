@@ -1,3 +1,5 @@
+import { XhrError } from "./download";
+
 export function isConnectSelectError(err) {
     return (
         err instanceof DOMException &&
@@ -16,9 +18,10 @@ export function isConnectUdevError(err) {
 
 export function isStorageError(err) {
     return (
-        err instanceof DOMException &&
-        err.code === 0 &&
-        err.message.startsWith("The requested file could not be read")
+        (err instanceof DOMException &&
+            err.code === 0 &&
+            err.message.startsWith("The requested file could not be read")) ||
+        (err instanceof XhrError && err.status === 0 && err.statusText === "")
     );
 }
 
