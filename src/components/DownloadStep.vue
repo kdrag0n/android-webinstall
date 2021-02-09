@@ -154,11 +154,11 @@ export default {
                     let indexResp = await fetch("/releases/index.json");
                     this.releaseIndex = await indexResp.json();
                 }
-            }
 
-            this.latestReleases = this.releaseIndex.latest[
-                this.$root.$data.product
-            ];
+                this.latestReleases = this.releaseIndex.latest[
+                    this.$root.$data.product
+                ];
+            }
         },
     },
 
