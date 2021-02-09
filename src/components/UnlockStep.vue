@@ -203,6 +203,13 @@ export default {
                     await this.device.connect();
                 }
 
+                // Unlocking can't be done in fastbootd
+                if ((await this.device.getVariable("is-userspace")) === "yes") {
+                    await this.device.reboot("bootloader", true, () => {
+                        this.$bubble("requestDeviceReconnect");
+                    });
+                }
+
                 await this.device.runCommand("flashing unlock");
             } catch (e) {
                 this.unlocking = false;
