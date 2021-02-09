@@ -235,9 +235,9 @@
                         </ul>
                     </p>
                     <p>
-                        After reconnecting, you need to
+                        If reconnecting gets stuck,
                         <strong>restart your device’s bootloader</strong>
-                        using the volume and power buttons before retrying.
+                        by holding the volume-down and power buttons, and try again.
                     </p>
                     <connect-banner
                         :device="device"
