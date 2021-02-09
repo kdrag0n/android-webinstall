@@ -225,15 +225,14 @@
                         continue installing.
                     </p>
                     <p>
-                        This is usually caused by a low-quality cable, loose
-                        connection, dirty USB port on your device or computer,
-                        unreliable USB port on your computer, or low-quality USB
-                        hub.
-                    </p>
-                    <p>
-                        To fix this, try unplugging your device and plugging it
-                        back in with a different cable and port. If it still
-                        doesn’t work, try cleaning your USB ports on both sides.
+                        To fix this:
+                        <ul class="ml-4 mb-4">
+                            <li>Don’t touch the device</li>
+                            <li>Use a different cable</li>
+                            <li>Clean your USB port</li>
+                            <li>Don’t use USB hubs</li>
+                            <li>Make sure the cable isn’t loose</li>
+                        </ul>
                     </p>
                     <p>
                         After reconnecting, you need to
