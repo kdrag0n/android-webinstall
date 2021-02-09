@@ -434,6 +434,8 @@ export default {
         },
 
         errorDisconnect(retry) {
+            this.disconnectReconnecting = false;
+            this.disconnectReconnectError = null;
             this.disconnectDialog = true;
             this.retryCallback = retry;
         },
@@ -481,6 +483,7 @@ export default {
         },
 
         reconnectCallback() {
+            this.reconnectError = null;
             this.reconnectDialog = true;
         },
         async requestReconnect() {
@@ -490,7 +493,6 @@ export default {
                 this.reconnectError = null;
             } catch (e) {
                 this.reconnectError = e.message;
-                throw e;
             }
         },
     },
