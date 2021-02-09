@@ -40,7 +40,7 @@
         </div>
 
         <div class="d-flex justify-space-between">
-            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+            <v-btn text @click="$bubble('prevStep')">Back</v-btn>
         </div>
     </v-container>
 </template>

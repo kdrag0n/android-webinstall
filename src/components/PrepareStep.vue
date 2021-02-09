@@ -51,7 +51,7 @@
         <div class="d-flex justify-space-between flex-row-reverse">
             <v-btn
                 color="primary"
-                @click="$emit('nextStep')"
+                @click="$bubble('nextStep')"
                 :disabled="!usbSupported"
             >
                 Start

@@ -110,11 +110,11 @@
         <div class="d-flex justify-space-between flex-row-reverse">
             <v-btn
                 color="primary"
-                @click="$emit('nextStep')"
+                @click="$bubble('nextStep')"
                 :disabled="$root.$data.zipBlob === null"
                 >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
-            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+            <v-btn text @click="$bubble('prevStep')">Back</v-btn>
         </div>
     </v-container>
 </template>
@@ -191,12 +191,16 @@ export default {
 
                 if (this.firstDownload) {
                     this.firstDownload = false;
-                    this.$emit("nextStep");
+                    this.$bubble("nextStep");
                 }
             } catch (e) {
-                this.error = e.message;
                 this.downloadProgress = null;
-                throw e;
+
+                let [handled, message] = this.bubbleError(e);
+                this.error = message;
+                if (!handled) {
+                    throw e;
+                }
             } finally {
                 this.downloading = false;
             }

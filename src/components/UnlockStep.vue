@@ -30,9 +30,8 @@
             </div>
 
             <v-btn
-                trigger="unlockStep"
                 color="primary"
-                @click="unlock()"
+                @click="unlock"
                 :disabled="unlocking || unlocked"
                 >Unlock</v-btn
             >
@@ -79,11 +78,11 @@
         <div class="d-flex justify-space-between flex-row-reverse">
             <v-btn
                 color="primary"
-                @click="$emit('nextStep')"
+                @click="$bubble('nextStep')"
                 :disabled="!unlocked"
                 >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
-            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+            <v-btn text @click="$bubble('prevStep')">Back</v-btn>
         </div>
 
         <v-dialog v-model="oemUnlockDialog" width="500" persistent>
@@ -124,12 +123,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn
-                        trigger="unlockStep"
-                        color="primary"
-                        text
-                        @click="retryOemUnlock()"
-                    >
+                    <v-btn color="primary" text @click="retryOemUnlock">
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -173,16 +167,19 @@ export default {
                     // Skip step only if unlock state was never changed
                     if (this.unlocked && this.initialUnlocked) {
                         if (newStep > oldStep) {
-                            this.$emit("nextStep");
+                            this.$bubble("nextStep");
                         } else {
-                            this.$emit("prevStep");
+                            this.$bubble("prevStep");
                         }
                     }
 
                     this.error = null;
                 } catch (e) {
-                    this.error = e.message;
-                    throw e;
+                    let [handled, message] = this.bubbleError(e);
+                    this.error = message;
+                    if (!handled) {
+                        throw e;
+                    }
                 }
             }
         },
@@ -208,25 +205,27 @@ export default {
 
                 await this.device.runCommand("flashing unlock");
             } catch (e) {
+                this.unlocking = false;
+
                 if (e instanceof FastbootError && e.status === "FAIL") {
                     if (e.message.includes("already")) {
                         /* Already unlocked = success */
                         return;
                     } else if (e.message.includes("canceled")) {
                         this.error = "Unlock request was canceled";
-                        this.unlocking = false;
                         return;
                     } else if (e.message.includes("not allowed")) {
                         this.error = "OEM unlocking is not enabled";
                         this.oemUnlockDialog = true;
-                        this.unlocking = false;
                         return;
                     }
                 }
 
-                this.error = e.message;
-                this.unlocking = false;
-                throw e;
+                let [handled, message] = this.bubbleError(e);
+                this.error = message;
+                if (!handled) {
+                    throw e;
+                }
             }
 
             this.unlocked = true;
@@ -234,7 +233,7 @@ export default {
 
             if (this.firstUnlock) {
                 this.firstUnlock = false;
-                this.$emit("nextStep");
+                this.$bubble("nextStep");
             }
 
             this.unlocking = false;

@@ -80,11 +80,11 @@
         <div class="d-flex justify-space-between flex-row-reverse">
             <v-btn
                 color="primary"
-                @click="$emit('nextStep')"
+                @click="$bubble('nextStep')"
                 :disabled="$root.$data.installType === null"
                 >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
-            <v-btn text @click="$emit('prevStep')">Back</v-btn>
+            <v-btn text @click="$bubble('prevStep')">Back</v-btn>
         </div>
     </v-container>
 </template>
@@ -123,7 +123,7 @@ export default {
 
             if (this.firstSet) {
                 this.firstSet = false;
-                this.$emit("nextStep");
+                this.$bubble("nextStep");
             }
 
             this.saEvent(`install_type__${newType}`);

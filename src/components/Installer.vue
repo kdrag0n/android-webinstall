@@ -4,6 +4,11 @@
             v-model="curStep"
             :alt-labels="!$vuetify.breakpoint.mobile"
             class="d-flex flex-column flex-grow-1"
+            @errorClaim="errorClaim"
+            @errorDisconnect="errorDisconnect"
+            @errorStorage="errorStorage"
+            @prevStep="curStep -= 1"
+            @nextStep="curStep += 1"
         >
             <v-stepper-header class="mb-3">
                 <v-stepper-step :complete="curStep > 1" step="1">
@@ -37,12 +42,9 @@
                     "
                 >
                     <prepare-step
-                        ref="prepareStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === -1"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -53,12 +55,9 @@
                     "
                 >
                     <install-type-step
-                        ref="installTypeStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 0"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -69,12 +68,9 @@
                     "
                 >
                     <connect-step
-                        ref="connectStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 1"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -85,13 +81,10 @@
                     "
                 >
                     <unlock-step
-                        ref="unlockStep"
                         :device="device"
                         :blob-store="blobStore"
                         :curStep="curStep"
                         stepNum="2"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -102,12 +95,9 @@
                     "
                 >
                     <download-step
-                        ref="downloadStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 3"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -118,12 +108,9 @@
                     "
                 >
                     <install-step
-                        ref="installStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 4"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
 
@@ -134,16 +121,65 @@
                     "
                 >
                     <finish-step
-                        ref="finishStep"
                         :device="device"
                         :blob-store="blobStore"
                         :active="curStep === 5"
-                        @prevStep="curStep -= 1"
-                        @nextStep="curStep += 1"
                     />
                 </v-stepper-content>
             </v-stepper-items>
         </v-stepper>
+
+        <v-dialog v-model="udevDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">Access denied</v-card-title>
+
+                <v-card-text>
+                    <p>
+                        On Linux, users aren’t allowed to access USB devices by
+                        default.
+                    </p>
+                    <p>
+                        To fix this, you need to install udev rules for Android
+                        devices. The way to do this varies by distribution, but
+                        here are the commands for some common distributions:
+                    </p>
+
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title>Arch Linux</v-list-item-title>
+                            <v-list-item-subtitle
+                                >sudo pacman -S
+                                android-udev</v-list-item-subtitle
+                            >
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title
+                                >Debian, Ubuntu</v-list-item-title
+                            >
+                            <v-list-item-subtitle
+                                >sudo apt install
+                                android-sdk-platform-tools-common</v-list-item-subtitle
+                            >
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <p>
+                        Once you’ve installed udev rules, unplug your device and
+                        plug it back in for it to take effect.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryUdev">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 
         <v-dialog v-model="claimDialog" width="500" persistent>
             <v-card>
@@ -169,7 +205,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryClaim()">
+                    <v-btn color="primary" text @click="retryClaim">
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -184,8 +220,8 @@
 
                 <v-card-text>
                     <p>
-                        Your device unexpectedly disconnected during the
-                        install, so we can’t continue installing.
+                        Your device disconnected unexpectedly, so we can’t
+                        continue installing.
                     </p>
                     <p>
                         This is usually caused by a low-quality cable, loose
@@ -206,28 +242,16 @@
                         <strong>restart your device’s bootloader</strong>
                         using the volume and power buttons before retrying.
                     </p>
-                    <v-banner
-                        single-line
-                        outlined
-                        rounded
-                        class="mt-8"
-                        v-if="reconnectError"
-                    >
-                        <v-icon slot="icon" color="red darken-3"
-                            >mdi-close</v-icon
-                        >
-                        <div class="my-4">
-                            <span
-                                class="text-body-1 red--text text--darken-3"
-                                >{{ reconnectError }}</span
-                            >
-                        </div>
-                    </v-banner>
+                    <connect-banner
+                        :device="device"
+                        :connecting="reconnecting"
+                        :error="reconnectError"
+                    />
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryDisconnect()">
+                    <v-btn color="primary" text @click="retryDisconnect">
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -243,7 +267,7 @@
                 <v-card-text>
                     <p>
                         There isn’t enough storage space available to download
-                        and unpack the OS.
+                        and unpack the OS. You need at least 5 GB free.
                     </p>
                     <p>
                         If you’re not low on storage space, this is usually
@@ -260,7 +284,33 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryStorage()">
+                    <v-btn color="primary" text @click="retryStorage">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="memoryDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline"> Out of memory </v-card-title>
+
+                <v-card-text>
+                    <p>
+                        There isn’t enough free memory (RAM) to unpack and
+                        install the OS.
+                    </p>
+                    <p>
+                        To fix this,
+                        <strong>close some unused apps</strong> and try again.
+                        If it still doesn’t work, you may need to install from
+                        another computer or device with more memory.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryMemory">
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -288,7 +338,7 @@
 <script>
 import * as fastboot from "fastboot";
 import { BlobStore } from "../core/download";
-import * as errors from "../core/errors";
+import ConnectBanner from "./ConnectBanner";
 import PrepareStep from "./PrepareStep";
 import InstallTypeStep from "./InstallTypeStep";
 import ConnectStep from "./ConnectStep";
@@ -313,6 +363,7 @@ export default {
         DownloadStep,
         InstallStep,
         FinishStep,
+        ConnectBanner,
     },
 
     data: () => ({
@@ -320,65 +371,81 @@ export default {
         blobStore: blobStore,
         curStep: -1,
 
+        udevDialog: false,
         claimDialog: false,
-        claimVm: null,
+        storageDialog: false,
+        memoryDialog: false,
+        retryCallback: null,
 
         disconnectDialog: false,
-        disconnectVm: null,
+        reconnecting: false,
         reconnectError: null,
-
-        storageDialog: false,
-        storageVm: null,
     }),
 
-    // eslint-disable-next-line no-unused-vars
-    errorCaptured(err, vm, info) {
-        if (errors.isClaimError(err)) {
-            this.claimDialog = true;
-            this.claimVm = vm;
-            return false;
-        } else if (errors.isDisconnectError(err)) {
-            this.disconnectDialog = true;
-            this.disconnectVm = vm;
-            return false;
-        } else if (errors.isStorageError(err)) {
-            this.storageDialog = true;
-            this.storageVm = vm;
-            return false;
-        }
-
-        return true;
-    },
-
     methods: {
-        async retryClaim() {
-            this.claimDialog = false;
-            if ("trigger" in this.claimVm.$attrs) {
-                await this.$refs[this.claimVm.$attrs.trigger].errorRetry();
-            }
+        errorUdev(retry) {
+            this.udevDialog = true;
+            this.retryCallback = retry;
+        },
+        retryUdev() {
+            this.udevDialog = false;
+            this.retryCallback();
         },
 
+        errorClaim(retry) {
+            this.claimDialog = true;
+            this.retryCallback = retry;
+        },
+        retryClaim() {
+            this.claimDialog = false;
+            this.retryCallback();
+        },
+
+        errorDisconnect(retry) {
+            this.disconnectDialog = true;
+            this.retryCallback = retry;
+        },
         async retryDisconnect() {
-            this.disconnectDialog = false;
+            this.reconnecting = true;
 
             try {
                 await this.device.connect();
+                this.$root.$data.product = await this.device.getVariable(
+                    "product"
+                );
                 this.reconnectError = null;
             } catch (e) {
-                this.reconnectError = e.message;
-                throw e;
+                let [handled, message] = this.bubbleError(e);
+                this.reconnectError = message;
+                if (!handled) {
+                    throw e;
+                }
+
+                this.reconnecting = false;
+                return;
             }
 
-            if ("trigger" in this.disconnectVm.$attrs) {
-                await this.$refs[this.disconnectVm.$attrs.trigger].errorRetry();
-            }
+            this.reconnecting = false;
+            this.disconnectDialog = false;
+            this.retryCallback();
         },
 
-        async retryStorage() {
+        errorStorage(retry) {
+            this.storageDialog = true;
+            this.retryCallback = retry;
+        },
+        retryStorage() {
             this.storageDialog = false;
-            if ("trigger" in this.storageVm.$attrs) {
-                await this.$refs[this.storageVm.$attrs.trigger].errorRetry();
-            }
+            this.retryCallback();
+        },
+
+        errorMemory(retry) {
+            this.memoryDialog = true;
+            this.retryCallback = retry;
+        },
+        retryMemory() {
+            this.memoryDialog = false;
+            this.retryCallback();
         },
     },
 };

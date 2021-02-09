@@ -30,10 +30,9 @@
             </div>
 
             <v-btn
-                trigger="installStep"
                 :color="installed ? null : 'primary'"
                 :disabled="installProgress !== null"
-                @click="install()"
+                @click="install"
                 >Install</v-btn
             >
         </div>
@@ -85,11 +84,11 @@
         <div class="d-flex justify-space-between flex-row-reverse">
             <v-btn
                 color="primary"
-                @click="$emit('nextStep')"
+                @click="$bubble('nextStep')"
                 :disabled="installing || !installed"
                 >Next <v-icon dark right>mdi-arrow-right</v-icon></v-btn
             >
-            <v-btn text @click="$emit('prevStep')" :disabled="installing"
+            <v-btn text @click="$bubble('prevStep')" :disabled="installing"
                 >Back</v-btn
             >
         </div>
@@ -121,44 +120,8 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn
-                        trigger="installStep"
-                        color="primary"
-                        text
-                        @click="requestReconnect"
-                    >
+                    <v-btn color="primary" text @click="requestReconnect">
                         Reconnect
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="memoryDialog" width="500" persistent>
-            <v-card>
-                <v-card-title class="headline"> Out of memory </v-card-title>
-
-                <v-card-text>
-                    <p>
-                        There isn’t enough free memory (RAM) to unpack and
-                        install the OS.
-                    </p>
-                    <p>
-                        To fix this,
-                        <strong>close some unused apps</strong> and try again.
-                        If it still doesn’t work, you may need to install from
-                        another computer or device with more memory.
-                    </p>
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        trigger="installStep"
-                        color="primary"
-                        text
-                        @click="retryMemory()"
-                    >
-                        Retry
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -178,7 +141,6 @@
 
 <script>
 import * as fastboot from "fastboot";
-import * as errors from "../core/errors";
 import { getDeviceName } from "../core/devices";
 
 fastboot.configureZip({
@@ -287,25 +249,15 @@ export default {
 
                 if (this.firstInstall) {
                     this.firstInstall = false;
-                    this.$emit("nextStep");
+                    this.$bubble("nextStep");
                 }
             } catch (e) {
                 this.installed = false;
                 this.installProgress = null;
 
-                if (errors.isDisconnectError(e)) {
-                    this.error = "Device unexpectedly disconnected";
-                    // Handled by parent
-                    throw e;
-                } else if (errors.isStorageError(e)) {
-                    this.error = "Out of storage space";
-                    // Handled by parent
-                    throw e;
-                } else if (errors.isMemoryError(e)) {
-                    this.error = "Out of memory";
-                    this.memoryDialog = true;
-                } else {
-                    this.error = e.message;
+                let [handled, message] = this.bubbleError(e);
+                this.error = message;
+                if (!handled) {
                     throw e;
                 }
             } finally {
