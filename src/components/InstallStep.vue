@@ -178,6 +178,7 @@
 
 <script>
 import * as fastboot from "fastboot";
+import * as errors from "../core/errors";
 import { getDeviceName } from "../core/devices";
 
 fastboot.configureZip({
@@ -292,34 +293,17 @@ export default {
                 this.installed = false;
                 this.installProgress = null;
 
-                if (
-                    e instanceof DOMException &&
-                    e.code === DOMException.NETWORK_ERR &&
-                    e.message === "A transfer error has occurred."
-                ) {
+                if (errors.isDisconnectError(e)) {
                     this.error = "Device unexpectedly disconnected";
                     // Handled by parent
                     throw e;
-                } else if (
-                    e instanceof DOMException &&
-                    e.code === 0 &&
-                    e.message.startsWith("The requested file could not be read")
-                ) {
+                } else if (errors.isStorageError(e)) {
                     this.error = "Out of storage space";
                     // Handled by parent
                     throw e;
-                } else if (
-                    e instanceof RangeError &&
-                    e.message.includes("allocation failed")
-                ) {
+                } else if (errors.isMemoryError(e)) {
                     this.error = "Out of memory";
                     this.memoryDialog = true;
-                } else if (
-                    e instanceof DOMException &&
-                    e.code === DOMException.NOT_FOUND_ERR &&
-                    e.message === "No device selected."
-                ) {
-                    this.error = e.message;
                 } else {
                     this.error = e.message;
                     throw e;

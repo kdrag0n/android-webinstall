@@ -288,6 +288,7 @@
 <script>
 import * as fastboot from "fastboot";
 import { BlobStore } from "../core/download";
+import * as errors from "../core/errors";
 import PrepareStep from "./PrepareStep";
 import InstallTypeStep from "./InstallTypeStep";
 import ConnectStep from "./ConnectStep";
@@ -332,27 +333,15 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     errorCaptured(err, vm, info) {
-        if (
-            err instanceof DOMException &&
-            err.code === DOMException.NETWORK_ERR &&
-            err.message === "Unable to claim interface."
-        ) {
+        if (errors.isClaimError(err)) {
             this.claimDialog = true;
             this.claimVm = vm;
             return false;
-        } else if (
-            err instanceof DOMException &&
-            err.code === DOMException.NETWORK_ERR &&
-            err.message === "A transfer error has occurred."
-        ) {
+        } else if (errors.isDisconnectError(err)) {
             this.disconnectDialog = true;
             this.disconnectVm = vm;
             return false;
-        } else if (
-            err instanceof DOMException &&
-            err.code === 0 &&
-            err.message.startsWith("The requested file could not be read")
-        ) {
+        } else if (errors.isStorageError(err)) {
             this.storageDialog = true;
             this.storageVm = vm;
             return false;

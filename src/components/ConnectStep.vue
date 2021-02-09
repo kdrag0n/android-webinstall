@@ -148,6 +148,7 @@
 
 <script>
 import { getDeviceName } from "../core/devices";
+import * as errors from "../core/errors";
 
 export default {
     name: "ConnectStep",
@@ -198,17 +199,9 @@ export default {
 
                 this.saEvent(`device_connect__${this.$root.$data.product}`);
             } catch (e) {
-                if (
-                    e instanceof DOMException &&
-                    e.code === DOMException.NOT_FOUND_ERR &&
-                    e.message === "No device selected."
-                ) {
+                if (errors.isConnectSelectError(e)) {
                     this.error = e.message;
-                } else if (
-                    e instanceof DOMException &&
-                    e.code === DOMException.SECURITY_ERR &&
-                    e.message === "Access denied."
-                ) {
+                } else if (errors.isConnectUdevError(e)) {
                     this.udevDialog = true;
                 } else {
                     this.error = e.message;
