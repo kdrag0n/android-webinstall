@@ -4,7 +4,7 @@
         aria-label="Liberapay"
         role="img"
         viewBox="0 0 512 512"
-        style="width: 24px; height: 24px;"
+        style="width: 24px; height: 24px"
     >
         <rect width="512" height="512" rx="15%" fill="#f6c915" />
         <path

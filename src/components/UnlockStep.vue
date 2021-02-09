@@ -97,7 +97,7 @@
                         default. Enable OEM unlocking to allow it:
                     </p>
 
-                    <ol class="ml-4 mb-8">
+                    <ol class="ml-4 mb-4">
                         <li>Restart back to Android</li>
                         <li>
                             Go to Settings → “About phone” and scroll to the
