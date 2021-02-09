@@ -92,40 +92,6 @@
                 >Back</v-btn
             >
         </div>
-
-        <v-dialog v-model="reconnectDialog" width="500" persistent>
-            <v-card>
-                <v-card-title class="headline"> Reconnect device </v-card-title>
-
-                <v-card-text>
-                    To continue flashing, allow access to your device again.
-                    <v-banner
-                        single-line
-                        outlined
-                        rounded
-                        class="mt-8"
-                        v-if="reconnectError"
-                    >
-                        <v-icon slot="icon" color="red darken-3"
-                            >mdi-close</v-icon
-                        >
-                        <div class="my-4">
-                            <span
-                                class="text-body-1 red--text text--darken-3"
-                                >{{ reconnectError }}</span
-                            >
-                        </div>
-                    </v-banner>
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="requestReconnect">
-                        Reconnect
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
     </v-container>
 </template>
 
@@ -171,9 +137,6 @@ export default {
         firstInstall: true,
         error: null,
 
-        reconnectDialog: false,
-        reconnectError: null,
-
         memoryDialog: false,
     }),
 
@@ -188,19 +151,8 @@ export default {
     methods: {
         getDeviceName,
 
-        async reconnectCallback() {
-            this.reconnectDialog = true;
-        },
-
-        async requestReconnect() {
-            try {
-                await this.device.connect();
-                this.reconnectDialog = false;
-                this.reconnectError = null;
-            } catch (e) {
-                this.reconnectError = e.message;
-                throw e;
-            }
+        reconnectCallback() {
+            this.$bubble("requestDeviceReconnect");
         },
 
         async retryMemory() {

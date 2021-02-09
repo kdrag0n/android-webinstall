@@ -7,6 +7,7 @@
             @errorClaim="errorClaim"
             @errorDisconnect="errorDisconnect"
             @errorStorage="errorStorage"
+            @requestDeviceReconnect="reconnectCallback"
             @prevStep="curStep -= 1"
             @nextStep="curStep += 1"
         >
@@ -226,16 +227,13 @@
                     <p>
                         This is usually caused by a low-quality cable, loose
                         connection, dirty USB port on your device or computer,
-                        or unreliable USB port on your computer.
+                        unreliable USB port on your computer, or low-quality USB
+                        hub.
                     </p>
                     <p>
                         To fix this, try unplugging your device and plugging it
                         back in with a different cable and port. If it still
                         doesn’t work, try cleaning your USB ports on both sides.
-                    </p>
-                    <p>
-                        You should also avoid using USB hubs. They’re often
-                        unreliable and can cause disconnects while installing.
                     </p>
                     <p>
                         After reconnecting, you need to
@@ -244,8 +242,8 @@
                     </p>
                     <connect-banner
                         :device="device"
-                        :connecting="reconnecting"
-                        :error="reconnectError"
+                        :connecting="disconnectReconnecting"
+                        :error="disconnectReconnectError"
                     />
                 </v-card-text>
 
@@ -314,6 +312,40 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="reconnectDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">Reconnect device</v-card-title>
+
+                <v-card-text>
+                    To continue flashing, allow access to your device again.
+                    <v-banner
+                        single-line
+                        outlined
+                        rounded
+                        class="mt-8"
+                        v-if="reconnectError"
+                    >
+                        <v-icon slot="icon" color="red darken-3"
+                            >mdi-close</v-icon
+                        >
+                        <div class="my-4">
+                            <span
+                                class="text-body-1 red--text text--darken-3"
+                                >{{ reconnectError }}</span
+                            >
+                        </div>
+                    </v-banner>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="requestReconnect">
+                        Reconnect
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -376,7 +408,10 @@ export default {
         retryCallback: null,
 
         disconnectDialog: false,
-        reconnecting: false,
+        disconnectReconnecting: false,
+        disconnectReconnectError: null,
+
+        reconnectDialog: false,
         reconnectError: null,
     }),
 
@@ -404,26 +439,26 @@ export default {
             this.retryCallback = retry;
         },
         async retryDisconnect() {
-            this.reconnecting = true;
+            this.disconnectReconnecting = true;
 
             try {
                 await this.device.connect();
                 this.$root.$data.product = await this.device.getVariable(
                     "product"
                 );
-                this.reconnectError = null;
+                this.disconnectReconnectError = null;
             } catch (e) {
                 let [handled, message] = this.bubbleError(e);
-                this.reconnectError = message;
+                this.disconnectReconnectError = message;
                 if (!handled) {
                     throw e;
                 }
 
-                this.reconnecting = false;
+                this.disconnectReconnecting = false;
                 return;
             }
 
-            this.reconnecting = false;
+            this.disconnectReconnecting = false;
             this.disconnectDialog = false;
             this.retryCallback();
         },
@@ -444,6 +479,20 @@ export default {
         retryMemory() {
             this.memoryDialog = false;
             this.retryCallback();
+        },
+
+        reconnectCallback() {
+            this.reconnectDialog = true;
+        },
+        async requestReconnect() {
+            try {
+                await this.device.connect();
+                this.reconnectDialog = false;
+                this.reconnectError = null;
+            } catch (e) {
+                this.reconnectError = e.message;
+                throw e;
+            }
         },
     },
 };
