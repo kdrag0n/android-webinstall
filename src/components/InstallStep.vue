@@ -24,8 +24,8 @@
                     >
                 </p>
                 <p>
-                    Don’t touch or unplug your device during the install. Make
-                    sure you don’t press any buttons — everything is automatic.
+                    <strong>Don’t touch, unplug, or press any buttons</strong>
+                    on your device during the install.
                 </p>
             </div>
 
