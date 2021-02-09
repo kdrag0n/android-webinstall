@@ -140,9 +140,7 @@
                         default.
                     </p>
                     <p>
-                        To fix this, you need to install udev rules for Android
-                        devices. The way to do this varies by distribution, but
-                        here are the commands for some common distributions:
+                        To fix this, install Android udev rules on your system:
                     </p>
 
                     <v-list-item two-line>
@@ -163,6 +161,17 @@
                             <v-list-item-subtitle
                                 >sudo apt install
                                 android-sdk-platform-tools-common</v-list-item-subtitle
+                            >
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item two-line>
+                        <v-list-item-content>
+                            <v-list-item-title
+                                >Other distributions</v-list-item-title
+                            >
+                            <v-list-item-subtitle
+                                >Instructions vary</v-list-item-subtitle
                             >
                         </v-list-item-content>
                     </v-list-item>
@@ -265,9 +274,8 @@
                         and unpack the OS. You need at least 5 GB free.
                     </p>
                     <p>
-                        If you’re not low on storage, this is usually caused by
-                        using an incognito window or guest profile in your
-                        browser. These profiles have very storage limits, so
+                        If you’re not low on storage, this is caused by
+                        using an incognito window or guest browser profile. These profiles have very storage limits, so
                         installing from them isn’t possible.
                     </p>
                     <p>
@@ -298,6 +306,8 @@
                     <p>
                         To fix this,
                         <strong>close some unused apps</strong> and try again.
+                    </p>
+                    <p>
                         If it still doesn’t work, you may need to install from
                         another computer or device with more memory.
                     </p>
