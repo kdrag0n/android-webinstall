@@ -4,7 +4,7 @@ This is an easy-to-use web installer for Android-based operating systems that ru
 
 If you have a device officially supported by [ProtonAOSP](https://github.com/ProtonAOSP), you can try flashing it with the official instance of this web installer at [ProtonAOSP web installer](https://protonaosp.kdrag0n.dev/install/web/).
 
-![Screenshot of an install in progress on a desktop computer](https://user-images.githubusercontent.com/7930239/107443954-9638d600-6aee-11eb-9848-5d0502fecfa9.png)
+![Screenshot of an install in progress on a desktop computer](https://user-images.githubusercontent.com/7930239/107459937-10c41e80-6b0c-11eb-8fbc-6882145f164f.png)
 
 ## Install process
 
@@ -12,13 +12,13 @@ The following screenshots show the entire installation process, from start to fi
 
 ### Desktop
 
-![Step: Prepare your device](https://user-images.githubusercontent.com/7930239/107443939-90db8b80-6aee-11eb-88e6-a6bb6625ec1f.png)
-![Step: Choose an install type](https://user-images.githubusercontent.com/7930239/107443941-920cb880-6aee-11eb-829c-a4d876d72c28.png)
-![Step: Connect your device](https://user-images.githubusercontent.com/7930239/107445466-56272280-6af1-11eb-925b-fe6d3cffc05b.png)
-![Step: Unlock your bootloader](https://user-images.githubusercontent.com/7930239/107443949-946f1280-6aee-11eb-83d5-7b2f0f597ee2.png)
-![Step: Download a build](https://user-images.githubusercontent.com/7930239/107443952-95a03f80-6aee-11eb-9528-15e3e0e996b3.png)
-![Step: Install ProtonAOSP](https://user-images.githubusercontent.com/7930239/107443954-9638d600-6aee-11eb-9848-5d0502fecfa9.png)
-![Step: Installation complete](https://user-images.githubusercontent.com/7930239/107443959-96d16c80-6aee-11eb-9424-a4acd7db2b7c.png)
+![Step: Prepare your device](https://user-images.githubusercontent.com/7930239/107459556-516f6800-6b0b-11eb-93b6-a3726c1d6256.png)
+![Step: Choose an install type](https://user-images.githubusercontent.com/7930239/107459558-5207fe80-6b0b-11eb-80b7-5597e640bb0c.png)
+![Step: Connect your device](https://user-images.githubusercontent.com/7930239/107459568-56341c00-6b0b-11eb-9f44-2760d873c8d7.png)
+![Step: Unlock your bootloader](https://user-images.githubusercontent.com/7930239/107459571-57654900-6b0b-11eb-9a6e-1b83a9c8bb7b.png)
+![Step: Download a build](https://user-images.githubusercontent.com/7930239/107459576-57fddf80-6b0b-11eb-82cb-731b35c6a10b.png)
+![Step: Install ProtonAOSP](https://user-images.githubusercontent.com/7930239/107459937-10c41e80-6b0c-11eb-8fbc-6882145f164f.png)
+![Step: Installation complete](https://user-images.githubusercontent.com/7930239/107459580-59c7a300-6b0b-11eb-831f-8d55e7c4c5ef.png)
 
 ## Adapting for other ROMs
 
