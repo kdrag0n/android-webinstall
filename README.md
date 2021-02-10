@@ -14,7 +14,7 @@ The following screenshots show the entire installation process, from start to fi
 
 ![Step: Prepare your device](https://user-images.githubusercontent.com/7930239/107443939-90db8b80-6aee-11eb-88e6-a6bb6625ec1f.png)
 ![Step: Choose an install type](https://user-images.githubusercontent.com/7930239/107443941-920cb880-6aee-11eb-829c-a4d876d72c28.png)
-![Step: Connect your device](https://user-images.githubusercontent.com/7930239/107443943-92a54f00-6aee-11eb-8533-5a8c5c0959a4.png)
+![Step: Connect your device](https://user-images.githubusercontent.com/7930239/107445466-56272280-6af1-11eb-925b-fe6d3cffc05b.png)
 ![Step: Unlock your bootloader](https://user-images.githubusercontent.com/7930239/107443949-946f1280-6aee-11eb-83d5-7b2f0f597ee2.png)
 ![Step: Download a build](https://user-images.githubusercontent.com/7930239/107443952-95a03f80-6aee-11eb-9528-15e3e0e996b3.png)
 ![Step: Install ProtonAOSP](https://user-images.githubusercontent.com/7930239/107443954-9638d600-6aee-11eb-9848-5d0502fecfa9.png)
