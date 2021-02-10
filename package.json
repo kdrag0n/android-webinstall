@@ -10,8 +10,8 @@
     "dependencies": {
         "@sentry/tracing": "^6.1.0",
         "@sentry/vue": "^6.1.0",
+        "android-fastboot": "^1.0.1",
         "core-js": "^3.6.5",
-        "fastboot": "file:/home/dragon/code/web/fastboot.js",
         "vue": "^2.6.11",
         "vuetify": "^2.4.0"
     },

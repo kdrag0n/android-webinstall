@@ -2324,9 +2324,9 @@
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
 "@zip.js/zip.js@^2.1.0":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.2.7.tgz#3de90e005e39c5d2dba9878f98246f2632a593ba"
-  integrity sha512-Gh8o2oM4aV72mQxkLXGDQ2Io4ivE9TLQtXGAwdSXgAuAqDhR5rwJqiwxEhQW2C1tULF7daQRK4MgsqHYM/wb5w==
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.2.12.tgz#2cd7b9471d266b661b608c413e0f42cfa7d8e0ac"
+  integrity sha512-B6WXdTs4XcbbcX3pxoJZD2zasbCCLm26PssWiSjbNOq1y6QwNPkNdKYSORDXxkgBcvAMG+4B2IR0kyNysbtyFQ==
 
 abbrev@1:
   version "1.1.1"
@@ -2398,6 +2398,13 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+android-fastboot@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.0.1.tgz#c3acdd02e81273762939daa6a96f4dca2cc10a46"
+  integrity sha512-MWhiJY884iwL5qb7IL5o1ypDtnPGjsmcGqBsTIlDQe6ltLrwUQC3viuBu+T+Z+6FGPkIbQPyGCKe/qZYm/Le1w==
+  dependencies:
+    "@zip.js/zip.js" "^2.1.0"
 
 ansi-align@^2.0.0:
   version "2.0.0"
@@ -5719,11 +5726,6 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
-
-"fastboot@file:../fastboot.js":
-  version "0.1.0"
-  dependencies:
-    "@zip.js/zip.js" "^2.1.0"
 
 fastq@^1.6.0:
   version "1.10.1"

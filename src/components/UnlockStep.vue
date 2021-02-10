@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import { FastbootError } from "fastboot";
+import { FastbootError } from "android-fastboot";
 
 export default {
     name: "UnlockStep",
