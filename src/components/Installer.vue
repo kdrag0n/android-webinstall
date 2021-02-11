@@ -296,7 +296,7 @@
 
         <v-dialog v-model="memoryDialog" width="500" persistent>
             <v-card>
-                <v-card-title class="headline"> Out of memory </v-card-title>
+                <v-card-title class="headline">Out of memory</v-card-title>
 
                 <v-card-text>
                     <p>
@@ -487,6 +487,8 @@ export default {
         errorMemory(retry) {
             this.memoryDialog = true;
             this.retryCallback = retry;
+
+            this.saEvent("error__out_of_memory");
         },
         retryMemory() {
             this.memoryDialog = false;
