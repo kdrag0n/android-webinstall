@@ -324,7 +324,7 @@
                 <v-card-title class="headline">Reconnect device</v-card-title>
 
                 <v-card-text>
-                    To continue flashing, allow access to your device again.
+                    To continue installing, allow access to your device again.
                     <v-banner
                         single-line
                         outlined
