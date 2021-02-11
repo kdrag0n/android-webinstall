@@ -444,6 +444,8 @@ export default {
         },
 
         errorDisconnect(retry) {
+            this.$root.$data.product = null;
+
             this.disconnectReconnecting = false;
             this.disconnectReconnectError = null;
             this.disconnectDialog = true;
