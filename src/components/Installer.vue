@@ -1,12 +1,14 @@
 <template>
     <div class="d-flex flex-column flex-grow-1">
         <v-stepper
+            ref="stepper"
             v-model="curStep"
             :alt-labels="!$vuetify.breakpoint.mobile"
             class="d-flex flex-column flex-grow-1"
             @errorClaim="errorClaim"
             @errorDisconnect="errorDisconnect"
             @errorStorage="errorStorage"
+            @errorTimeout="errorTimeout"
             @requestDeviceReconnect="reconnectCallback"
             @prevStep="curStep -= 1"
             @nextStep="curStep += 1"
@@ -432,7 +434,7 @@ export default {
         storageDialog: false,
         memoryDialog: false,
         timeoutDialog: false,
-        retryCallback: null,
+        retryCallbacks: [],
 
         disconnectDialog: false,
         disconnectReconnecting: false,
@@ -443,22 +445,26 @@ export default {
     }),
 
     methods: {
+        handleSelfError(error, retryCallback) {
+            this.$refs.stepper.$emit(error, retryCallback);
+        },
+
         errorUdev(retry) {
             this.udevDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
         },
         retryUdev() {
             this.udevDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
 
         errorClaim(retry) {
             this.claimDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
         },
         retryClaim() {
             this.claimDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
 
         errorDisconnect(retry) {
@@ -467,7 +473,7 @@ export default {
             this.disconnectReconnecting = false;
             this.disconnectReconnectError = null;
             this.disconnectDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
         },
         async retryDisconnect() {
             this.disconnectReconnecting = true;
@@ -480,7 +486,7 @@ export default {
                 );
                 this.disconnectReconnectError = null;
             } catch (e) {
-                let [handled, message] = this.bubbleError(e);
+                let [handled, message] = this.bubbleError(e, this.retryDisconnect);
                 this.disconnectReconnectError = message;
                 if (!handled) {
                     throw e;
@@ -492,27 +498,27 @@ export default {
 
             this.disconnectReconnecting = false;
             this.disconnectDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
 
         errorStorage(retry) {
             this.storageDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
         },
         retryStorage() {
             this.storageDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
 
         errorMemory(retry) {
             this.memoryDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
 
             this.saEvent("error__out_of_memory");
         },
         retryMemory() {
             this.memoryDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
 
         reconnectCallback() {
@@ -531,11 +537,11 @@ export default {
 
         errorTimeout(retry) {
             this.timeoutDialog = true;
-            this.retryCallback = retry;
+            this.retryCallbacks.push(retry);
         },
         retryTimeout() {
             this.timeoutDialog = false;
-            this.retryCallback();
+            this.retryCallbacks.pop()();
         },
     },
 };

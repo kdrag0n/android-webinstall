@@ -21,7 +21,7 @@ Vue.mixin({
             } while (component);
         },
 
-        bubbleError(err) {
+        bubbleError(err, retryCallback = undefined) {
             let errEvent = null;
             let errMessage = err.message;
             if (errors.isConnectSelectError(err)) {
@@ -48,7 +48,17 @@ Vue.mixin({
             }
 
             if (errEvent !== null) {
-                this.$bubble(`error${errEvent}`, this.errorRetry);
+                if ("handleSelfError" in this) {
+                    this.handleSelfError(
+                        `error${errEvent}`,
+                        retryCallback || this.errorRetry
+                    );
+                }
+
+                this.$bubble(
+                    `error${errEvent}`,
+                    retryCallback || this.errorRetry
+                );
             }
 
             return [errEvent !== null, errMessage];
