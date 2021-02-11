@@ -451,6 +451,7 @@ export default {
         },
         async retryDisconnect() {
             this.disconnectReconnecting = true;
+            this.$root.$data.product = null;
 
             try {
                 await this.device.connect();
