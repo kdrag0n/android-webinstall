@@ -42,6 +42,9 @@ Vue.mixin({
             } else if (errors.isMemoryError(err)) {
                 errEvent = "Memory";
                 errMessage = "Out of memory";
+            } else if (errors.isTimeoutError(err)) {
+                errEvent = "Timeout";
+                errMessage = "Device is stuck";
             }
 
             if (errEvent !== null) {

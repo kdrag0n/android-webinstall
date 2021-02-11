@@ -1,4 +1,5 @@
 import { XhrError } from "./download";
+import { TimeoutError } from "android-fastboot";
 
 export function isConnectSelectError(err) {
     return (
@@ -49,4 +50,9 @@ export function isMemoryError(err) {
     return (
         err instanceof RangeError && err.message.includes("allocation failed")
     );
+}
+
+// This is still separate in case it changes in the future.
+export function isTimeoutError(err) {
+    return err instanceof TimeoutError;
 }

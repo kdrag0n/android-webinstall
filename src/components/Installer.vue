@@ -243,11 +243,6 @@
                             <li>Make sure the cable isn’t loose</li>
                         </ul>
                     </p>
-                    <p>
-                        If reconnecting gets stuck,
-                        <strong>restart your device’s bootloader</strong>
-                        by holding the volume-down and power buttons, and try again.
-                    </p>
                     <connect-banner
                         :device="device"
                         :connecting="disconnectReconnecting"
@@ -355,6 +350,28 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="timeoutDialog" width="500" persistent>
+            <v-card>
+                <v-card-title class="headline">Device is stuck</v-card-title>
+
+                <v-card-text>
+                    <p>
+                        The connection to your device is stuck.
+                    </p>
+                    <p>
+                        To fix this, use the volume buttons to highlight <strong>“Restart bootloader”</strong> in the bootloader menu, and press the power button to select it.
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryTimeout">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -414,6 +431,7 @@ export default {
         claimDialog: false,
         storageDialog: false,
         memoryDialog: false,
+        timeoutDialog: false,
         retryCallback: null,
 
         disconnectDialog: false,
@@ -509,6 +527,15 @@ export default {
             } catch (e) {
                 this.reconnectError = e.message;
             }
+        },
+
+        errorTimeout(retry) {
+            this.timeoutDialog = true;
+            this.retryCallback = retry;
+        },
+        retryTimeout() {
+            this.timeoutDialog = false;
+            this.retryCallback();
         },
     },
 };
