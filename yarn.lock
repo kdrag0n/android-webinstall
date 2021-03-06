@@ -2389,10 +2389,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-android-fastboot@^1.0.1:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.0.6.tgz#7d3ecdaab6b39ab4852ccc29a6de0ea2b31b41a4"
-  integrity sha512-5PPoqcNL6z55hht3aeK9/xl1NpXRyaFvAs1kt2dlx5e9PDDSCwNguogljJMG10LOHNpU8t9hJhbFsfGxEaX1RQ==
+android-fastboot@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.0.7.tgz#79cff4afe2069e38a6309e520403256a09ffaa0e"
+  integrity sha512-AmZ1Q+OtFWWaGd66MiCe0AdjyLrZGJH5LQivB0csxTVx0yW3JRBb0fnixw9zMDQGzMXJhW6vOc0r8Z1tGBN+zw==
   dependencies:
     "@zip.js/zip.js" "^2.1.0"
 
