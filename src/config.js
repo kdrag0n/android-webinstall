@@ -29,6 +29,14 @@ export default {
                 "Version with Google services included, so the apps you’re familiar with will work. Recommended for most users.",
             suffix: " with Google services",
         },
+        test: {
+            description: "Experimental version for testing only.",
+            suffix: "experimental"
+        },
+        beta: {
+            description: "Beta version for testing only.",
+            suffix: "beta"
+        },
     },
     DONATION_LINKS: [
         {
