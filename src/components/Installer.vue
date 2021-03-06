@@ -5,6 +5,7 @@
             v-model="curStep"
             :alt-labels="!$vuetify.breakpoint.mobile"
             class="d-flex flex-column flex-grow-1"
+            @errorConnectSelect="errorConnectSelect"
             @errorConnectUdev="errorConnectUdev"
             @errorClaim="errorClaim"
             @errorDisconnect="errorDisconnect"
@@ -132,6 +133,47 @@
                 </v-stepper-content>
             </v-stepper-items>
         </v-stepper>
+
+        <v-dialog v-model="connectSelectDialog" :width="userAgent.includes('Windows') ? 600 : 500">
+            <v-card>
+                <v-card-title class="headline">No device selected</v-card-title>
+
+                <v-card-text>
+                    <p>
+                        You need to select a device to continue installing.
+                    </p>
+                    <p>
+                        Device not showing up? Try following these steps:
+                        <ul class="ml-4 mb-4">
+                            <li>Put your device into bootloader mode</li>
+                            <li>Use a different cable</li>
+                            <li>Clean your USB port</li>
+                            <li>Don’t use USB hubs</li>
+                            <li>Make sure the cable isn’t loose</li>
+                        </ul>
+                    </p>
+                    <p v-if="userAgent.includes('Windows')">
+                        If it’s still not working, you need to install Windows drivers:
+                        <ol class="ml-4 mb-4">
+                            <li>Plug your device into your computer while it’s in bootloader mode</li>
+                            <li>Open Settings → Windows Update</li>
+                            <li>Click “Check for updates” and wait</li>
+                            <li>Click “View optional updates”</li>
+                            <li>Select the “Android Bootloader Interface” update (ignore the brand name)</li>
+                            <li>Click “Download and install” and wait</li>
+                            <li>Unplug your device and plug it back in</li>
+                        </ol>
+                    </p>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="retryConnectSelect">
+                        Retry
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 
         <v-dialog v-model="connectUdevDialog" width="500" persistent>
             <v-card>
@@ -429,7 +471,9 @@ export default {
         device: device,
         blobStore: blobStore,
         curStep: -1,
+        userAgent: navigator.userAgent,
 
+        connectSelectDialog: false,
         connectUdevDialog: false,
         claimDialog: false,
         storageDialog: false,
@@ -448,6 +492,15 @@ export default {
     methods: {
         handleSelfError(error, retryCallback) {
             this.$refs.stepper.$emit(error, retryCallback);
+        },
+
+        errorConnectSelect(retry) {
+            this.connectSelectDialog = true;
+            this.retryCallbacks.push(retry);
+        },
+        retryConnectSelect() {
+            this.connectSelectDialog = false;
+            this.retryCallbacks.pop()();
         },
 
         errorConnectUdev(retry) {
