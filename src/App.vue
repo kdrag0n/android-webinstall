@@ -5,7 +5,11 @@
                 <v-row align="center" justify="center">
                     <v-col cols="12" sm="2"></v-col>
 
-                    <v-col cols="12" sm="8" class="d-flex flex-row justify-center">
+                    <v-col
+                        cols="12"
+                        sm="8"
+                        class="d-flex flex-row justify-center"
+                    >
                         <v-sheet
                             :min-height="
                                 $vuetify.breakpoint.mobile ? '100vh' : '75vh'

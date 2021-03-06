@@ -31,11 +31,11 @@ export default {
         },
         test: {
             description: "Experimental version for testing only.",
-            suffix: "experimental"
+            suffix: "experimental",
         },
         beta: {
             description: "Beta version for testing only.",
-            suffix: "beta"
+            suffix: "beta",
         },
     },
     DONATION_LINKS: [
