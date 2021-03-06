@@ -5,6 +5,7 @@
             v-model="curStep"
             :alt-labels="!$vuetify.breakpoint.mobile"
             class="d-flex flex-column flex-grow-1"
+            @errorConnectUdev="errorConnectUdev"
             @errorClaim="errorClaim"
             @errorDisconnect="errorDisconnect"
             @errorStorage="errorStorage"
@@ -132,7 +133,7 @@
             </v-stepper-items>
         </v-stepper>
 
-        <v-dialog v-model="udevDialog" width="500" persistent>
+        <v-dialog v-model="connectUdevDialog" width="500" persistent>
             <v-card>
                 <v-card-title class="headline">Access denied</v-card-title>
 
@@ -186,7 +187,7 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="retryUdev">
+                    <v-btn color="primary" text @click="retryConnectUdev">
                         Retry
                     </v-btn>
                 </v-card-actions>
@@ -405,7 +406,7 @@ import DownloadStep from "./DownloadStep";
 import InstallStep from "./InstallStep";
 import FinishStep from "./FinishStep";
 
-fastboot.setDebugLevel(1);
+fastboot.setDebugLevel(2);
 
 let device = new fastboot.FastbootDevice();
 let blobStore = new BlobStore();
@@ -429,7 +430,7 @@ export default {
         blobStore: blobStore,
         curStep: -1,
 
-        udevDialog: false,
+        connectUdevDialog: false,
         claimDialog: false,
         storageDialog: false,
         memoryDialog: false,
@@ -449,12 +450,12 @@ export default {
             this.$refs.stepper.$emit(error, retryCallback);
         },
 
-        errorUdev(retry) {
-            this.udevDialog = true;
+        errorConnectUdev(retry) {
+            this.connectUdevDialog = true;
             this.retryCallbacks.push(retry);
         },
-        retryUdev() {
-            this.udevDialog = false;
+        retryConnectUdev() {
+            this.connectUdevDialog = false;
             this.retryCallbacks.pop()();
         },
 
