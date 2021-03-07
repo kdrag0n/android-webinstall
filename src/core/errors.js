@@ -4,7 +4,7 @@ import { TimeoutError } from "android-fastboot";
 export function isConnectSelectError(err) {
     return (
         err instanceof DOMException &&
-        err.code === DOMException.NOT_FOUND_ERR &&
+        err.name === "NotFoundError" &&
         err.message === "No device selected."
     );
 }
@@ -12,7 +12,7 @@ export function isConnectSelectError(err) {
 export function isConnectUdevError(err) {
     return (
         err instanceof DOMException &&
-        err.code === DOMException.SECURITY_ERR &&
+        err.name === "SecurityError" &&
         err.message === "Access denied."
     );
 }
@@ -20,7 +20,7 @@ export function isConnectUdevError(err) {
 export function isStorageError(err) {
     return (
         (err instanceof DOMException &&
-            err.code === 0 &&
+            err.name === "NotReadableError" &&
             err.message.startsWith("The requested file could not be read")) ||
         (err instanceof XhrError && err.status === 0 && err.statusText === "")
     );
@@ -29,10 +29,10 @@ export function isStorageError(err) {
 export function isClaimError(err) {
     return (
         (err instanceof DOMException &&
-            err.code === DOMException.NETWORK_ERR &&
+            err.name === "NetworkError" &&
             err.message === "Unable to claim interface.") ||
         (err instanceof DOMException &&
-            err.code === DOMException.INVALID_STATE_ERR &&
+            err.name === "InvalidStateError" &&
             err.message ===
                 "An operation that changes the device state is in progress.")
     );
@@ -41,7 +41,7 @@ export function isClaimError(err) {
 export function isDisconnectError(err) {
     return (
         err instanceof DOMException &&
-        err.code === DOMException.NETWORK_ERR &&
+        err.name === "NetworkError" &&
         err.message === "A transfer error has occurred."
     );
 }
