@@ -40,9 +40,12 @@ export function isClaimError(err) {
 
 export function isDisconnectError(err) {
     return (
-        err instanceof DOMException &&
-        err.name === "NetworkError" &&
-        err.message === "A transfer error has occurred."
+        (err instanceof DOMException &&
+            err.name === "NetworkError" &&
+            err.message === "A transfer error has occurred.") ||
+        (err instanceof DOMException &&
+            err.code === "NetworkError" &&
+            err.message === "The device was disconnected.")
     );
 }
 
