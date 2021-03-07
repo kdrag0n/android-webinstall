@@ -2314,9 +2314,9 @@
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
 "@zip.js/zip.js@^2.1.0":
-  version "2.2.18"
-  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.2.18.tgz#341c4c264dbce6f78c20bd3ac86c4a8177ad1be3"
-  integrity sha512-WQomoIVZYOduGVzYAJhhU6C9jrHykybgrwmRaExUyfCSd9OSz9tw/NKJbXffnQFB8xutD/H3i/2qXScV9GMn5w==
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.2.20.tgz#7857840fbd224d37335f4be8fe6d497f11d339d2"
+  integrity sha512-/Tm0WsUFhLEo+Gcvr96dtv/6cHLuOuI8KJVWwZCMXjznmqykJkl5mY8QPMbQ2efl0cdwOWws+OL3b6L2i93aWg==
 
 abbrev@1:
   version "1.1.1"
@@ -2390,9 +2390,9 @@ alphanum-sort@^1.0.0:
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
 android-fastboot@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.0.7.tgz#79cff4afe2069e38a6309e520403256a09ffaa0e"
-  integrity sha512-AmZ1Q+OtFWWaGd66MiCe0AdjyLrZGJH5LQivB0csxTVx0yW3JRBb0fnixw9zMDQGzMXJhW6vOc0r8Z1tGBN+zw==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.0.8.tgz#e3dc085cc1a3f6b7bd44f96f984fd39c0f9c23e1"
+  integrity sha512-yz67YypcC991VaxqTGIoolieFoFcCgXGf2unG0XkYEU2wt5CP7dSduLM8n1puLtvi4lV9Qo8OinfT2ifavm/FQ==
   dependencies:
     "@zip.js/zip.js" "^2.1.0"
 
