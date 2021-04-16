@@ -56,8 +56,8 @@
 </style>
 
 <script>
-import LiberapayIcon from "./LiberapayIcon.vue";
-import PaypalIcon from "./PaypalIcon.vue";
+import LiberapayIcon from "./icons/LiberapayIcon.vue";
+import PaypalIcon from "./icons/PaypalIcon.vue";
 import { getDeviceName } from "../core/devices";
 
 export default {
