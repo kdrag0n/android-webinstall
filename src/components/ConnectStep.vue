@@ -5,11 +5,10 @@
 
             <div class="text-body-1">
                 <p>
-                    Put your device into bootloader mode by turning it off, then
+                    Put your device into bootloader mode by restarting it and
                     holding the
-                    <strong>power</strong> and
-                    <strong>volume down</strong> buttons together until you see
-                    a <span class="red--text text--darken-3">red</span> warning
+                    <strong>volume down</strong> button until you see a
+                    <span class="red--text text--darken-3">red</span> warning
                     sign or
                     <span class="green--text text--darken-3">green</span>
                     Android robot.
