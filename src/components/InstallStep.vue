@@ -27,6 +27,11 @@
                     <strong>Don’t touch, unplug, or press any buttons</strong>
                     on your device during the install.
                 </p>
+                <p>
+                    Your phone will restart several times, but
+                    <strong>don’t touch it.</strong> Watch the progress bar
+                    on this page instead.
+                </p>
             </div>
 
             <v-btn
