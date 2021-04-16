@@ -32,6 +32,7 @@
                     <div class="pr-2">
                         <liberapay-icon v-if="donation.icon === 'liberapay'" />
                         <paypal-icon v-if="donation.icon === 'paypal'" />
+                        <patreon-icon v-if="donation.icon === 'patreon'" />
                     </div>
                     {{ donation.title }}</v-card-title
                 >
@@ -58,10 +59,11 @@
 <script>
 import LiberapayIcon from "./icons/LiberapayIcon.vue";
 import PaypalIcon from "./icons/PaypalIcon.vue";
+import PatreonIcon from "./icons/PatreonIcon.vue";
 import { getDeviceName } from "../core/devices";
 
 export default {
-    components: { LiberapayIcon, PaypalIcon },
+    components: { LiberapayIcon, PaypalIcon, PatreonIcon },
     name: "FinishStep",
 
     props: ["device", "blobStore", "active"],
