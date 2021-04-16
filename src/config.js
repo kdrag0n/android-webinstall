@@ -42,10 +42,10 @@ export default {
         {
             title: "Recurring donation",
             description:
-                "If you are able to, please consider making a recurring donation through Liberapay. This allows us to support the project sustainably in the future.",
+                "Please consider making a recurring donation on Patreon for benefits such as early access to updates, exclusive behind-the-scenes development news, and priority support. This allows us to support the project sustainably in the future.",
             highlight: true,
-            url: "https://liberapay.com/kdrag0n/",
-            icon: "liberapay",
+            url: "https://patreon.com/kdrag0n",
+            icon: "patreon",
         },
         {
             title: "One-time donation",
