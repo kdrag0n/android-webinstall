@@ -315,7 +315,7 @@
                     </p>
                     <p>
                         If you’re not low on storage, this is caused by
-                        using an incognito window or guest browser profile. These profiles have very storage limits, so
+                        using an incognito window or guest browser profile. These profiles have very low storage limits, so
                         installing from them isn’t possible.
                     </p>
                     <p>
