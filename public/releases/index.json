@@ -2,50 +2,50 @@
     "latest": {
         "taimen": [
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "minimal",
-                "url": "/releases/files/proton-aosp_taimen-factory_11.3.2.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_wahoo/v11.4.0/proton-aosp_taimen-factory_11.4.0.zip"
             },
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "gapps",
-                "url": "/releases/files/proton-aosp_taimen-factory_11.3.2-gapps.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_wahoo/v11.4.0/proton-aosp_taimen-factory_11.4.0-gapps.zip"
             }
         ],
         "walleye": [
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "minimal",
-                "url": "/releases/files/proton-aosp_walleye-factory_11.3.2.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_wahoo/v11.4.0/proton-aosp_walleye-factory_11.4.0.zip"
             },
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "gapps",
-                "url": "/releases/files/proton-aosp_walleye-factory_11.3.2-gapps.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_wahoo/v11.4.0/proton-aosp_walleye-factory_11.4.0-gapps.zip"
             }
         ],
         "bramble": [
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "minimal",
-                "url": "/releases/files/proton-aosp_bramble-factory_11.3.2.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.4.0/proton-aosp_bramble-factory_11.4.0.zip"
             },
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "gapps",
-                "url": "/releases/files/proton-aosp_bramble-factory_11.3.2-gapps.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.4.0/proton-aosp_bramble-factory_11.4.0-gapps.zip"
             }
         ],
         "redfin": [
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "minimal",
-                "url": "/releases/files/proton-aosp_redfin-factory_11.3.2.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.4.0/proton-aosp_redfin-factory_11.4.0.zip"
             },
             {
-                "version": "11.3.2",
+                "version": "11.4.0",
                 "variant": "gapps",
-                "url": "/releases/files/proton-aosp_redfin-factory_11.3.2-gapps.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.4.0/proton-aosp_redfin-factory_11.4.0-gapps.zip"
             }
         ]
     }
