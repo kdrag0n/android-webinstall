@@ -36,7 +36,7 @@
                     Unfortunately, you can’t use this web installer for
                     {{ $root.$data.OS_NAME }} because your browser doesn’t
                     support WebUSB. Only Google Chrome and other browsers based
-                    on Chromium, such Brave and Microsoft Edge, are supported.
+                    on Chromium, such as Brave and Microsoft Edge, are supported.
                 </p>
             </div>
 
