@@ -1,6 +1,6 @@
 export default {
     OS_NAME: process.env.VUE_APP_OS_NAME,
-    ACCENT_COLOR: "#007cfa",
+    ACCENT_COLOR: "#0366d6",
     SUPPORTED_DEVICES: [
         {
             name: "Pixel 2",
@@ -17,6 +17,14 @@ export default {
         {
             name: "Pixel 5",
             model: "redfin",
+        },
+        {
+            name: "Pixel 4",
+            model: "flame",
+        },
+        {
+            name: "Pixel 4 XL",
+            model: "coral",
         },
     ],
     RELEASE_VARIANTS: {
