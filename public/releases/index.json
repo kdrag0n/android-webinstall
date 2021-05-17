@@ -40,12 +40,36 @@
             {
                 "version": "11.5.0",
                 "variant": "minimal",
-                "url": "/releases/files/proton-aosp_redfin-factory_11.5.0.zip"
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.5.0/proton-aosp_redfin-factory_11.5.0.zip"
             },
             {
                 "version": "11.5.0",
                 "variant": "gapps",
                 "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_redbull/v11.5.0/proton-aosp_redfin-factory_11.5.0-gapps.zip"
+            }
+        ],
+        "coral": [
+            {
+                "version": "11.5.0",
+                "variant": "minimal",
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_coral-factory_11.5.0.zip"
+            },
+            {
+                "version": "11.5.0",
+                "variant": "gapps",
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_coral-factory_11.5.0-gapps.zip"
+            }
+        ],
+        "flame": [
+            {
+                "version": "11.5.0",
+                "variant": "minimal",
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_flame-factory_11.5.0.zip"
+            },
+            {
+                "version": "11.5.0",
+                "variant": "gapps",
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_flame-factory_11.5.0-gapps.zip"
             }
         ]
     }
