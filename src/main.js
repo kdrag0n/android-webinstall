@@ -61,10 +61,7 @@ Vue.mixin({
                 );
             }
 
-            return [
-                errEvent !== null && !errors.isTimeoutError(err),
-                errMessage,
-            ];
+            return [errEvent !== null, errMessage];
         },
     },
 });
