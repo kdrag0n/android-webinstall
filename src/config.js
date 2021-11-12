@@ -3,14 +3,6 @@ export default {
     ACCENT_COLOR: "#0366d6",
     SUPPORTED_DEVICES: [
         {
-            name: "Pixel 2",
-            model: "walleye",
-        },
-        {
-            name: "Pixel 2 XL",
-            model: "taimen",
-        },
-        {
             name: "Pixel 4a 5G",
             model: "bramble",
         },
