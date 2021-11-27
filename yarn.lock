@@ -2038,10 +2038,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zip.js/zip.js@^2.2.27":
-  version "2.3.19"
-  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.3.19.tgz#20d8b2654e6a7d1d7e1771d7be421be84451f292"
-  integrity sha512-dkqAdsgJPq7cR4iP5oIdI6Zu75WZka1L02NCYxdoXydsdNLO37A5YbBrVurTq5FxHDQRaH7S86rHdlxVeUl/dA==
+"@zip.js/zip.js@2.2.27":
+  version "2.2.27"
+  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.2.27.tgz#672c63fd586d83c6f6c6231a38b54a16b5abe267"
+  integrity sha512-lQLsq41xUIGJnUizICgjLL+1hrnlLcqyWnQcaNi8FdsxfJl8y0bqdolDit8o65Huai+/GwXbCODMVu05kNU8mA==
 
 accepts@^1.3.5, accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
@@ -2110,11 +2110,11 @@ alphanum-sort@^1.0.0:
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
 android-fastboot@^1.0.7:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.1.0.tgz#1ca61e050da07ec61d7c2055573edfa39f2f6523"
-  integrity sha512-IPAuhxLTZtQG6MJ/yB0o+TlXqRuf+OxW0u4r5frcs8V6EJrl8FVBMkWSuPODf+mx4uvqQMugBwPhLkPuuRWP/g==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/android-fastboot/-/android-fastboot-1.1.1.tgz#6a975842b2076b389cb30e0e6f80e559a1636d91"
+  integrity sha512-6MCqRarUfyOV68R9pNKNPMlIDLE/qJju2nhi/Jul+Juw7sqYnjwHDA9EGz3UY55tmlYeMc44jTBGcSY1zjTEdw==
   dependencies:
-    "@zip.js/zip.js" "^2.2.27"
+    "@zip.js/zip.js" "2.2.27"
 
 ansi-align@^3.0.0:
   version "3.0.0"
