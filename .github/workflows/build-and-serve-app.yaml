@@ -1,0 +1,20 @@
+name: Build and Serve Vue app
+on: [push]
+jobs:
+  build_vue:
+    runs-on: ubuntu-latest
+    name: Build Vue
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js '16.x'
+      uses: actions/setup-node@v2
+      with:
+        node-version: "16.x"
+        cache: "npm"
+    - id: Build-Vue
+      uses: SerhiiKa/VuePagesAction@1.0.4
+      with:
+        username: 'ii'
+        reponame: 'android-webinstall'
+        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        useyarn: true
