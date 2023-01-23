@@ -62,6 +62,18 @@
         ],
         "flame": [
             {
+                "version": "TQ1A.221205.011.2022121400",
+                "variant": "minimal",
+                "url": "https://releases.grapheneos.org/bluejay-factory-2022121400.zip"
+            },
+            {
+                "version": "11.5.0",
+                "variant": "gapps",
+                "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_flame-factory_11.5.0-gapps.zip"
+            }
+        ],
+        "bluejay": [
+            {
                 "version": "11.5.0",
                 "variant": "minimal",
                 "url": "https://github-releases-proxy.kdrag0n.workers.dev/android_device_google_coral/v11.5.0/proton-aosp_flame-factory_11.5.0.zip"
