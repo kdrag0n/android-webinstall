@@ -454,7 +454,7 @@ let device = new fastboot.FastbootDevice();
 let blobStore = new BlobStore();
 
 export default {
-    name: "Installer",
+    name: "WebInstaller",
 
     components: {
         PrepareStep,

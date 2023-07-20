@@ -12,17 +12,18 @@
         "@sentry/vue": "^6.1.0",
         "android-fastboot": "^1.0.7",
         "core-js": "^3.6.5",
+        "url": "^0.11.1",
         "vue": "^2.6.11",
         "vuetify": "^2.4.0"
     },
     "devDependencies": {
-        "@vue/cli": "^4.5.11",
-        "@vue/cli-plugin-babel": "~4.5.0",
-        "@vue/cli-plugin-eslint": "~4.5.0",
-        "@vue/cli-service": "~4.5.0",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^6.7.2",
-        "eslint-plugin-vue": "^6.2.2",
+        "@babel/eslint-parser": "^7.22.9",
+        "@vue/cli": "^5.0.8",
+        "@vue/cli-plugin-babel": "^5.0.8",
+        "@vue/cli-plugin-eslint": "^5.0.8",
+        "@vue/cli-service": "^5.0.8",
+        "eslint": "^8.45.0",
+        "eslint-plugin-vue": "^9.15.1",
         "prettier": "^2.2.1",
         "sass": "^1.32.0",
         "sass-loader": "^10.0.0",
@@ -40,7 +41,7 @@
             "eslint:recommended"
         ],
         "parserOptions": {
-            "parser": "babel-eslint"
+            "parser": "@babel/eslint-parser"
         },
         "rules": {}
     },
